@@ -5,14 +5,14 @@
  */
 
 import summary from 'rollup-plugin-summary';
-import {terser} from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 
 export default {
-  input: 'my-element.js',
+  input: 'fumble-button.js',
   output: {
-    file: 'my-element.bundled.js',
+    file: 'fumble-button.bundled.js',
     format: 'esm',
   },
   onwarn(warning) {
@@ -28,6 +28,7 @@ export default {
      * For bundling and minification, check the README.md file.
      */
     terser({
+      // @ts-ignore
       ecma: 2021,
       module: true,
       warnings: true,

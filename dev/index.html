@@ -1,22 +1,120 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>&lt;my-element> Demo</title>
+    <title>&lt;fumble-button> Demo</title>
     <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../node_modules/lit/polyfill-support.js"></script>
-    <script type="module" src="../my-element.js"></script>
+    <script type="module" src="../fumble-button.js"></script>
     <style>
-      p {
-        border: solid 1px blue;
-        padding: 8px;
+      .wrapper {
+        font-size: 10px;
       }
     </style>
   </head>
   <body>
-    <my-element>
-      <p>This is child content</p>
-    </my-element>
+    <div class="wrapper">
+      <div>
+        <h2>armor=Unarmored, luck=3</h2>
+        <fumble-button armor="Unarmored" luck="3"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Unarmored, luck=3, shield</h2>
+        <fumble-button armor="Unarmored" luck="3" shield></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Padded armor, luck=4</h2>
+        <fumble-button armor="Padded" luck="4"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Leather, luck=5</h2>
+        <fumble-button armor="Leather" luck="5"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Studded leather, luck=6</h2>
+        <fumble-button armor="Studded leather" luck="6"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Hide, luck=7</h2>
+        <fumble-button armor="Hide" luck="7"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Scale mail, luck=8</h2>
+        <fumble-button armor="Scale mail" luck="8"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Chainmail, luck=9</h2>
+        <fumble-button armor="Chainmail" luck="9"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Banded mail, luck=10</h2>
+        <fumble-button armor="Banded mail" luck="10"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Half-plate, luck=11</h2>
+        <fumble-button armor="Half-plate" luck="11"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Full plate, luck=12</h2>
+        <fumble-button armor="Full plate" luck="12"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Shield, luck=13</h2>
+        <fumble-button armor="Shield" luck="13"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Unarmored, luck=14</h2>
+        <fumble-button armor="Unarmored" luck="14"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Padded, luck=15</h2>
+        <fumble-button armor="Padded" luck="15"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Leather, luck=16</h2>
+        <fumble-button armor="Leather" luck="16"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Studded leather, luck=17</h2>
+        <fumble-button armor="Studded leather" luck="17"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Hide, luck=18</h2>
+        <fumble-button armor="Hide" luck="18"></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Hide, luck=18, die-override=d20</h2>
+        <fumble-button
+          armor="Hide"
+          luck="18"
+          die-override="d20"
+        ></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Hide, luck=18 modifier-override=+6</h2>
+        <fumble-button
+          armor="Hide"
+          luck="18"
+          modifier-override="+6"
+        ></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Hide, luck=18 modifier-override=1</h2>
+        <fumble-button
+          armor="Hide"
+          luck="18"
+          modifier-override="1"
+        ></fumble-button>
+      </div>
+      <div>
+        <h2>armor=Hide, luck=18 modifier-override=-3</h2>
+        <fumble-button
+          armor="Hide"
+          luck="18"
+          modifier-override="-3"
+        ></fumble-button>
+      </div>
+    </div>
   </body>
 </html>
