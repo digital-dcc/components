@@ -7,7 +7,8 @@
   "module": "index.js",
 	"exports": {
 		"./fumble-button": "./components/fumble-button/fumble-button.js",
-		"./adjustment-input": "./components/adjustment-input/adjustment-input.js"
+		"./adjustment-input": "./components/adjustment-input/adjustment-input.js",
+		"./alignment-display": "./components/alignment-display/alignment-display.js"
 	},
   "type": "module",
   "scripts": {
