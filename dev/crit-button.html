@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;crit-button> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/crit-button/crit-button.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <div>
+        <h2>Warrior level 1</h2>
+        <crit-button class="warrior" level="1" luck="12"></crit-button>
+      </div>
+      <div>
+        <h2>Warrior level 1 with lucky sign</h2>
+        <crit-button class="warrior" level="1" luck="13" lucky-sign="Warrior's arm: critical hit tables"></crit-button>
+      </div>
+      <div>
+        <h2>Warrior level 10 with lucky sign</h2>
+        <crit-button class="warrior" level="10" luck="13" lucky-sign="warriors-arm"></crit-button>
+      </div>
+      <div>
+        <h2>Warrior level 1 with lucky sign and die override</h2>
+        <crit-button class="warrior" level="10" luck="13" lucky-sign="warriors-arm" die-override="24"></crit-button>
+      </div>
+    </div>
+  </body>
+</html>
