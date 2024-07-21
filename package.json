@@ -3,8 +3,12 @@
   "private": true,
   "version": "2.0.1",
   "description": "A simple web component",
-  "main": "fumble-button.js",
-  "module": "fumble-button.js",
+  "main": "index.js",
+  "module": "index.js",
+	"exports": {
+		"./fumble-button": "./components/fumble-button/fumble-button.js",
+		"./adjustment-input": "./components/adjustment-input/adjustment-input.js"
+	},
   "type": "module",
   "scripts": {
     "build": "echo \"This is not a TypeScript project, so no need to build.\"",

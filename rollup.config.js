@@ -10,9 +10,9 @@ import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 
 export default {
-  input: 'fumble-button.js',
+  input: 'index.js',
   output: {
-    file: 'fumble-button.bundled.js',
+    file: 'components.bundled.js',
     format: 'esm',
   },
   onwarn(warning) {
