@@ -7,9 +7,10 @@ class DiceRoll {
   armor;
   shield;
   luck;
-  qty;
+	luckySign;
+  multiplier;
   die;
-  mod;
+  modifier;
 }
 
 const fumbleDie = new Map([
@@ -47,9 +48,11 @@ export class FumbleButton extends LitElement {
     return {
       armor: {type: String},
       luck: {type: Number},
+      luckySign: {attribute: 'lucky-sign', type: String},
       shield: {type: Boolean},
-      dieOverride: {attribute: 'die-override', type: String},
-      modifierOverride: {attribute: 'modifier-override', type: String},
+      multiplierOverride: {attribute: 'multiplier-override', type: Number},
+      dieOverride: {attribute: 'die-override', type: Number},
+      modifierOverride: {attribute: 'modifier-override', type: Number},
     };
   }
 
@@ -57,7 +60,9 @@ export class FumbleButton extends LitElement {
     super();
     this.armor = 'Unarmored';
     this.luck = null;
+    this.luckySign = null;
     this.shield = false;
+    this.multiplierOverride = null;
     this.dieOverride = null;
     this.modifierOverride = null;
   }
@@ -66,16 +71,35 @@ export class FumbleButton extends LitElement {
     return html`
       <stat-display
         name="Fumble"
-        modifier="d"
-        value="${this._fumbleDie}"
-        suffix="${this._modifier}"
+        modifier="${this.multiplier}d"
+        value="${this.fumbleDie}"
+        suffix="${this.formatModifier(this.modifier)}"
         clickable
-        @value-clicked="${this._onClick}"
+        @value-clicked="${this.onClick}"
       ></stat-display>
     `;
   }
 
-  get _fumbleDie() {
+	get multiplier() {
+    if (this.multiplierOverride) return Number(this.multiplierOverride);
+    return 1;
+  }
+
+	get luckySignSlug() {
+    if (
+      this.luckySign &&
+      this.luckySign
+        .toLowerCase()
+        .replaceAll(' ', '-')
+        .replace(/['´]/g, '')
+        .startsWith('the-broken-star')
+    ) {
+      return 'the-broken-star';
+    }
+    return '';
+  }
+
+  get fumbleDie() {
     if (this.dieOverride) return Number(this.dieOverride.replace('d', ''));
     const armorDie = fumbleDie.get(this.armor) || 4;
     const shieldDie = fumbleDie.get('shield') || 8;
@@ -85,24 +109,35 @@ export class FumbleButton extends LitElement {
     return armorDie;
   }
 
-  get _modifier() {
-    let mod = this._modifierFor(this.luck) * -1;
+  get modifier() {
+		// inverse luck affects fumbles
+    let mod = this.modifierFor(this.luck) * -1;
+
+		// The broken star lucky sign, doubles the luck modifier effect on fumbles
+		if (this.luckySignSlug === 'the-broken-star') {
+      mod = mod * 2;
+    }
     if (this.modifierOverride) mod = Number(this.modifierOverride);
-    if (mod < 0) return mod;
+    return mod;
+  }
+
+	formatModifier(mod) {
+    if (mod < 0) return String(mod);
     if (mod === 0) return '';
     return `+${mod}`;
   }
 
-  _onClick() {
+  onClick() {
     const roll = new DiceRoll();
     roll.name = 'Fumble Roll';
     roll.description = 'A fumble roll was made';
     roll.armor = this.armor;
     roll.luck = this.luck;
+    roll.luckySign = this.luckySignSlug;
     roll.shield = this.shield;
-    roll.qty = 1;
-    roll.die = `d${fumbleDie.get(this.armor) || 4}`;
-    roll.mod = this._modifier;
+    roll.multiplier = 1;
+    roll.die = fumbleDie.get(this.armor) || 4;
+    roll.modifier = this.modifier;
 
     this.dispatchEvent(
       new CustomEvent('fumble-roll', {
@@ -111,7 +146,7 @@ export class FumbleButton extends LitElement {
     );
   }
 
-  _modifierFor(stat) {
+  modifierFor(stat) {
     if (stat <= 3) return -3;
     if (stat >= 4 && stat <= 5) return -2;
     if (stat >= 6 && stat <= 8) return -1;

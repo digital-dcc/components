@@ -36,7 +36,6 @@ suite('fumble-button', () => {
     await el.updateComplete;
 
     assert.deepEqual(event.detail, {
-			"__WTR_CONSTRUCTOR_NAME__": "DiceRoll",
       name: 'Crit Roll',
       description: 'A crit roll was made',
       luck: 7,

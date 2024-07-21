@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * @license
  * Copyright 2021 Google LLC
@@ -5,9 +6,8 @@
  */
 
 import {FumbleButton} from './fumble-button.js';
-import {assert} from '@open-wc/testing';
-// import {fixture, assert} from '@open-wc/testing';
-// import {html} from 'lit/static-html.js';
+import {fixture, assert} from '@open-wc/testing';
+import {html} from 'lit/static-html.js';
 
 suite('fumble-button', () => {
   test('is defined', () => {
@@ -15,48 +15,36 @@ suite('fumble-button', () => {
     assert.instanceOf(el, FumbleButton);
   });
 
-  // test('renders with default values', async () => {
-  //   const el = await fixture(html`<fumble-button></fumble-button>`);
-  //   assert.shadowDom.equal(
-  //     el,
-  //     `
-  //     <h1>Hello, World!</h1>
-  //     <button part="button">Click Count: 0</button>
-  //     <slot></slot>
-  //   `
-  //   );
-  // });
+  test('handles a click', async () => {
+    let event;
+    const roll = (e) => {
+      event = e;
+    };
+    const el = await fixture(
+      html`<fumble-button
+        class="warrior"
+        level="10"
+        luck="7"
+        lucky-sign="The Broken Star"
+        @fumble-roll="${roll}"
+      ></fumble-button>`
+    );
+    const button = el?.shadowRoot
+      ?.querySelector('stat-display')
+      ?.shadowRoot?.querySelector('button');
+    button?.click();
+    await el.updateComplete;
 
-  // test('renders with a set name', async () => {
-  //   const el = await fixture(html`<fumble-button name="Test"></fumble-button>`);
-  //   assert.shadowDom.equal(
-  //     el,
-  //     `
-  //     <h1>Hello, Test!</h1>
-  //     <button part="button">Click Count: 0</button>
-  //     <slot></slot>
-  //   `
-  //   );
-  // });
-
-  // test('handles a click', async () => {
-  //   const el = await fixture(html`<fumble-button></fumble-button>`);
-  //   const button = el.shadowRoot.querySelector('button');
-  //   button.click();
-  //   await el.updateComplete;
-  //   assert.shadowDom.equal(
-  //     el,
-  //     `
-  //     <h1>Hello, World!</h1>
-  //     <button part="button">Click Count: 1</button>
-  //     <slot></slot>
-  //   `
-  //   );
-  // });
-
-  // test('styling applied', async () => {
-  //   const el = await fixture(html`<fumble-button></fumble-button>`);
-  //   await el.updateComplete;
-  //   assert.equal(getComputedStyle(el).paddingTop, '16px');
-  // });
+    assert.deepEqual(event.detail, {
+      name: 'Fumble Roll',
+      description: 'A fumble roll was made',
+			armor: "Unarmored",
+      luck: 7,
+      multiplier: 1,
+      die: 4,
+      modifier: 2,
+      shield: false,
+      luckySign: 'the-broken-star',
+    });
+  });
 });
