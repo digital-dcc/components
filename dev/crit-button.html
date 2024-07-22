@@ -14,6 +14,15 @@
       .wrapper {
         font-size: 10px;
       }
+      :root,
+      :host {
+        --main-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--main-font);
+      }
     </style>
   </head>
   <body>
@@ -25,19 +34,40 @@
       </div>
       <div>
         <h2>Warrior level 1 with lucky sign</h2>
-        <crit-button class="warrior" level="1" luck="13" lucky-sign="Warrior's arm: critical hit tables"></crit-button>
+        <crit-button
+          class="warrior"
+          level="1"
+          luck="13"
+          lucky-sign="Warrior's arm: critical hit tables"
+        ></crit-button>
       </div>
       <div>
         <h2>Warrior level 10 with lucky sign</h2>
-        <crit-button class="warrior" level="10" luck="13" lucky-sign="warriors-arm"></crit-button>
+        <crit-button
+          class="warrior"
+          level="10"
+          luck="13"
+          lucky-sign="warriors-arm"
+        ></crit-button>
       </div>
       <div>
         <h2>Warrior level 1 with lucky sign and die override</h2>
-        <crit-button class="warrior" level="10" luck="13" lucky-sign="warriors-arm" die-override="24"></crit-button>
+        <crit-button
+          class="warrior"
+          level="10"
+          luck="13"
+          lucky-sign="warriors-arm"
+          die-override="24"
+        ></crit-button>
       </div>
       <div>
         <h2>Thief level 10 gets a modifier</h2>
-        <crit-button class="thief" level="10" luck="12" lucky-sign="nothing important"></crit-button>
+        <crit-button
+          class="thief"
+          level="10"
+          luck="12"
+          lucky-sign="nothing important"
+        ></crit-button>
       </div>
     </div>
   </body>

@@ -14,6 +14,15 @@
       .wrapper {
         font-size: 10px;
       }
+      :root,
+      :host {
+        --main-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--main-font);
+      }
     </style>
   </head>
   <body>
@@ -124,7 +133,7 @@
         <fumble-button
           armor="Hide"
           luck="18"
-					lucky-sign="The Broken Star"
+          lucky-sign="The Broken Star"
         ></fumble-button>
       </div>
     </div>
