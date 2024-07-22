@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;untrained-input> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/untrained-input/untrained-input.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 10px;
+      }
+      :root,
+      :host {
+        --main-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--main-font);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <div>
+        <h2>Untrained Input default</h2>
+        <untrained-input></untrained-input>
+      </div>
+      <div>
+        <h2>Untrained Input - checked</h2>
+        <untrained-input checked></untrained-input>
+      </div>
+      <div>
+        <h2>
+          Untrained input with change handler
+        </h2>
+        <untrained-input id="one"></untrained-input>
+        <script>
+          const cp = document.querySelector('#one');
+          cp.addEventListener('change', (event) => {
+            console.log(event.detail);
+          });
+        </script>
+      </div>
+    </div>
+  </body>
+</html>
