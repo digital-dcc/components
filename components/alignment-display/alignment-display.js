@@ -41,24 +41,14 @@ export class AlignmentDisplay extends LitElement {
     this.alignment = null;
   }
 
-	get icon() {
-		if (this.alignment === 'law') {
-			return html`placeholder law`;
-		}
-		if (this.alignment === 'neutrality') {
-			return html`placeholder neutrality`;
-		}
-		if (this.alignment === 'chaos') {
-			return html`placeholder chaos`;
-		}
-		return ``;
+	get alignmentText() {
+		return this.alignment.charAt(0).toUpperCase() + this.alignment.slice(1);
 	}
 
   render() {
     return html`
       <div part="wrapper" class="wrapper">
-        <div class="alignment-icon" part="alignment-icon">${this.icon}</div>
-        <h1 class="alignment-name" part="alignment-name">${this.alignment}</h1>
+        <h1 class="alignment-name" part="alignment-name">${this.alignmentText}</h1>
       </div>
     `;
   }
