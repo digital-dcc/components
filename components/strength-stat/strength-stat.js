@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import '@digital-dcc/stat-display';
+import '../stat-display/stat-display.js';
 
 class DiceRoll {
   name;
@@ -50,14 +50,12 @@ export class StrengthStat extends LitElement {
   render() {
 		let modifier = this.modifierFor(this.strength);
 		modifier = modifier + this.checkPenalty;
-		console.log(modifier)
     return html`
       <stat-display
         name="Str"
-        modifier="${modifier >= 0 ? "+" : ""}"
-        value="${modifier}"
+        value="${modifier >= 0 ? `+${modifier}` : modifier}"
 				base="${this.strength}"
-        clickable
+        value-clickable
         @value-clicked="${this.onClick}"
       ></stat-display>
     `;

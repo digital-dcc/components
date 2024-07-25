@@ -13,8 +13,20 @@ export class UntrainedInput extends LitElement {
         display: flex;
         justify-content: space-between;
         min-height: 25px;
-        font-family: var(--main-font, 'Arial', sans-serif);
-        font-size: 1em;
+        font-family: var(
+          --primary-font,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif,
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+          'Segoe UI Symbol'
+        );
+        font-size: 1rem;
         align-items: center;
         padding: 0px 10px;
       }

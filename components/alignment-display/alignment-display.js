@@ -13,8 +13,20 @@ export class AlignmentDisplay extends LitElement {
         display: flex;
 				flex-direction: column;
         min-height: 25px;
-        font-family: var(--main-font, 'Arial', sans-serif);
-        font-size: 1em;
+        font-family: var(
+          --primary-font,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif,
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+          'Segoe UI Symbol'
+        );
+        font-size: 1rem;
 				align-items: center;
 				min-width: fit-content;
 				max-width: 120px;

@@ -13,10 +13,20 @@
 				flex-direction: column;
 				gap: 10px;
 			}
+			:root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
 		</style>
   </head>
   <body>
 		<div class="wrapper">
+			<a href="/">back</a>
 			<stat-display name="HP" value="4"></stat-display>
 			<stat-display name="AC" value="13"></stat-display>
 			<stat-display name="Init" value="+0" value-clickable></stat-display>

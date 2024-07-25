@@ -6,8 +6,20 @@ export class StatDisplay extends LitElement {
       :host {
         display: block;
         padding: 0px;
-        font-family: var(--main-font, 'Arial', sans-serif);
-        font-size: 1em;
+        font-family: var(
+          --primary-font,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif,
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+          'Segoe UI Symbol'
+        );
+        font-size: 1rem;
       }
       .wrapper {
         position: relative;
@@ -24,7 +36,7 @@ export class StatDisplay extends LitElement {
       h1 {
         margin: 0 auto;
         width: max-content;
-        font-size: 1em;
+        font-size: 1rem;
         flex: 0.6;
       }
 			button {
@@ -36,7 +48,7 @@ export class StatDisplay extends LitElement {
 			}
       button.value-button {
         flex: 1.4;
-        font-size: 1.7em;
+        font-size: 1.7rem;
 				border-radius: 5px 5px 0 0;
       }
       button.with-base {

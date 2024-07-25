@@ -26,7 +26,7 @@ export class AdjustmentInput extends LitElement {
         justify-content: space-between;
         min-height: 25px;
         font-family: var(--main-font, 'Arial', sans-serif);
-        font-size: 1em;
+        font-size: 1rem;
       }
       .value {
         align-content: center;

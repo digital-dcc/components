@@ -47,8 +47,20 @@ export class BirthAugur extends LitElement {
 				flex-direction: column;
         justify-content: space-between;
         min-height: 25px;
-        font-family: var(--main-font, 'Arial', sans-serif);
-        font-size: 1em;
+        font-family: var(
+          --primary-font,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif,
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+          'Segoe UI Symbol'
+        );
+        font-size: 1rem;
         align-items: center;
         padding: 5px 10px 0px 10px;
 				min-width: fit-content;
@@ -59,7 +71,7 @@ export class BirthAugur extends LitElement {
 				padding: 0;
 			}
 			h1 {
-				font-size: 1.2em;
+				font-size: 1.2rem;
 			}
     `;
   }
