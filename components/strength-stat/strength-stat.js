@@ -1,4 +1,6 @@
 import {LitElement, html, css} from 'lit';
+import {modifierFor} from '../../utilities/modifier-for.js';
+import {diceChain} from '../../utilities/dice-chain.js';
 import '../stat-display/stat-display.js';
 
 class DiceRoll {
@@ -8,6 +10,8 @@ class DiceRoll {
   die;
   modifier;
   checkPenalty;
+  dieAdjustment;
+  modifierAdjustment;
 }
 
 /**
@@ -30,8 +34,10 @@ export class StrengthStat extends LitElement {
   static get properties() {
     return {
       strength: {type: Number},
-      adjustment: {type: Number},
-      override: {type: Number},
+      dieAdjustment: {attribute: 'die-adjustment', type: Number},
+      modifierAdjustment: {attribute: 'modifier-adjustment', type: Number},
+      dieOverride: {attribute: 'die-override', type: Number},
+      modifierOverride: {attribute: 'modifier-override', type: Number},
       checkPenalty: {attribute: 'check-penalty', type: Number},
     };
   }
@@ -39,18 +45,33 @@ export class StrengthStat extends LitElement {
   constructor() {
     super();
     this.strength = null;
-    this.adjustment = 0;
-    this.override = null;
+    this.dieAdjustment = 0;
+    this.dieOverride = null;
+    this.modifierAdjustment = 0;
+    this.modifierOverride = null;
     this.checkPenalty = 0;
   }
 
+  get die() {
+    if (this.dieOverride) return this.dieOverride;
+    // adjust the die up or down the dice chain
+    const die = diceChain[diceChain.indexOf('d20') + this.dieAdjustment];
+    // ensure adjustment doesnt take the index out of bounds
+    if (!die) return 20;
+    return Number(die.split('d')[1]);
+  }
+
+  get modifier() {
+    if (this.modifierOverride) return this.modifierOverride;
+    const modifier = modifierFor(this.strength);
+    return modifier + this.modifierAdjustment + this.checkPenalty;
+  }
+
   render() {
-    let modifier = this.modifierFor(this.strength);
-    modifier = modifier + this.checkPenalty;
     return html`
       <stat-display
         name="Str"
-        value="${modifier >= 0 ? `+${modifier}` : modifier}"
+        value="${this.formatModifier(this.modifier)}"
         base="${this.strength}"
         value-clickable
         @value-clicked="${this.onClick}"
@@ -68,8 +89,10 @@ export class StrengthStat extends LitElement {
     roll.name = 'Strength Roll';
     roll.description = 'A strength roll was made';
     roll.multiplier = 1;
-    roll.die = 20;
-    roll.modifier = this.modifierFor(this.strength);
+    roll.die = this.die;
+    roll.modifier = this.modifier;
+    roll.dieAdjustment = this.dieAdjustment;
+    roll.modifierAdjustment = this.modifierAdjustment;
     roll.checkPenalty = this.checkPenalty;
 
     this.dispatchEvent(
@@ -77,17 +100,6 @@ export class StrengthStat extends LitElement {
         detail: roll,
       })
     );
-  }
-
-  modifierFor(stat) {
-    if (stat <= 3) return -3;
-    if (stat >= 4 && stat <= 5) return -2;
-    if (stat >= 6 && stat <= 8) return -1;
-    if (stat >= 9 && stat <= 12) return 0;
-    if (stat >= 13 && stat <= 15) return +1;
-    if (stat >= 16 && stat <= 17) return +2;
-    if (stat >= 18) return +3;
-    return 0;
   }
 }
 
