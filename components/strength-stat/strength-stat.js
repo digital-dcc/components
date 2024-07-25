@@ -4,13 +4,10 @@ import '../stat-display/stat-display.js';
 class DiceRoll {
   name;
   description;
-  armor;
-  shield;
-  luck;
-  luckySign;
   multiplier;
   die;
   modifier;
+  checkPenalty;
 }
 
 /**
@@ -42,52 +39,24 @@ export class StrengthStat extends LitElement {
   constructor() {
     super();
     this.strength = null;
-		this.adjustment = 0;
-		this.override = null;
-		this.checkPenalty = 0;
+    this.adjustment = 0;
+    this.override = null;
+    this.checkPenalty = 0;
   }
 
   render() {
-		let modifier = this.modifierFor(this.strength);
-		modifier = modifier + this.checkPenalty;
+    let modifier = this.modifierFor(this.strength);
+    modifier = modifier + this.checkPenalty;
     return html`
       <stat-display
         name="Str"
         value="${modifier >= 0 ? `+${modifier}` : modifier}"
-				base="${this.strength}"
+        base="${this.strength}"
         value-clickable
         @value-clicked="${this.onClick}"
       ></stat-display>
     `;
   }
-
-  // get luckySignSlug() {
-  //   if (
-  //     this.luckySign &&
-  //     this.luckySign
-  //       .toLowerCase()
-  //       .replaceAll(' ', '-')
-  //       .replace(/['´]/g, '')
-  //       .startsWith('the-broken-star')
-  //   ) {
-  //     return 'the-broken-star';
-  //   }
-  //   return '';
-  // }
-
-  
-
-  // get modifier() {
-  //   // inverse luck affects fumbles
-  //   let mod = this.modifierFor(this.luck) * -1;
-
-  //   // The broken star lucky sign, doubles the luck modifier effect on fumbles
-  //   if (this.luckySignSlug === 'the-broken-star') {
-  //     mod = mod * 2;
-  //   }
-  //   if (this.modifierOverride) mod = Number(this.modifierOverride);
-  //   return mod;
-  // }
 
   formatModifier(mod) {
     if (mod < 0) return String(mod);
@@ -96,15 +65,12 @@ export class StrengthStat extends LitElement {
 
   onClick() {
     const roll = new DiceRoll();
-    roll.name = 'Fumble Roll';
-    roll.description = 'A fumble roll was made';
-    // roll.armor = this.armor;
-    // roll.luck = this.luck;
-    // roll.luckySign = this.luckySignSlug;
-    // roll.shield = this.shield;
-    // roll.multiplier = 1;
-    // roll.die = fumbleDie.get(this.armor) || 4;
-    // roll.modifier = this.modifier;
+    roll.name = 'Strength Roll';
+    roll.description = 'A strength roll was made';
+    roll.multiplier = 1;
+    roll.die = 20;
+    roll.modifier = this.modifierFor(this.strength);
+    roll.checkPenalty = this.checkPenalty;
 
     this.dispatchEvent(
       new CustomEvent('strength-roll', {

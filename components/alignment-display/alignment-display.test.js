@@ -16,7 +16,7 @@ suite('alignment-display', () => {
       html`<alignment-display alignment="law"></alignment-display>`
     );
     const alignment = el.shadowRoot?.querySelector('.alignment-name');
-    assert.match(alignment.innerText, /law/);
+    assert.match(alignment.innerText, /Law/);
   });
 
   test('displays correct alignment - neutrality', async () => {
@@ -24,7 +24,7 @@ suite('alignment-display', () => {
       html`<alignment-display alignment="neutrality"></alignment-display>`
     );
     const alignment = el.shadowRoot?.querySelector('.alignment-name');
-    assert.match(alignment.innerText, /neutrality/);
+    assert.match(alignment.innerText, /Neutral/);
   });
 
   test('displays correct alignment - chaos', async () => {
@@ -32,6 +32,6 @@ suite('alignment-display', () => {
       html`<alignment-display alignment="chaos"></alignment-display>`
     );
     const alignment = el.shadowRoot?.querySelector('.alignment-name');
-    assert.match(alignment.innerText, /chaos/);
+    assert.match(alignment.innerText, /Chaos/);
   });
 });

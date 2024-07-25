@@ -5,14 +5,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-import {FumbleButton} from './fumble-button.js';
+import {StrengthStat} from './strength-stat.js';
 import {fixture, assert} from '@open-wc/testing';
 import {html} from 'lit/static-html.js';
 
-suite('fumble-button', () => {
+suite('strength-stat', () => {
   test('is defined', () => {
-    const el = document.createElement('fumble-button');
-    assert.instanceOf(el, FumbleButton);
+    const el = document.createElement('strength-stat');
+    assert.instanceOf(el, StrengthStat);
   });
 
   test('handles a click', async () => {
@@ -21,13 +21,10 @@ suite('fumble-button', () => {
       event = e;
     };
     const el = await fixture(
-      html`<fumble-button
-        class="warrior"
-        level="10"
-        luck="7"
-        lucky-sign="The Broken Star"
-        @fumble-roll="${roll}"
-      ></fumble-button>`
+      html`<strength-stat
+        strength="17"
+        @strength-roll="${roll}"
+      ></strength-stat>`
     );
     const button = el?.shadowRoot
       ?.querySelector('stat-display')
@@ -36,15 +33,12 @@ suite('fumble-button', () => {
     await el.updateComplete;
 
     assert.deepEqual(event.detail, {
-      name: 'Fumble Roll',
-      description: 'A fumble roll was made',
-			armor: "Unarmored",
-      luck: 7,
+      name: 'Strength Roll',
+      description: 'A strength roll was made',
       multiplier: 1,
-      die: 4,
+      die: 20,
       modifier: 2,
-      shield: false,
-      luckySign: 'the-broken-star',
+      checkPenalty: 0,
     });
   });
 });

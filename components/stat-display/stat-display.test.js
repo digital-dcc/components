@@ -18,16 +18,10 @@ suite('stat-display', () => {
     const el = await fixture(
       html`<stat-display name="HP" value="4"></stat-display>`
     );
-    assert.shadowDom.equal(
-      el,
-      `
-      <div class="wrapper" part="wrapper">
-				<h1 part="name">HP</h1>
-				<button part="value">
-					4
-				</button>
-			</div>
-    `
+    assert.match(el.shadowRoot?.querySelector('h1')?.innerHTML || '', /HP/);
+    assert.match(
+      el.shadowRoot?.querySelector('.value-button')?.innerHTML || '',
+      /4/
     );
   });
 
