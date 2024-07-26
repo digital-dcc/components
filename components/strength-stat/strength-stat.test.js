@@ -41,6 +41,7 @@ suite('strength-stat', () => {
       modifierAdjustment: 0,
       modifier: 2,
       checkPenalty: 0,
+      strength: 17,
     });
   });
   test('handles click - die adjustment', async () => {
@@ -70,6 +71,7 @@ suite('strength-stat', () => {
       modifierAdjustment: 0,
       modifier: 2,
       checkPenalty: 0,
+      strength: 17,
     });
   });
 });

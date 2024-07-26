@@ -38,7 +38,18 @@
       </div>
       <div>
         <h2>Strength=17 die-adjustment="+2"</h2>
-        <strength-stat strength="17" die-adjustment="+2"></strength-stat>
+        <strength-stat
+          id="str-1"
+          strength="17"
+          die-adjustment="+2"
+        ></strength-stat>
+        <script type="module">
+          document
+            .querySelector('#str-1')
+            .addEventListener('strength-roll', (event) => {
+              console.log(event.detail);
+            });
+        </script>
       </div>
       <div>
         <h2>Strength=17 modifier-adjustment="+2"</h2>

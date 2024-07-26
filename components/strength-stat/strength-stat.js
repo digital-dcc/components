@@ -12,6 +12,7 @@ class DiceRoll {
   checkPenalty;
   dieAdjustment;
   modifierAdjustment;
+  strength;
 }
 
 /**
@@ -94,6 +95,7 @@ export class StrengthStat extends LitElement {
     roll.dieAdjustment = this.dieAdjustment;
     roll.modifierAdjustment = this.modifierAdjustment;
     roll.checkPenalty = this.checkPenalty;
+    roll.strength = this.strength;
 
     this.dispatchEvent(
       new CustomEvent('strength-roll', {
