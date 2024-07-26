@@ -13,6 +13,7 @@ class DiceRoll {
   checkPenalty;
   dieAdjustment;
   modifierAdjustment;
+  maxStrength;
   strength;
   luck;
   applyCheckPenalty;
@@ -38,6 +39,7 @@ export class StrengthStat extends LitElement {
 
   static get properties() {
     return {
+      maxStrength: {attribute: 'max-strength', type: Number},
       strength: {type: Number},
       luck: {type: Number},
       dieAdjustment: {attribute: 'die-adjustment', type: Number},
@@ -53,6 +55,7 @@ export class StrengthStat extends LitElement {
 
   constructor() {
     super();
+    this.maxStrength = null;
     this.strength = null;
     this.luck = null;
     this.dieAdjustment = 0;
@@ -76,7 +79,7 @@ export class StrengthStat extends LitElement {
 
   get modifier() {
     if (this.modifierOverride) return this.modifierOverride;
-    let mod = modifierFor(this.strength);
+    let mod = modifierFor(this.strength || this.maxStrength);
     mod = mod + this.modifierAdjustment;
     if (this.applyCheckPenalty) mod = mod + this.checkPenalty;
     if (this.applyLuckModifier) mod = mod + modifierFor(this.luck);
@@ -89,12 +92,19 @@ export class StrengthStat extends LitElement {
     return penalty;
   }
 
+  get displayStrength() {
+    if (this.maxStrength === this.strength || this.strength === null) {
+      return this.maxStrength;
+    }
+    return `${this.strength}/${this.maxStrength}`;
+  }
+
   render() {
     return html`
       <stat-display
         name="Str"
         value="${this.formatModifier(this.modifier)}"
-        base="${this.strength}"
+        base="${this.displayStrength}"
         value-clickable
         @value-clicked="${this.onClick}"
       ></stat-display>
@@ -116,6 +126,7 @@ export class StrengthStat extends LitElement {
     roll.dieAdjustment = this.dieAdjustment;
     roll.modifierAdjustment = this.modifierAdjustment;
     roll.checkPenalty = this.checkPenalty;
+    roll.maxStrength = this.maxStrength;
     roll.strength = this.strength;
     roll.luck = this.luck;
     roll.applyLuckModifier = this.applyLuckModifier;

@@ -23,6 +23,7 @@ suite('strength-stat', () => {
     const el = await fixture(
       html`<strength-stat
         strength="17"
+        max-strength="17"
         @strength-roll="${roll}"
       ></strength-stat>`
     );
@@ -43,6 +44,7 @@ suite('strength-stat', () => {
       modifierAdjustment: 0,
       modifier: 2,
       checkPenalty: 0,
+      maxStrength: 17,
       strength: 17,
       luck: null,
     });
@@ -54,7 +56,7 @@ suite('strength-stat', () => {
     };
     const el = await fixture(
       html`<strength-stat
-        strength="17"
+        max-strength="17"
         die-adjustment="+2"
         @strength-roll="${roll}"
       ></strength-stat>`
@@ -77,7 +79,8 @@ suite('strength-stat', () => {
       modifierAdjustment: 0,
       modifier: 2,
       checkPenalty: 0,
-      strength: 17,
+      maxStrength: 17,
+      strength: null,
     });
   });
 });

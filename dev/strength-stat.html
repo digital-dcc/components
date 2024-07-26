@@ -30,14 +30,14 @@
     <div class="wrapper">
       <div>
         <h2>Strength=17</h2>
-        <strength-stat strength="17"></strength-stat>
+        <strength-stat max-strength="17"></strength-stat>
       </div>
       <div>
         <h2>
           Strength=17 armor="chainmail" apply-check-penalty - should be -3
         </h2>
         <strength-stat
-          strength="17"
+          max-strength="17"
           armor="chainmail"
           apply-check-penalty
         ></strength-stat>
@@ -45,7 +45,7 @@
       <div>
         <h2>Strength=17 luck="17" apply-luck-modifier - should be +4</h2>
         <strength-stat
-          strength="17"
+          max-strength="17"
           luck="17"
           apply-luck-modifier
         ></strength-stat>
@@ -54,7 +54,7 @@
         <h2>Strength=17 die-adjustment="+2"</h2>
         <strength-stat
           id="str-1"
-          strength="17"
+          max-strength="17"
           die-adjustment="+2"
         ></strength-stat>
         <script type="module">
@@ -67,7 +67,14 @@
       </div>
       <div>
         <h2>Strength=17 modifier-adjustment="+2"</h2>
-        <strength-stat strength="17" modifier-adjustment="+2"></strength-stat>
+        <strength-stat
+          max-strength="17"
+          modifier-adjustment="+2"
+        ></strength-stat>
+      </div>
+      <div>
+        <h2>Strength 13 depleted to 3</h2>
+        <strength-stat max-strength="13" strength="3"></strength-stat>
       </div>
     </div>
   </body>
