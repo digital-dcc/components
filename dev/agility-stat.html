@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;agility-stat> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/agility-stat/agility-stat.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <div>
+        <h2>agility=17</h2>
+        <agility-stat max-agility="17"></agility-stat>
+      </div>
+      <div>
+        <h2>agility=17 armor="chainmail" apply-check-penalty - should be -3</h2>
+        <agility-stat
+          max-agility="17"
+          armor="chainmail"
+          apply-check-penalty
+        ></agility-stat>
+      </div>
+      <div>
+        <h2>agility=17 luck="17" apply-luck-modifier - should be +4</h2>
+        <agility-stat
+          max-agility="17"
+          luck="17"
+          apply-luck-modifier
+        ></agility-stat>
+      </div>
+      <div>
+        <h2>agility=17 die-adjustment="+2"</h2>
+        <agility-stat
+          id="int-1"
+          max-agility="17"
+          die-adjustment="+2"
+        ></agility-stat>
+        <script type="module">
+          document
+            .querySelector('#int-1')
+            .addEventListener('agility-roll', (event) => {
+              console.log(event.detail);
+            });
+        </script>
+      </div>
+      <div>
+        <h2>agility=17 modifier-adjustment="+2"</h2>
+        <agility-stat max-agility="17" modifier-adjustment="+2"></agility-stat>
+      </div>
+      <div>
+        <h2>agility 13 depleted to 3</h2>
+        <agility-stat max-agility="13" agility="3"></agility-stat>
+      </div>
+    </div>
+  </body>
+</html>
