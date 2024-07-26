@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;armor-class> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/armor-class/armor-class.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div>
+        <h2>agility="3" armor="Padded"</h2>
+        <armor-class agility="3" armor="Padded"></armor-class>
+      </div>
+      <div>
+        <h2>agility="4" armor="Leather"</h2>
+        <armor-class agility="4" armor="Leather"></armor-class>
+      </div>
+      <div>
+        <h2>agility="9" armor="Studded leather"</h2>
+        <armor-class agility="9" armor="Studded leather"></armor-class>
+      </div>
+      <div>
+        <h2>agility="10" armor="Hide"</h2>
+        <armor-class agility="10" armor="Hide"></armor-class>
+      </div>
+      <div>
+        <h2>agility="13" armor="Scale mail" shield</h2>
+        <armor-class agility="13" armor="Scale mail" shield></armor-class>
+      </div>
+      <div>
+        <h2>agility="13" armor="Banded mail" shield</h2>
+        <armor-class agility="13" armor="Banded mail" shield></armor-class>
+      </div>
+      <div>
+        <h2>agility="13" armor="Half-plate" shield</h2>
+        <armor-class agility="13" armor="Half-plate" shield></armor-class>
+      </div>
+      <div>
+        <h2>agility="13" armor="Half-plate" shield</h2>
+        <armor-class agility="16" armor="Chainmail" shield></armor-class>
+      </div>
+      <div>
+        <h2>agility="18" armor="Full plate" shield adjustment="+1"</h2>
+        <armor-class
+          agility="18"
+          adjustment="+1"
+          armor="Full plate"
+          shield
+        ></armor-class>
+      </div>
+      <div>
+        <h2>
+          agility="18" armor="Full plate" shield adjustment="+1" override="13"
+        </h2>
+        <armor-class
+          agility="18"
+          adjustment="+1"
+          armor="Full plate"
+          shield
+          override="13"
+        ></armor-class>
+      </div>
+    </div>
+  </body>
+</html>
