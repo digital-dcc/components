@@ -133,7 +133,7 @@ export class StrengthStat extends LitElement {
     roll.applyCheckPenalty = this.applyCheckPenalty;
 
     this.dispatchEvent(
-      new CustomEvent('strength-roll', {
+      new CustomEvent('strength-skill-check', {
         detail: roll,
       })
     );

@@ -24,7 +24,7 @@ suite('stamina-stat', () => {
       html`<stamina-stat
         stamina="17"
         max-stamina="17"
-        @stamina-roll="${roll}"
+        @stamina-skill-check="${roll}"
       ></stamina-stat>`
     );
     const button = el?.shadowRoot
@@ -58,7 +58,7 @@ suite('stamina-stat', () => {
       html`<stamina-stat
         max-stamina="17"
         die-adjustment="+2"
-        @stamina-roll="${roll}"
+        @stamina-skill-check="${roll}"
       ></stamina-stat>`
     );
     const button = el?.shadowRoot

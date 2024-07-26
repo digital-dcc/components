@@ -133,7 +133,7 @@ export class AgilityStat extends LitElement {
     roll.applyCheckPenalty = this.applyCheckPenalty;
 
     this.dispatchEvent(
-      new CustomEvent('agility-roll', {
+      new CustomEvent('agility-skill-check', {
         detail: roll,
       })
     );

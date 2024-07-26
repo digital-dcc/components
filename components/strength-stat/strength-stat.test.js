@@ -24,7 +24,7 @@ suite('strength-stat', () => {
       html`<strength-stat
         strength="17"
         max-strength="17"
-        @strength-roll="${roll}"
+        @strength-skill-check="${roll}"
       ></strength-stat>`
     );
     const button = el?.shadowRoot
@@ -58,7 +58,7 @@ suite('strength-stat', () => {
       html`<strength-stat
         max-strength="17"
         die-adjustment="+2"
-        @strength-roll="${roll}"
+        @strength-skill-check="${roll}"
       ></strength-stat>`
     );
     const button = el?.shadowRoot

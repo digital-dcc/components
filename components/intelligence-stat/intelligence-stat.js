@@ -136,7 +136,7 @@ export class IntelligenceStat extends LitElement {
     roll.applyCheckPenalty = this.applyCheckPenalty;
 
     this.dispatchEvent(
-      new CustomEvent('intelligence-roll', {
+      new CustomEvent('intelligence-skill-check', {
         detail: roll,
       })
     );

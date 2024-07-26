@@ -24,7 +24,7 @@ suite('intelligence-stat', () => {
       html`<intelligence-stat
         intelligence="17"
         max-intelligence="17"
-        @intelligence-roll="${roll}"
+        @intelligence-skill-check="${roll}"
       ></intelligence-stat>`
     );
     const button = el?.shadowRoot
@@ -58,7 +58,7 @@ suite('intelligence-stat', () => {
       html`<intelligence-stat
         max-intelligence="17"
         die-adjustment="+2"
-        @intelligence-roll="${roll}"
+        @intelligence-skill-check="${roll}"
       ></intelligence-stat>`
     );
     const button = el?.shadowRoot

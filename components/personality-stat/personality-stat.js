@@ -133,7 +133,7 @@ export class PersonalityStat extends LitElement {
     roll.applyCheckPenalty = this.applyCheckPenalty;
 
     this.dispatchEvent(
-      new CustomEvent('personality-roll', {
+      new CustomEvent('personality-skill-check', {
         detail: roll,
       })
     );

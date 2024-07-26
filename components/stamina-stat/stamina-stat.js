@@ -133,7 +133,7 @@ export class StaminaStat extends LitElement {
     roll.applyCheckPenalty = this.applyCheckPenalty;
 
     this.dispatchEvent(
-      new CustomEvent('stamina-roll', {
+      new CustomEvent('stamina-skill-check', {
         detail: roll,
       })
     );

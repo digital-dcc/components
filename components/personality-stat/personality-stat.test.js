@@ -24,7 +24,7 @@ suite('personality-stat', () => {
       html`<personality-stat
         personality="17"
         max-personality="17"
-        @personality-roll="${roll}"
+        @personality-skill-check="${roll}"
       ></personality-stat>`
     );
     const button = el?.shadowRoot
@@ -58,7 +58,7 @@ suite('personality-stat', () => {
       html`<personality-stat
         max-personality="17"
         die-adjustment="+2"
-        @personality-roll="${roll}"
+        @personality-skill-check="${roll}"
       ></personality-stat>`
     );
     const button = el?.shadowRoot

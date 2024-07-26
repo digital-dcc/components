@@ -24,7 +24,7 @@ suite('agility-stat', () => {
       html`<agility-stat
         agility="17"
         max-agility="17"
-        @agility-roll="${roll}"
+        @agility-skill-check="${roll}"
       ></agility-stat>`
     );
     const button = el?.shadowRoot
@@ -58,7 +58,7 @@ suite('agility-stat', () => {
       html`<agility-stat
         max-agility="17"
         die-adjustment="+2"
-        @agility-roll="${roll}"
+        @agility-skill-check="${roll}"
       ></agility-stat>`
     );
     const button = el?.shadowRoot
