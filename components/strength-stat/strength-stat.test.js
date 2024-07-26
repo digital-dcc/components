@@ -33,6 +33,8 @@ suite('strength-stat', () => {
     await el.updateComplete;
 
     assert.deepEqual(event.detail, {
+      applyCheckPenalty: false,
+      applyLuckModifier: false,
       name: 'Strength Roll',
       description: 'A strength roll was made',
       multiplier: 1,
@@ -42,6 +44,7 @@ suite('strength-stat', () => {
       modifier: 2,
       checkPenalty: 0,
       strength: 17,
+      luck: null,
     });
   });
   test('handles click - die adjustment', async () => {
@@ -63,6 +66,9 @@ suite('strength-stat', () => {
     await el.updateComplete;
 
     assert.deepEqual(event.detail, {
+      applyCheckPenalty: false,
+      applyLuckModifier: false,
+      luck: null,
       name: 'Strength Roll',
       description: 'A strength roll was made',
       multiplier: 1,

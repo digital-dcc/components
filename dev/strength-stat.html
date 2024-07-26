@@ -33,8 +33,22 @@
         <strength-stat strength="17"></strength-stat>
       </div>
       <div>
-        <h2>Strength=17 check-penalty="-6"</h2>
-        <strength-stat strength="17" check-penalty="-6"></strength-stat>
+        <h2>
+          Strength=17 armor="chainmail" apply-check-penalty - should be -3
+        </h2>
+        <strength-stat
+          strength="17"
+          armor="chainmail"
+          apply-check-penalty
+        ></strength-stat>
+      </div>
+      <div>
+        <h2>Strength=17 luck="17" apply-luck-modifier - should be +4</h2>
+        <strength-stat
+          strength="17"
+          luck="17"
+          apply-luck-modifier
+        ></strength-stat>
       </div>
       <div>
         <h2>Strength=17 die-adjustment="+2"</h2>
