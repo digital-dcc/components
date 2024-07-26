@@ -1,18 +1,5 @@
 import {LitElement, html, css} from 'lit';
-
-const armor = new Map([
-  ['', 0],
-  ['unarmored', 0],
-  ['padded', 0],
-  ['leather', -1],
-  ['studded-leather', -2],
-  ['hide', -3],
-  ['scale-mail', -4],
-  ['chainmail', -5],
-  ['banded-mail', -6],
-  ['half-plate', -7],
-  ['full-plate', -8],
-]);
+import {armor, armorSlug} from '../../utilities/armor.js';
 
 export class CheckPenalty extends LitElement {
   static get styles() {
@@ -72,11 +59,7 @@ export class CheckPenalty extends LitElement {
   }
 
   get checkPenalty() {
-    const armorSlug = (this.armor || '')
-      .replace(/[()]/g, '')
-      .replace(/[\s]/g, '-')
-      .toLowerCase();
-    let penalty = armor.get(armorSlug) || 0;
+    let penalty = armor.get(armorSlug(this.armor || ''))?.checkPenalty || 0;
     if (this.shield) penalty = penalty - 1;
     return penalty;
   }
