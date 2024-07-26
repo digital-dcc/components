@@ -39,30 +39,29 @@ export class StatDisplay extends LitElement {
         font-size: 1rem;
         flex: 0.6;
       }
-			button {
-				margin: 0 auto;
-				display: block;
-				border: 0;
-				background-color: unset;
-				width: 100%;
-			}
+      button {
+        margin: 0 auto;
+        display: block;
+        border: 0;
+        background-color: unset;
+        width: 100%;
+      }
       button.value-button {
         flex: 1.4;
         font-size: 1.7rem;
-				border-radius: 5px 5px 0 0;
+        border-radius: 5px 5px 0 0;
       }
       button.with-base {
         flex: 0;
       }
-			button.base-button {
-				border-radius: 0 0 5px 5px;	
-				padding-top: 5px; 
-				text-align: center;
-				
-			}
-			button.no-bottom-text.without-base {
-				border-radius: 5px;
-			}
+      button.base-button {
+        border-radius: 0 0 5px 5px;
+        padding-top: 5px;
+        text-align: center;
+      }
+      button.no-bottom-text.without-base {
+        border-radius: 5px;
+      }
       .clickable:hover {
         background-color: rgba(211, 211, 211, 0.5);
       }
@@ -73,11 +72,7 @@ export class StatDisplay extends LitElement {
         transform: translateY(1px);
       }
       .base {
-        
-        
         border-top: 1px black solid;
-        
-        
       }
     `;
   }
@@ -114,27 +109,30 @@ export class StatDisplay extends LitElement {
           ? html`<h1 part="name">${this.name}</h1>`
           : html``}
         <button
-          @click=${this._onClick}
+          @click=${this.onValueClicked}
           part="value"
-          class="value-button ${this.valueClickable ? 'clickable' : ''} ${this.base
+          class="value-button ${this.valueClickable ? 'clickable' : ''} ${this
+            .base
             ? 'with-base'
-            : 'without-base'} ${this.textPosition !== 'bottom' ? 'no-bottom-text' : ''}"
+            : 'without-base'} ${this.textPosition !== 'bottom'
+            ? 'no-bottom-text'
+            : ''}"
         >
           ${this.value}
         </button>
         ${this.textPosition === 'bottom'
           ? html`<h1 part="name">${this.name}</h1>`
           : html``}
-        ${this.base ? this._displayBase() : html``}
+        ${this.base ? this.displayBase() : html``}
       </div>
     `;
   }
 
-  _displayBase() {
+  displayBase() {
     return html`
       <div class="base">
         <button
-          @click=${this._onClick}
+          @click=${this.onBaseClicked}
           part="base"
           class="base-button ${this.baseClickable ? 'clickable' : ''}"
         >
@@ -144,8 +142,12 @@ export class StatDisplay extends LitElement {
     `;
   }
 
-  _onClick() {
+  onValueClicked() {
     this.dispatchEvent(new CustomEvent('value-clicked'));
+  }
+
+  onBaseClicked() {
+    this.dispatchEvent(new CustomEvent('base-clicked'));
   }
 }
 

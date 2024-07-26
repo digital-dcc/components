@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;luck-stat> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/luck-stat/luck-stat.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <div>
+        <h2>luck=17</h2>
+        <luck-stat max-luck="17"></luck-stat>
+      </div>
+      <div>
+        <h2>
+          luck=17 armor="chainmail" apply-check-penalty - should be -3
+        </h2>
+        <luck-stat
+          max-luck="17"
+          armor="chainmail"
+          apply-check-penalty
+        ></luck-stat>
+      </div>
+      <div>
+        <h2>luck=17 luck="17" apply-luck-modifier - should be +4</h2>
+        <luck-stat
+          max-luck="17"
+          luck="17"
+          apply-luck-modifier
+        ></luck-stat>
+      </div>
+      <div>
+        <h2>luck=17 die-adjustment="+2"</h2>
+        <luck-stat
+          id="int-1"
+          max-luck="17"
+          die-adjustment="+2"
+        ></luck-stat>
+        <script type="module">
+          document
+            .querySelector('#int-1')
+            .addEventListener('luck-skill-check', (event) => {
+              console.log(event.detail);
+            });
+        </script>
+      </div>
+      <div>
+        <h2>luck=17 - luck check</h2>
+        <luck-stat
+          id="int-2"
+          max-luck="17"
+        ></luck-stat>
+        <script type="module">
+          const el = document.querySelector('#int-2')
+          el.addEventListener('luck-check', (event) => {
+						console.log(event.detail);
+					});
+					el.addEventListener('luck-skill-check', (event) => {
+						console.log(event.detail);
+					});
+        </script>
+      </div>
+      <div>
+        <h2>luck=17 modifier-adjustment="+2"</h2>
+        <luck-stat
+          max-luck="17"
+          modifier-adjustment="+2"
+        ></luck-stat>
+      </div>
+      <div>
+        <h2>luck 13 depleted to 3</h2>
+        <luck-stat
+          max-luck="13"
+          luck="3"
+        ></stamina-stat>
+      </div>
+    </div>
+  </body>
+</html>
