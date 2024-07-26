@@ -13,8 +13,8 @@ class DiceRoll {
   checkPenalty;
   dieAdjustment;
   modifierAdjustment;
-  maxPersonality;
-  personality;
+  maxStamina;
+  stamina;
   luck;
   applyCheckPenalty;
   applyLuckModifier;
@@ -27,7 +27,7 @@ class DiceRoll {
  * @slot - This element has a slot
  * @csspart button - The button
  */
-export class PersonalityStat extends LitElement {
+export class StaminaStat extends LitElement {
   static get styles() {
     return css`
       :host {
@@ -39,8 +39,8 @@ export class PersonalityStat extends LitElement {
 
   static get properties() {
     return {
-      maxPersonality: {attribute: 'max-personality', type: Number},
-      personality: {type: Number},
+      maxStamina: {attribute: 'max-stamina', type: Number},
+      stamina: {type: Number},
       luck: {type: Number},
       dieAdjustment: {attribute: 'die-adjustment', type: Number},
       modifierAdjustment: {attribute: 'modifier-adjustment', type: Number},
@@ -55,8 +55,8 @@ export class PersonalityStat extends LitElement {
 
   constructor() {
     super();
-    this.maxPersonality = null;
-    this.personality = null;
+    this.maxStamina = null;
+    this.stamina = null;
     this.luck = null;
     this.dieAdjustment = 0;
     this.dieOverride = null;
@@ -79,7 +79,7 @@ export class PersonalityStat extends LitElement {
 
   get modifier() {
     if (this.modifierOverride) return this.modifierOverride;
-    let mod = modifierFor(this.personality || this.maxPersonality);
+    let mod = modifierFor(this.stamina || this.maxStamina);
     mod = mod + this.modifierAdjustment;
     if (this.applyCheckPenalty) mod = mod + this.checkPenalty;
     if (this.applyLuckModifier) mod = mod + modifierFor(this.luck);
@@ -92,19 +92,19 @@ export class PersonalityStat extends LitElement {
     return penalty;
   }
 
-  get displayPersonality() {
-    if (this.maxPersonality === this.personality || this.personality === null) {
-      return this.maxPersonality;
+  get displayStamina() {
+    if (this.maxStamina === this.stamina || this.stamina === null) {
+      return this.maxStamina;
     }
-    return `${this.personality}/${this.maxPersonality}`;
+    return `${this.stamina}/${this.maxStamina}`;
   }
 
   render() {
     return html`
       <stat-display
-        name="Per"
+        name="Sta"
         value="${this.formatModifier(this.modifier)}"
-        base="${this.displayPersonality}"
+        base="${this.displayStamina}"
         value-clickable
         @value-clicked="${this.onClick}"
       ></stat-display>
@@ -118,26 +118,26 @@ export class PersonalityStat extends LitElement {
 
   onClick() {
     const roll = new DiceRoll();
-    roll.name = 'Personality Roll';
-    roll.description = 'A personality roll was made';
+    roll.name = 'Stamina Roll';
+    roll.description = 'A stamina roll was made';
     roll.multiplier = 1;
     roll.die = this.die;
     roll.modifier = this.modifier;
     roll.dieAdjustment = this.dieAdjustment;
     roll.modifierAdjustment = this.modifierAdjustment;
     roll.checkPenalty = this.checkPenalty;
-    roll.maxPersonality = this.maxPersonality;
-    roll.personality = this.personality;
+    roll.maxStamina = this.maxStamina;
+    roll.stamina = this.stamina;
     roll.luck = this.luck;
     roll.applyLuckModifier = this.applyLuckModifier;
     roll.applyCheckPenalty = this.applyCheckPenalty;
 
     this.dispatchEvent(
-      new CustomEvent('personality-roll', {
+      new CustomEvent('stamina-roll', {
         detail: roll,
       })
     );
   }
 }
 
-window.customElements.define('personality-stat', PersonalityStat);
+window.customElements.define('stamina-stat', StaminaStat);
