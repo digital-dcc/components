@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {armor, armorSlug} from '../../utilities/armor';
 import {modifierFor} from '../../utilities/modifier-for';
-import '@digital-dcc/stat-display';
+import '../stat-display/stat-display.js';
 
 // @ts-ignore
 export class ArmorClass extends LitElement {
