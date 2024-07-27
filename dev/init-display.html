@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;init-display> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/init-display/init-display.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <h2>Warrior</h2>
+      <init-display
+        character-class="warrior"
+        character-level="1"
+      ></init-display>
+      <h2>Agility 13</h2>
+      <init-display agility="13"></init-display>
+      <h2>Level 2 Warrior with agility 13</h2>
+      <init-display
+        character-class="warrior"
+        agility="13"
+        character-level="2"
+      ></init-display>
+      <h2>
+        Level 2 Warrior with agility 13 and Speed of the Cobra birth augur
+      </h2>
+      <init-display
+        character-class="warrior"
+        agility="13"
+        character-level="2"
+        birth-augur="speed-of-the-cobra"
+        starting-luck="18"
+      ></init-display>
+      <h2>Level 3 Warrior with agility 4 and Speed of the Cobra birth augur</h2>
+      <init-display
+        character-class="warrior"
+        agility="4"
+        character-level="3"
+        birth-augur="speed-of-the-cobra"
+        starting-luck="4"
+      ></init-display>
+    </div>
+  </body>
+</html>
