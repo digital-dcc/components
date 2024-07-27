@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;experience-points> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/experience-points/experience-points.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <h2>xp="0"</h2>
+      <experience-points xp="0"></experience-points>
+      <h2>xp="4"</h2>
+      <experience-points xp="4"></experience-points>
+      <h2>xp="15"</h2>
+      <experience-points xp="15"></experience-points>
+      <h2>xp="45"</h2>
+      <experience-points xp="45"></experience-points>
+      <h2>xp="50"</h2>
+      <experience-points xp="50"></experience-points>
+      <h2>xp="111"</h2>
+      <experience-points xp="111"></experience-points>
+    </div>
+  </body>
+</html>
