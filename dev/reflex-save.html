@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;reflex-save> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/reflex-save/reflex-save.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <h2>no class, 12 agility</h2>
+      <reflex-save agility="12"></reflex-save>
+      <reflex-save agility="12" character-class="none" level="0"></reflex-save>
+      <h2>class warrior, but level 0, 13 agility</h2>
+      <reflex-save agility="13" character-class="warrior" level="0"></reflex-save>
+      <h2>class warrior, 13 agility</h2>
+      <reflex-save agility="12" character-class="warrior" level="1"></reflex-save>
+      <h2>Maxed out theif</h2>
+      <reflex-save agility="18" character-class="thief" level="10" birth-augur="lucky-sign" starting-luck="18"></reflex-save>
+      <h2>Min wizard</h2>
+      <reflex-save agility="3" character-class="wizard" level="1" birth-augur="lucky-sign" starting-luck="3"></reflex-save>
+      <h2>adjustment</h2>
+      <reflex-save id="ref1" agility="18" character-class="wizard" level="10" birth-augur="lucky-sign" starting-luck="18" adjustment="+5"></reflex-save>
+			<script type="module">
+				document.querySelector('#ref1').addEventListener('reflex-saving-throw', (e) => {
+					console.log(e.detail);
+				});
+			</script>
+      <h2>Override</h2>
+      <reflex-save agility="18" character-class="wizard" level="10" birth-augur="lucky-sign" starting-luck="18" override="+5"></reflex-save>
+    </div>
+  </body>
+</html>
