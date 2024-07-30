@@ -1,26 +1,18 @@
-# LitElement JavaScript starter
+# DCC Digital Character Sheet Custom Elements
 
-This project includes a sample component using LitElement with JavaScript.
+This repo contains a set of custom elements to build a character sheet UI for Dungeon Crawl Classics.
+See the components folder for a list of available components.
 
-This template is generated from the `lit-starter-js` package in [the main Lit
-repo](https://github.com/lit/lit). Issues and PRs for this template should be
-filed in that repo.
+## Quick start
 
-## About this release
+To take the components for a spin:
 
-This is a pre-release of Lit 3.0, the next major version of Lit.
+```
+npm install
+npm run serve
+```
 
-Lit 3.0 has very few breaking changes from Lit 2.0:
-
-- Drops support for IE11
-- Published as ES2021
-- Removes a couple of deprecated Lit 1.x APIs
-
-Lit 3.0 should require no changes to upgrade from Lit 2.0 for the vast majority of users. Once the full release is published, most apps and libraries will be able to extend their npm version ranges to include both 2.x and 3.x, like `"^2.7.0 || ^3.0.0"`.
-
-Lit 2.x and 3.0 are _interoperable_: templates, base classes, directives, decorators, etc., from one version of Lit will work with those from another.
-
-Please file any issues you find on our [issue tracker](https://github.com/lit/lit/issues).
+Then visit http://localhost:8000/
 
 ## Setup
 

@@ -1,16 +1,48 @@
 {
-  "name": "@lit/lit-starter-js",
-  "private": true,
-  "version": "2.0.1",
-  "description": "A simple web component",
+  "name": "@digital-dcc/components",
+  "private": false,
+  "version": "1.0.0",
+  "description": "DCC Character Builder Custom Element Components",
   "main": "index.js",
   "module": "index.js",
-	"exports": {
-		"./fumble-button": "./components/fumble-button/fumble-button.js",
-		"./adjustment-input": "./components/adjustment-input/adjustment-input.js",
-		"./alignment-display": "./components/alignment-display/alignment-display.js"
+	"publishConfig": {
+		"access": "public"
 	},
-  "type": "module",
+	"type": "module",
+	"keywords": [
+    "web-components",
+    "lit-element",
+    "javascript",
+    "lit"
+  ],
+  "author": "Richard Walker <digitalsadhu@gmail.com>",
+  "license": "BSD-3-Clause",
+	"exports": {
+		"./adjustment-input": "./components/adjustment-input/adjustment-input.js",
+		"./agility-stat": "./components/agility-stat/agility-stat.js",
+		"./alignment-display": "./components/alignment-display/alignment-display.js",
+		"./armor-class": "./components/armor-class/armor-class.js",
+		"./birth-augur": "./components/birth-augur/birth-augur.js",
+		"./check-penalty": "./components/check-penalty/check-penalty.js",
+		"./crit-button": "./components/crit-button/crit-button.js",
+		"./equipped-weapon": "./components/equipped-weapon/equipped-weapon.js",
+		"./experience-points": "./components/experience-points/experience-points.js",
+		"./fortitude-save": "./components/fortitude-save/fortitude-save.js",
+		"./fumble-button": "./components/fumble-button/fumble-button.js",
+		"./hit-points": "./components/hit-points/hit-points.js",
+		"./init-display": "./components/init-display/init-display.js",
+		"./intelligence-stat": "./components/intelligence-stat/intelligence-stat.js",
+		"./luck-stat": "./components/luck-stat/luck-stat.js",
+		"./personality-stat": "./components/personality-stat/personality-stat.js",
+		"./reflex-save": "./components/reflex-save/reflex-save.js",
+		"./speed-display": "./components/speed-display/speed-display.js",
+		"./stamina-stat": "./components/stamina-stat/stamina-stat.js",
+		"./stat-display": "./components/stat-display/stat-display.js",
+		"./strength-stat": "./components/strength-stat/strength-stat.js",
+		"./untrained-input": "./components/untrained-input/untrained-input.js",
+		"./weapons-panel": "./components/weapons-panel/weapons-panel.js",
+		"./willpower-save": "./components/willpower-save/willpower-save.js"
+	},
   "scripts": {
     "build": "echo \"This is not a TypeScript project, so no need to build.\"",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
@@ -35,16 +67,7 @@
     "test:prod:watch": "MODE=prod wtr --watch",
     "checksize": "rollup -c ; cat fumble-button.bundled.js | gzip -9 | wc -c ; rm fumble-button.bundled.js"
   },
-  "keywords": [
-    "web-components",
-    "lit-element",
-    "javascript",
-    "lit"
-  ],
-  "author": "Google LLC",
-  "license": "BSD-3-Clause",
   "dependencies": {
-    "@digital-dcc/stat-display": "^1.0.0",
     "lit": "^3.0.0"
   },
   "devDependencies": {
