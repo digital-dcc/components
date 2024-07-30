@@ -73,9 +73,9 @@ export class FortitudeSave extends LitElement {
 		const roll = new DiceRoll();
 		roll.roll.mod = this.fortitudeSave;
 		roll.stamina = this.stamina;
-		roll.birthAugur = slug(this.birthAugur);
+		roll.birthAugur = slug(this.birthAugur || '');
 		roll.startingLuck = this.startingLuck;
-		roll.characterClass = slug(this.characterClass);
+		roll.characterClass = slug(this.characterClass || '');
 		roll.level = this.level || 0;
 		roll.adjustment = this.adjustment || 0;
 		roll.override = !!this.override;

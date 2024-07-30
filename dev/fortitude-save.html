@@ -42,7 +42,7 @@
       <h2>adjustment</h2>
       <fortitude-save id="ref1" stamina="18" character-class="wizard" level="10" birth-augur="lucky-sign" starting-luck="18" adjustment="+5"></fortitude-save>
 			<script type="module">
-				document.querySelector('#ref1').addEventListener('reflex-saving-throw', (e) => {
+				document.querySelector('#ref1').addEventListener('fortitude-saving-throw', (e) => {
 					console.log(e.detail);
 				});
 			</script>
