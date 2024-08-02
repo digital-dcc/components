@@ -1,7 +1,8 @@
 import {LitElement, html, css} from 'lit';
 import {modifierFor} from '../../utilities/modifier-for.js';
 import {diceChain} from '../../utilities/dice-chain.js';
-import {armor, armorSlug} from '../../utilities/armor.js';
+import {checkPenaltyFor} from '../../utilities/armor.js';
+import {formatModifier} from '../../utilities/format-modifier.js';
 import '../stat-display/stat-display.js';
 
 class DiceRoll {
@@ -87,7 +88,7 @@ export class AgilityStat extends LitElement {
     ];
     let checkPenalty = 0;
     if (this.applyCheckPenalty) {
-      checkPenalty = this.checkPenalty;
+      checkPenalty = checkPenaltyFor(this.armor, this.shield);
       breakdown.push({name: 'Check Penalty', value: checkPenalty});
     }
     let luckModifier = 0;
@@ -101,12 +102,6 @@ export class AgilityStat extends LitElement {
     };
   }
 
-  get checkPenalty() {
-    let penalty = armor.get(armorSlug(this.armor || ''))?.checkPenalty || 0;
-    if (this.shield) penalty = penalty - 1;
-    return penalty;
-  }
-
   get displayAgility() {
     if (this.maxAgility === this.agility || this.agility === null) {
       return this.maxAgility;
@@ -118,17 +113,12 @@ export class AgilityStat extends LitElement {
     return html`
       <stat-display
         name="Agl"
-        value="${this.formatModifier(this.modifier.total)}"
+        value="${formatModifier(this.modifier.total)}"
         base="${this.displayAgility}"
         value-clickable
         @value-clicked="${this.onClick}"
       ></stat-display>
     `;
-  }
-
-  formatModifier(mod) {
-    if (mod < 0) return String(mod);
-    return `+${mod}`;
   }
 
   onClick() {
