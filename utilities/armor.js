@@ -12,5 +12,13 @@ export const armor = new Map([
   ['full-plate', {checkPenalty: -8, bonus: +8}],
 ]);
 
+const armorList = armor;
+
 export const armorSlug = (armor = '') =>
   armor.replace(/[()]/g, '').replace(/[\s]/g, '-').toLowerCase();
+
+export const checkPenaltyFor = (armor = 'unarmored', shield = false) => {
+  let penalty = armorList.get(armorSlug(armor || ''))?.checkPenalty || 0;
+  if (shield) penalty = penalty - 1;
+  return penalty;
+};

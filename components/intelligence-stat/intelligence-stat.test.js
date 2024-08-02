@@ -34,16 +34,25 @@ suite('intelligence-stat', () => {
     await el.updateComplete;
 
     assert.deepEqual(event.detail, {
-      applyCheckPenalty: false,
-      applyLuckModifier: false,
-      name: 'Intelligence Roll',
-      description: 'An intelligence roll was made',
-      multiplier: 1,
-      die: 20,
-      dieAdjustment: 0,
-      modifierAdjustment: 0,
-      modifier: 2,
-      checkPenalty: 0,
+      name: 'Skill Check',
+      description: 'Intelligence skill check roll',
+      roll: {
+        qty: 1,
+        die: 20,
+        modifier: {
+          breakdown: [
+            {
+              name: 'Intelligence Modifier',
+              value: 2,
+            },
+            {
+              name: 'Modifier Adjustment',
+              value: 0,
+            },
+          ],
+          total: 2,
+        },
+      },
       maxIntelligence: 17,
       intelligence: 17,
       luck: null,
@@ -68,19 +77,28 @@ suite('intelligence-stat', () => {
     await el.updateComplete;
 
     assert.deepEqual(event.detail, {
-      applyCheckPenalty: false,
-      applyLuckModifier: false,
-      luck: null,
-      name: 'Intelligence Roll',
-      description: 'An intelligence roll was made',
-      multiplier: 1,
-      die: 30,
-      dieAdjustment: 2,
-      modifierAdjustment: 0,
-      modifier: 2,
-      checkPenalty: 0,
+      name: 'Skill Check',
+      description: 'Intelligence skill check roll',
+      roll: {
+        qty: 1,
+        die: 30,
+        modifier: {
+          breakdown: [
+            {
+              name: 'Intelligence Modifier',
+              value: 2,
+            },
+            {
+              name: 'Modifier Adjustment',
+              value: 0,
+            },
+          ],
+          total: 2,
+        },
+      },
       maxIntelligence: 17,
       intelligence: null,
+      luck: null,
     });
   });
 });

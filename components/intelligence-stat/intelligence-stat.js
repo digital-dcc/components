@@ -1,23 +1,24 @@
 import {LitElement, html, css} from 'lit';
 import {modifierFor} from '../../utilities/modifier-for.js';
 import {diceChain} from '../../utilities/dice-chain.js';
-import {armor, armorSlug} from '../../utilities/armor.js';
+import {checkPenaltyFor} from '../../utilities/armor.js';
+import {formatModifier} from '../../utilities/format-modifier.js';
 import '../stat-display/stat-display.js';
 
 class DiceRoll {
   name;
   description;
-  multiplier;
-  die;
-  modifier;
-  checkPenalty;
-  dieAdjustment;
-  modifierAdjustment;
+  roll = {
+    qty: 1,
+    die: 20,
+    modifier: {
+      breakdown: [],
+      total: 0,
+    },
+  };
   maxIntelligence;
   intelligence;
   luck;
-  applyCheckPenalty;
-  applyLuckModifier;
 }
 
 /**
@@ -79,17 +80,28 @@ export class IntelligenceStat extends LitElement {
 
   get modifier() {
     if (this.modifierOverride) return this.modifierOverride;
-    let mod = modifierFor(this.intelligence || this.maxIntelligence);
-    mod = mod + this.modifierAdjustment;
-    if (this.applyCheckPenalty) mod = mod + this.checkPenalty;
-    if (this.applyLuckModifier) mod = mod + modifierFor(this.luck);
-    return mod;
-  }
-
-  get checkPenalty() {
-    let penalty = armor.get(armorSlug(this.armor || ''))?.checkPenalty || 0;
-    if (this.shield) penalty = penalty - 1;
-    return penalty;
+    const intelligenceModifier = modifierFor(
+      this.intelligence || this.maxIntelligence
+    );
+    const adjustment = this.modifierAdjustment;
+    const breakdown = [
+      {name: 'Intelligence Modifier', value: intelligenceModifier},
+      {name: 'Modifier Adjustment', value: adjustment},
+    ];
+    let checkPenalty = 0;
+    if (this.applyCheckPenalty) {
+      checkPenalty = checkPenaltyFor(this.armor, this.shield);
+      breakdown.push({name: 'Check Penalty', value: checkPenalty});
+    }
+    let luckModifier = 0;
+    if (this.applyLuckModifier) {
+      luckModifier = modifierFor(this.luck);
+      breakdown.push({name: 'Luck Modifier', value: luckModifier});
+    }
+    return {
+      breakdown,
+      total: intelligenceModifier + adjustment + checkPenalty + luckModifier,
+    };
   }
 
   get displayIntelligence() {
@@ -106,7 +118,7 @@ export class IntelligenceStat extends LitElement {
     return html`
       <stat-display
         name="Int"
-        value="${this.formatModifier(this.modifier)}"
+        value="${formatModifier(this.modifier.total)}"
         base="${this.displayIntelligence}"
         value-clickable
         @value-clicked="${this.onClick}"
@@ -114,26 +126,16 @@ export class IntelligenceStat extends LitElement {
     `;
   }
 
-  formatModifier(mod) {
-    if (mod < 0) return String(mod);
-    return `+${mod}`;
-  }
-
   onClick() {
     const roll = new DiceRoll();
-    roll.name = 'Intelligence Roll';
-    roll.description = 'An intelligence roll was made';
-    roll.multiplier = 1;
-    roll.die = this.die;
-    roll.modifier = this.modifier;
-    roll.dieAdjustment = this.dieAdjustment;
-    roll.modifierAdjustment = this.modifierAdjustment;
-    roll.checkPenalty = this.checkPenalty;
+    roll.name = 'Skill Check';
+    roll.description = 'Intelligence skill check roll';
+    roll.roll.qty = 1;
+    roll.roll.die = this.die;
+    roll.roll.modifier = this.modifier;
     roll.maxIntelligence = this.maxIntelligence;
     roll.intelligence = this.intelligence;
     roll.luck = this.luck;
-    roll.applyLuckModifier = this.applyLuckModifier;
-    roll.applyCheckPenalty = this.applyCheckPenalty;
 
     this.dispatchEvent(
       new CustomEvent('intelligence-skill-check', {
