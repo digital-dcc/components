@@ -34,16 +34,25 @@ suite('agility-stat', () => {
     await el.updateComplete;
 
     assert.deepEqual(event.detail, {
-      applyCheckPenalty: false,
-      applyLuckModifier: false,
-      name: 'Agility Roll',
-      description: 'An agility roll was made',
-      multiplier: 1,
-      die: 20,
-      dieAdjustment: 0,
-      modifierAdjustment: 0,
-      modifier: 2,
-      checkPenalty: 0,
+      name: 'Skill Check',
+      description: 'Agility skill check roll',
+      roll: {
+        qty: 1,
+        die: 20,
+        modifier: {
+          breakdown: [
+            {
+              name: 'Agility Modifier',
+              value: 2,
+            },
+            {
+              name: 'Modifier Adjustment',
+              value: 0,
+            },
+          ],
+          total: 2,
+        },
+      },
       maxAgility: 17,
       agility: 17,
       luck: null,
@@ -68,19 +77,28 @@ suite('agility-stat', () => {
     await el.updateComplete;
 
     assert.deepEqual(event.detail, {
-      applyCheckPenalty: false,
-      applyLuckModifier: false,
-      luck: null,
-      name: 'Agility Roll',
-      description: 'An agility roll was made',
-      multiplier: 1,
-      die: 30,
-      dieAdjustment: 2,
-      modifierAdjustment: 0,
-      modifier: 2,
-      checkPenalty: 0,
+      name: 'Skill Check',
+      description: 'Agility skill check roll',
+      roll: {
+        qty: 1,
+        die: 30,
+        modifier: {
+          breakdown: [
+            {
+              name: 'Agility Modifier',
+              value: 2,
+            },
+            {
+              name: 'Modifier Adjustment',
+              value: 0,
+            },
+          ],
+          total: 2,
+        },
+      },
       maxAgility: 17,
       agility: null,
+      luck: null,
     });
   });
 });

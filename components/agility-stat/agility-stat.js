@@ -7,17 +7,17 @@ import '../stat-display/stat-display.js';
 class DiceRoll {
   name;
   description;
-  multiplier;
-  die;
-  modifier;
-  checkPenalty;
-  dieAdjustment;
-  modifierAdjustment;
+  roll = {
+    qty: 1,
+    die: 20,
+    modifier: {
+      breakdown: [],
+      total: 0,
+    },
+  };
   maxAgility;
   agility;
   luck;
-  applyCheckPenalty;
-  applyLuckModifier;
 }
 
 /**
@@ -79,11 +79,26 @@ export class AgilityStat extends LitElement {
 
   get modifier() {
     if (this.modifierOverride) return this.modifierOverride;
-    let mod = modifierFor(this.agility || this.maxAgility);
-    mod = mod + this.modifierAdjustment;
-    if (this.applyCheckPenalty) mod = mod + this.checkPenalty;
-    if (this.applyLuckModifier) mod = mod + modifierFor(this.luck);
-    return mod;
+    const agilityModifier = modifierFor(this.agility || this.maxAgility);
+    const adjustment = this.modifierAdjustment;
+    const breakdown = [
+      {name: 'Agility Modifier', value: agilityModifier},
+      {name: 'Modifier Adjustment', value: adjustment},
+    ];
+    let checkPenalty = 0;
+    if (this.applyCheckPenalty) {
+      checkPenalty = this.checkPenalty;
+      breakdown.push({name: 'Check Penalty', value: checkPenalty});
+    }
+    let luckModifier = 0;
+    if (this.applyLuckModifier) {
+      luckModifier = modifierFor(this.luck);
+      breakdown.push({name: 'Luck Modifier', value: luckModifier});
+    }
+    return {
+      breakdown,
+      total: agilityModifier + adjustment + checkPenalty + luckModifier,
+    };
   }
 
   get checkPenalty() {
@@ -103,7 +118,7 @@ export class AgilityStat extends LitElement {
     return html`
       <stat-display
         name="Agl"
-        value="${this.formatModifier(this.modifier)}"
+        value="${this.formatModifier(this.modifier.total)}"
         base="${this.displayAgility}"
         value-clickable
         @value-clicked="${this.onClick}"
@@ -118,19 +133,14 @@ export class AgilityStat extends LitElement {
 
   onClick() {
     const roll = new DiceRoll();
-    roll.name = 'Agility Roll';
-    roll.description = 'An agility roll was made';
-    roll.multiplier = 1;
-    roll.die = this.die;
-    roll.modifier = this.modifier;
-    roll.dieAdjustment = this.dieAdjustment;
-    roll.modifierAdjustment = this.modifierAdjustment;
-    roll.checkPenalty = this.checkPenalty;
+    roll.name = 'Skill Check';
+    roll.description = 'Agility skill check roll';
+    roll.roll.qty = 1;
+    roll.roll.die = this.die;
+    roll.roll.modifier = this.modifier;
     roll.maxAgility = this.maxAgility;
     roll.agility = this.agility;
     roll.luck = this.luck;
-    roll.applyLuckModifier = this.applyLuckModifier;
-    roll.applyCheckPenalty = this.applyCheckPenalty;
 
     this.dispatchEvent(
       new CustomEvent('agility-skill-check', {
