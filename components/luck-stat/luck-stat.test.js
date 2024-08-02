@@ -34,15 +34,16 @@ suite('luck-stat', () => {
     await el.updateComplete;
 
     assert.deepEqual(event.detail, {
-      applyCheckPenalty: undefined,
       name: 'Luck Check',
-      description: 'A luck check roll was made',
-      multiplier: 1,
-      die: 20,
-      dieAdjustment: undefined,
-      modifierAdjustment: undefined,
-      modifier: undefined,
-      checkPenalty: undefined,
+      description: 'Luck check roll',
+      roll: {
+        qty: 1,
+        die: 20,
+        modifier: {
+          breakdown: [],
+          total: 0,
+        },
+      },
       maxLuck: 17,
       luck: 17,
     });
@@ -66,17 +67,18 @@ suite('luck-stat', () => {
     await el.updateComplete;
 
     assert.deepEqual(event.detail, {
-      applyCheckPenalty: undefined,
-      luck: null,
       name: 'Luck Check',
-      description: 'A luck check roll was made',
-      multiplier: 1,
-      die: 20,
-      dieAdjustment: undefined,
-      modifierAdjustment: undefined,
-      modifier: undefined,
-      checkPenalty: undefined,
+      description: 'Luck check roll',
+      roll: {
+        qty: 1,
+        die: 20,
+				modifier: {
+          breakdown: [],
+          total: 0,
+        },
+      },
       maxLuck: 17,
+      luck: null,
     });
   });
 });

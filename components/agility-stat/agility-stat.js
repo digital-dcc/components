@@ -79,7 +79,12 @@ export class AgilityStat extends LitElement {
   }
 
   get modifier() {
-    if (this.modifierOverride) return this.modifierOverride;
+    if (this.modifierOverride) {
+      return {
+        breakdown: [{name: 'Modifier Override', value: this.modifierOverride}],
+        total: this.modifierOverride,
+      };
+    }
     const agilityModifier = modifierFor(this.agility || this.maxAgility);
     const adjustment = this.modifierAdjustment;
     const breakdown = [
@@ -127,6 +132,7 @@ export class AgilityStat extends LitElement {
     roll.description = 'Agility skill check roll';
     roll.roll.qty = 1;
     roll.roll.die = this.die;
+    // @ts-ignore
     roll.roll.modifier = this.modifier;
     roll.maxAgility = this.maxAgility;
     roll.agility = this.agility;

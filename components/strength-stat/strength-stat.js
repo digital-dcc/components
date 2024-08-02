@@ -79,7 +79,12 @@ export class StrengthStat extends LitElement {
   }
 
   get modifier() {
-    if (this.modifierOverride) return this.modifierOverride;
+    if (this.modifierOverride) {
+      return {
+        breakdown: [{name: 'Modifier Override', value: this.modifierOverride}],
+        total: this.modifierOverride,
+      };
+    }
     const strengthModifier = modifierFor(this.strength || this.maxStrength);
     const adjustment = this.modifierAdjustment;
     const breakdown = [
@@ -127,6 +132,7 @@ export class StrengthStat extends LitElement {
     roll.description = 'Strength skill check roll';
     roll.roll.qty = 1;
     roll.roll.die = this.die;
+    // @ts-ignore
     roll.roll.modifier = this.modifier;
     roll.maxStrength = this.maxStrength;
     roll.strength = this.strength;

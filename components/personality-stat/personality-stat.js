@@ -79,7 +79,12 @@ export class PersonalityStat extends LitElement {
   }
 
   get modifier() {
-    if (this.modifierOverride) return this.modifierOverride;
+    if (this.modifierOverride) {
+      return {
+        breakdown: [{name: 'Modifier Override', value: this.modifierOverride}],
+        total: this.modifierOverride,
+      };
+    }
     const personalityModifier = modifierFor(
       this.personality || this.maxPersonality
     );
@@ -132,6 +137,7 @@ export class PersonalityStat extends LitElement {
     roll.description = 'Personality skill check roll';
     roll.roll.qty = 1;
     roll.roll.die = this.die;
+    // @ts-ignore
     roll.roll.modifier = this.modifier;
     roll.maxPersonality = this.maxPersonality;
     roll.personality = this.personality;

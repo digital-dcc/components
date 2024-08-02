@@ -1,21 +1,23 @@
 import {LitElement, html, css} from 'lit';
 import {modifierFor} from '../../utilities/modifier-for.js';
 import {diceChain} from '../../utilities/dice-chain.js';
-import {armor, armorSlug} from '../../utilities/armor.js';
+import {checkPenaltyFor} from '../../utilities/armor.js';
+import {formatModifier} from '../../utilities/format-modifier.js';
 import '../stat-display/stat-display.js';
 
 class DiceRoll {
   name;
   description;
-  multiplier;
-  die;
-  modifier;
-  checkPenalty;
-  dieAdjustment;
-  modifierAdjustment;
+  roll = {
+    qty: 1,
+    die: 20,
+    modifier: {
+      breakdown: [],
+      total: 0,
+    },
+  };
   maxLuck;
   luck;
-  applyCheckPenalty;
 }
 
 /**
@@ -72,17 +74,27 @@ export class LuckStat extends LitElement {
   }
 
   get modifier() {
-    if (this.modifierOverride) return this.modifierOverride;
-    let mod = modifierFor(this.luck || this.maxLuck);
-    mod = mod + this.modifierAdjustment;
-    if (this.applyCheckPenalty) mod = mod + this.checkPenalty;
-    return mod;
-  }
-
-  get checkPenalty() {
-    let penalty = armor.get(armorSlug(this.armor || ''))?.checkPenalty || 0;
-    if (this.shield) penalty = penalty - 1;
-    return penalty;
+    if (this.modifierOverride) {
+      return {
+        breakdown: [{name: 'Modifier Override', value: this.modifierOverride}],
+        total: this.modifierOverride,
+      };
+    }
+    const luckModifier = modifierFor(this.luck || this.maxLuck);
+    const adjustment = this.modifierAdjustment;
+    const breakdown = [
+      {name: 'Luck Modifier', value: luckModifier},
+      {name: 'Modifier Adjustment', value: adjustment},
+    ];
+    let checkPenalty = 0;
+    if (this.applyCheckPenalty) {
+      checkPenalty = checkPenaltyFor(this.armor, this.shield);
+      breakdown.push({name: 'Check Penalty', value: checkPenalty});
+    }
+    return {
+      breakdown,
+      total: luckModifier + adjustment + checkPenalty,
+    };
   }
 
   get displayLuck() {
@@ -97,7 +109,7 @@ export class LuckStat extends LitElement {
       <stat-display
         name="Luck"
         value="${this.displayLuck}"
-        base="${this.formatModifier(this.modifier)}"
+        base="${formatModifier(this.modifier.total)}"
         value-clickable
         base-clickable
         @base-clicked="${this.onLuckModifierClick}"
@@ -106,24 +118,16 @@ export class LuckStat extends LitElement {
     `;
   }
 
-  formatModifier(mod) {
-    if (mod < 0) return String(mod);
-    return `+${mod}`;
-  }
-
   onLuckModifierClick() {
     const roll = new DiceRoll();
-    roll.name = 'Luck Skill Check';
-    roll.description = 'A luck skill check roll was made';
-    roll.multiplier = 1;
-    roll.die = this.die;
-    roll.modifier = this.modifier;
-    roll.dieAdjustment = this.dieAdjustment;
-    roll.modifierAdjustment = this.modifierAdjustment;
-    roll.checkPenalty = this.checkPenalty;
+    roll.name = 'Skill Check';
+    roll.description = 'Luck skill check roll';
+    roll.roll.qty = 1;
+    roll.roll.die = this.die;
+    // @ts-ignore
+    roll.roll.modifier = this.modifier;
     roll.maxLuck = this.maxLuck;
     roll.luck = this.luck;
-    roll.applyCheckPenalty = this.applyCheckPenalty;
 
     this.dispatchEvent(
       new CustomEvent('luck-skill-check', {
@@ -135,9 +139,9 @@ export class LuckStat extends LitElement {
   onLuckScoreClick() {
     const roll = new DiceRoll();
     roll.name = 'Luck Check';
-    roll.description = 'A luck check roll was made';
-    roll.multiplier = 1;
-    roll.die = 20;
+    roll.description = 'Luck check roll';
+    roll.roll.qty = 1;
+    roll.roll.die = 20;
     roll.maxLuck = this.maxLuck;
     roll.luck = this.luck;
 

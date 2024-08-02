@@ -79,7 +79,12 @@ export class IntelligenceStat extends LitElement {
   }
 
   get modifier() {
-    if (this.modifierOverride) return this.modifierOverride;
+    if (this.modifierOverride) {
+      return {
+        breakdown: [{name: 'Modifier Override', value: this.modifierOverride}],
+        total: this.modifierOverride,
+      };
+    }
     const intelligenceModifier = modifierFor(
       this.intelligence || this.maxIntelligence
     );
@@ -132,6 +137,7 @@ export class IntelligenceStat extends LitElement {
     roll.description = 'Intelligence skill check roll';
     roll.roll.qty = 1;
     roll.roll.die = this.die;
+    // @ts-ignore
     roll.roll.modifier = this.modifier;
     roll.maxIntelligence = this.maxIntelligence;
     roll.intelligence = this.intelligence;

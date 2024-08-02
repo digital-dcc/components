@@ -79,7 +79,12 @@ export class StaminaStat extends LitElement {
   }
 
   get modifier() {
-    if (this.modifierOverride) return this.modifierOverride;
+    if (this.modifierOverride) {
+      return {
+        breakdown: [{name: 'Modifier Override', value: this.modifierOverride}],
+        total: this.modifierOverride,
+      };
+    }
     const staminaModifier = modifierFor(
       this.stamina || this.maxStamina
     );
@@ -132,6 +137,7 @@ export class StaminaStat extends LitElement {
     roll.description = 'Stamina skill check roll';
     roll.roll.qty = 1;
     roll.roll.die = this.die;
+    // @ts-ignore
     roll.roll.modifier = this.modifier;
     roll.maxStamina = this.maxStamina;
     roll.stamina = this.stamina;
