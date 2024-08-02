@@ -34,16 +34,25 @@ suite('strength-stat', () => {
     await el.updateComplete;
 
     assert.deepEqual(event.detail, {
-      applyCheckPenalty: false,
-      applyLuckModifier: false,
-      name: 'Strength Roll',
-      description: 'A strength roll was made',
-      multiplier: 1,
-      die: 20,
-      dieAdjustment: 0,
-      modifierAdjustment: 0,
-      modifier: 2,
-      checkPenalty: 0,
+      name: 'Skill Check',
+      description: 'Strength skill check roll',
+      roll: {
+        qty: 1,
+        die: 20,
+        modifier: {
+          breakdown: [
+            {
+              name: 'Strength Modifier',
+              value: 2,
+            },
+            {
+              name: 'Modifier Adjustment',
+              value: 0,
+            },
+          ],
+          total: 2,
+        },
+      },
       maxStrength: 17,
       strength: 17,
       luck: null,
@@ -68,19 +77,28 @@ suite('strength-stat', () => {
     await el.updateComplete;
 
     assert.deepEqual(event.detail, {
-      applyCheckPenalty: false,
-      applyLuckModifier: false,
-      luck: null,
-      name: 'Strength Roll',
-      description: 'A strength roll was made',
-      multiplier: 1,
-      die: 30,
-      dieAdjustment: 2,
-      modifierAdjustment: 0,
-      modifier: 2,
-      checkPenalty: 0,
+      name: 'Skill Check',
+      description: 'Strength skill check roll',
+      roll: {
+        qty: 1,
+        die: 30,
+        modifier: {
+          breakdown: [
+            {
+              name: 'Strength Modifier',
+              value: 2,
+            },
+            {
+              name: 'Modifier Adjustment',
+              value: 0,
+            },
+          ],
+          total: 2,
+        },
+      },
       maxStrength: 17,
       strength: null,
+      luck: null,
     });
   });
 });
