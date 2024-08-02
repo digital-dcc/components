@@ -5,7 +5,7 @@ import {AdjustmentInput} from './adjustment-input.js';
 import {fixture, assert} from '@open-wc/testing';
 import {html} from 'lit/static-html.js';
 
-suite('fumble-button', () => {
+suite('adjustment input', () => {
   test('is defined', () => {
     const el = document.createElement('adjustment-input');
     assert.instanceOf(el, AdjustmentInput);

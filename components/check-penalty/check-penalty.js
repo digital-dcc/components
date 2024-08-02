@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {armor, armorSlug} from '../../utilities/armor.js';
+import { formatModifier } from '../../utilities/format-modifier.js';
 
 export class CheckPenalty extends LitElement {
   static get styles() {
@@ -9,8 +10,6 @@ export class CheckPenalty extends LitElement {
         padding: 0px;
       }
       .wrapper {
-        border-radius: 5px;
-        border: 1px black solid;
         display: flex;
         justify-content: space-between;
         min-height: 25px;
@@ -31,6 +30,10 @@ export class CheckPenalty extends LitElement {
         align-items: center;
         padding: 0px 10px;
       }
+			.border {
+				border-radius: 5px;
+        border: 1px black solid;
+			}
     `;
   }
 
@@ -39,6 +42,8 @@ export class CheckPenalty extends LitElement {
       armor: {type: String, reflect: true},
       shield: {type: Boolean, reflect: true},
       checked: {type: Boolean, reflect: true},
+			displayModifier: { attribute: 'display-modifier', type: Boolean, reflect: true},
+			displayBorder: { attribute: 'display-border', type: Boolean, reflect: true},
     };
   }
 
@@ -47,6 +52,8 @@ export class CheckPenalty extends LitElement {
     this.armor = null;
     this.shield = false;
     this.checked = false;
+		this.displayModifier = false;
+		this.displayBorder = false;
   }
 
   onChange() {
@@ -66,9 +73,9 @@ export class CheckPenalty extends LitElement {
 
   render() {
     return html`
-      <div part="wrapper" class="wrapper">
+      <div part="wrapper" class="wrapper ${this.displayBorder ? 'border' : ''}">
         <label class="label" part="label" for="check-penalty"
-          >Check Penalty (${this.checkPenalty})</label
+          >Check Penalty ${this.displayModifier ? `(${formatModifier(this.checkPenalty)})` : ''}</label
         >
         <input
           type="checkbox"

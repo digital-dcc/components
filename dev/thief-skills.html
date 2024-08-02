@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;thief-skills> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script type="module" src="../components/thief-skills/thief-skills.js"></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <h2>Level 1 Lawful Agility 18</h2>
+      <thief-skills id="ref1" agility="18" level="1" alignment="lawful" armor="leather" intelligence="12"></thief-skills>
+			<script>
+				const ref1 = document.querySelector('#ref1');
+				ref1.addEventListener('thief-skill-check', (event) => {
+					console.log(event.detail);
+				});
+			</script>
+      <h2>Level 10 Chaotic Agility 18</h2>
+      <thief-skills id="ref2" agility="18" level="10" alignment="chaotic" armor="leather" intelligence="18" starting-luck="18" birth-augur="foxs-cunning"></thief-skills>
+			<script>
+				const ref2 = document.querySelector('#ref2');
+				ref2.addEventListener('thief-skill-check', (event) => {
+					console.log(event.detail);
+				});
+			</script>
+    </div>
+  </body>
+</html>

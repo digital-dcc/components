@@ -1,5 +1,13 @@
 import {LitElement, html, css} from 'lit';
 
+const alignmentMap = new Map([
+	['law', 'Law'],
+	['lawful', 'Law'],
+	['neutral', 'Neutral'],
+	['chaos', 'Chaos'],
+	['chaotic', 'Chaos'],
+]);
+
 export class AlignmentDisplay extends LitElement {
   static get styles() {
     return css`
@@ -54,7 +62,7 @@ export class AlignmentDisplay extends LitElement {
   }
 
 	get alignmentText() {
-		return this.alignment.charAt(0).toUpperCase() + this.alignment.slice(1);
+		return alignmentMap.get(this.alignment.toLowerCase());
 	}
 
   render() {

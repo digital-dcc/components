@@ -11,25 +11,25 @@ suite('alignment-display', () => {
     assert.instanceOf(el, AlignmentDisplay);
   });
 
-  test('displays correct alignment - law', async () => {
+  test('displays correct alignment - lawful', async () => {
     const el = await fixture(
-      html`<alignment-display alignment="law"></alignment-display>`
+      html`<alignment-display alignment="lawful"></alignment-display>`
     );
     const alignment = el.shadowRoot?.querySelector('.alignment-name');
     assert.match(alignment.innerText, /Law/);
   });
 
-  test('displays correct alignment - neutrality', async () => {
+  test('displays correct alignment - neutral', async () => {
     const el = await fixture(
-      html`<alignment-display alignment="neutrality"></alignment-display>`
+      html`<alignment-display alignment="neutral"></alignment-display>`
     );
     const alignment = el.shadowRoot?.querySelector('.alignment-name');
     assert.match(alignment.innerText, /Neutral/);
   });
 
-  test('displays correct alignment - chaos', async () => {
+  test('displays correct alignment - chaotic', async () => {
     const el = await fixture(
-      html`<alignment-display alignment="chaos"></alignment-display>`
+      html`<alignment-display alignment="chaotic"></alignment-display>`
     );
     const alignment = el.shadowRoot?.querySelector('.alignment-name');
     assert.match(alignment.innerText, /Chaos/);
