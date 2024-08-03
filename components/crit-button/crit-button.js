@@ -31,7 +31,7 @@ export class CritButton extends LitElement {
         padding: 0px;
       }
       stat-display::part(value) {
-        font-size: 1rem;
+        font-size: 0.8em
       }
     `;
   }

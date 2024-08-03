@@ -1,16 +1,24 @@
 import {LitElement, html, css} from 'lit';
-import '@digital-dcc/stat-display';
+import {formatModifier} from '../../utilities/format-modifier.js';
+import {modifierFor} from '../../utilities/modifier-for.js';
+import {slug} from '../../utilities/slug.js';
+import '../stat-display/stat-display.js';
 
 class DiceRoll {
   name;
   description;
+  roll = {
+    qty: 1,
+    die: 4,
+    modifier: {
+      breakdown: [],
+      total: 0,
+    },
+  };
+  luck;
+  birthAugur;
   armor;
   shield;
-  luck;
-	luckySign;
-  multiplier;
-  die;
-  modifier;
 }
 
 const fumbleDie = new Map([
@@ -41,6 +49,9 @@ export class FumbleButton extends LitElement {
         display: block;
         padding: 0px;
       }
+      stat-display::part(value) {
+        font-size: 0.8em;
+      }
     `;
   }
 
@@ -48,7 +59,7 @@ export class FumbleButton extends LitElement {
     return {
       armor: {type: String},
       luck: {type: Number},
-      luckySign: {attribute: 'lucky-sign', type: String},
+      birthAugur: {attribute: 'birth-augur', type: String},
       shield: {type: Boolean},
       multiplierOverride: {attribute: 'multiplier-override', type: Number},
       dieOverride: {attribute: 'die-override', type: Number},
@@ -60,7 +71,7 @@ export class FumbleButton extends LitElement {
     super();
     this.armor = 'Unarmored';
     this.luck = null;
-    this.luckySign = null;
+    this.birthAugur = null;
     this.shield = false;
     this.multiplierOverride = null;
     this.dieOverride = null;
@@ -71,37 +82,24 @@ export class FumbleButton extends LitElement {
     return html`
       <stat-display
         name="Fumble"
-        modifier="${this.multiplier}d"
-        value="${this.fumbleDie}"
-        suffix="${this.formatModifier(this.modifier)}"
-        clickable
+        value="${this.multiplier}d${this.fumbleDie}${formatModifier(
+          this.modifier.total,
+          true
+        )}"
+        value-clickable
         @value-clicked="${this.onClick}"
       ></stat-display>
     `;
   }
 
-	get multiplier() {
+  get multiplier() {
     if (this.multiplierOverride) return Number(this.multiplierOverride);
     return 1;
   }
 
-	get luckySignSlug() {
-    if (
-      this.luckySign &&
-      this.luckySign
-        .toLowerCase()
-        .replaceAll(' ', '-')
-        .replace(/['´]/g, '')
-        .startsWith('the-broken-star')
-    ) {
-      return 'the-broken-star';
-    }
-    return '';
-  }
-
   get fumbleDie() {
     if (this.dieOverride) return Number(this.dieOverride.replace('d', ''));
-    const armorDie = fumbleDie.get(this.armor) || 4;
+    const armorDie = fumbleDie.get(slug(this.armor || '')) || 4;
     const shieldDie = fumbleDie.get('shield') || 8;
     if (this.shield && armorDie < shieldDie) {
       return shieldDie;
@@ -110,51 +108,49 @@ export class FumbleButton extends LitElement {
   }
 
   get modifier() {
-		// inverse luck affects fumbles
-    let mod = this.modifierFor(this.luck) * -1;
-
-		// The broken star lucky sign, doubles the luck modifier effect on fumbles
-		if (this.luckySignSlug === 'the-broken-star') {
-      mod = mod * 2;
+    if (this.modifierOverride) {
+      return {
+        breakdown: [{name: 'Modifier Override', value: this.modifierOverride}],
+        total: Number(this.modifierOverride),
+      };
     }
-    if (this.modifierOverride) mod = Number(this.modifierOverride);
-    return mod;
-  }
 
-	formatModifier(mod) {
-    if (mod < 0) return String(mod);
-    if (mod === 0) return '';
-    return `+${mod}`;
+    // inverse luck affects fumbles
+    let mod;
+    const breakdown = [];
+
+    // The broken star lucky sign, doubles the luck modifier effect on fumbles
+    if (slug(this.birthAugur || '') === 'the-broken-star') {
+      mod = modifierFor(this.luck) * 2 * -1;
+      breakdown.push({name: 'Luck Modifier (The Broken Star)', value: mod});
+    } else {
+      mod = modifierFor(this.luck) * -1;
+      breakdown.push({name: 'Luck Modifier', value: mod});
+    }
+
+    return {breakdown, total: mod};
   }
 
   onClick() {
     const roll = new DiceRoll();
     roll.name = 'Fumble Roll';
-    roll.description = 'A fumble roll was made';
-    roll.armor = this.armor;
+    roll.description = `Fumble roll based on armor worn`;
+    roll.roll = {
+      qty: this.multiplier,
+      die: fumbleDie.get(slug(this.armor || '')) || 4,
+      // @ts-ignore
+      modifier: this.modifier,
+    };
+    roll.birthAugur = slug(this.birthAugur || '');
     roll.luck = this.luck;
-    roll.luckySign = this.luckySignSlug;
-    roll.shield = this.shield;
-    roll.multiplier = 1;
-    roll.die = fumbleDie.get(this.armor) || 4;
-    roll.modifier = this.modifier;
+    roll.armor = slug(this.armor || '');
+    roll.shield = !!this.shield;
 
     this.dispatchEvent(
       new CustomEvent('fumble-roll', {
         detail: roll,
       })
     );
-  }
-
-  modifierFor(stat) {
-    if (stat <= 3) return -3;
-    if (stat >= 4 && stat <= 5) return -2;
-    if (stat >= 6 && stat <= 8) return -1;
-    if (stat >= 9 && stat <= 12) return 0;
-    if (stat >= 13 && stat <= 15) return +1;
-    if (stat >= 16 && stat <= 17) return +2;
-    if (stat >= 18) return +3;
-    return 0;
   }
 }
 
