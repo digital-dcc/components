@@ -1,103 +1,27 @@
 import {LitElement, html, css} from 'lit';
-import '@digital-dcc/stat-display';
+import {formatModifier} from '../../utilities/format-modifier.js';
+import {slug} from '../../utilities/slug.js';
+import {modifierFor} from '../../utilities/modifier-for.js';
+import {characterClasses} from '../../utilities/character-classes.js';
+import '../stat-display/stat-display.js';
 
 class DiceRoll {
   name;
   description;
+  roll = {
+    qty: 1,
+    die: 20,
+    modifier: {
+      breakdown: [],
+      total: 0,
+    },
+  };
   luck;
-  luckySign;
-  multiplier;
-  die;
-  modifier;
-  table;
+  class;
+  level;
+  birthAugur;
+  critTable;
 }
-
-const classInfo = {
-  warrior: {
-    1: {multiplier: 1, die: 12, table: 'III'},
-    2: {multiplier: 1, die: 14, table: 'III'},
-    3: {multiplier: 1, die: 16, table: 'IV'},
-    4: {multiplier: 1, die: 20, table: 'IV'},
-    5: {multiplier: 1, die: 24, table: 'V'},
-    6: {multiplier: 1, die: 30, table: 'V'},
-    7: {multiplier: 1, die: 30, table: 'V'},
-    8: {multiplier: 2, die: 20, table: 'V'},
-    9: {multiplier: 2, die: 20, table: 'V'},
-    10: {multiplier: 2, die: 20, table: 'V'},
-  },
-  wizard: {
-    1: {multiplier: 1, die: 6, table: 'I'},
-    2: {multiplier: 1, die: 6, table: 'I'},
-    3: {multiplier: 1, die: 8, table: 'I'},
-    4: {multiplier: 1, die: 8, table: 'I'},
-    5: {multiplier: 1, die: 10, table: 'I'},
-    6: {multiplier: 1, die: 10, table: 'I'},
-    7: {multiplier: 1, die: 12, table: 'I'},
-    8: {multiplier: 1, die: 12, table: 'I'},
-    9: {multiplier: 1, die: 14, table: 'I'},
-    10: {multiplier: 1, die: 14, table: 'I'},
-  },
-  cleric: {
-    1: {multiplier: 1, die: 8, table: 'III'},
-    2: {multiplier: 1, die: 8, table: 'III'},
-    3: {multiplier: 1, die: 10, table: 'III'},
-    4: {multiplier: 1, die: 10, table: 'III'},
-    5: {multiplier: 1, die: 12, table: 'III'},
-    6: {multiplier: 1, die: 12, table: 'III'},
-    7: {multiplier: 1, die: 14, table: 'III'},
-    8: {multiplier: 1, die: 14, table: 'III'},
-    9: {multiplier: 1, die: 16, table: 'III'},
-    10: {multiplier: 1, die: 16, table: 'III'},
-  },
-  thief: {
-    1: {multiplier: 1, die: 10, modifier: 0, table: 'II'},
-    2: {multiplier: 1, die: 12, modifier: 0, table: 'II'},
-    3: {multiplier: 1, die: 14, modifier: 0, table: 'II'},
-    4: {multiplier: 1, die: 16, modifier: 0, table: 'II'},
-    5: {multiplier: 1, die: 20, modifier: 0, table: 'II'},
-    6: {multiplier: 1, die: 24, modifier: 0, table: 'II'},
-    7: {multiplier: 1, die: 30, modifier: 0, table: 'II'},
-    8: {multiplier: 1, die: 30, modifier: 2, table: 'II'},
-    9: {multiplier: 1, die: 30, modifier: 4, table: 'II'},
-    10: {multiplier: 1, die: 30, modifier: 6, table: 'II'},
-  },
-  dwarf: {
-    1: {multiplier: 1, die: 10, table: 'III'},
-    2: {multiplier: 1, die: 12, table: 'III'},
-    3: {multiplier: 1, die: 14, table: 'III'},
-    4: {multiplier: 1, die: 16, table: 'IV'},
-    5: {multiplier: 1, die: 20, table: 'IV'},
-    6: {multiplier: 1, die: 24, table: 'V'},
-    7: {multiplier: 1, die: 30, table: 'V'},
-    8: {multiplier: 1, die: 30, table: 'V'},
-    9: {multiplier: 2, die: 20, table: 'V'},
-    10: {multiplier: 2, die: 20, table: 'V'},
-  },
-  halfling: {
-    1: {multiplier: 1, die: 8, table: 'III'},
-    2: {multiplier: 1, die: 8, table: 'III'},
-    3: {multiplier: 1, die: 10, table: 'III'},
-    4: {multiplier: 1, die: 10, table: 'III'},
-    5: {multiplier: 1, die: 12, table: 'III'},
-    6: {multiplier: 1, die: 12, table: 'III'},
-    7: {multiplier: 1, die: 14, table: 'III'},
-    8: {multiplier: 1, die: 14, table: 'III'},
-    9: {multiplier: 1, die: 16, table: 'III'},
-    10: {multiplier: 1, die: 16, table: 'III'},
-  },
-  elf: {
-    1: {multiplier: 1, die: 6, table: 'II'},
-    2: {multiplier: 1, die: 8, table: 'II'},
-    3: {multiplier: 1, die: 8, table: 'II'},
-    4: {multiplier: 1, die: 10, table: 'II'},
-    5: {multiplier: 1, die: 10, table: 'II'},
-    6: {multiplier: 1, die: 12, table: 'II'},
-    7: {multiplier: 1, die: 12, table: 'II'},
-    8: {multiplier: 1, die: 14, table: 'II'},
-    9: {multiplier: 1, die: 14, table: 'II'},
-    10: {multiplier: 1, die: 16, table: 'II'},
-  },
-};
 
 export class CritButton extends LitElement {
   static get styles() {
@@ -105,6 +29,9 @@ export class CritButton extends LitElement {
       :host {
         display: block;
         padding: 0px;
+      }
+      stat-display::part(value) {
+        font-size: 1rem;
       }
     `;
   }
@@ -114,7 +41,7 @@ export class CritButton extends LitElement {
       class: {type: String},
       level: {type: String},
       luck: {type: Number},
-      luckySign: {attribute: 'lucky-sign', type: String},
+      birthAugur: {attribute: 'birth-augur', type: String},
       multiplierOverride: {attribute: 'multiplier-override', type: Number},
       dieOverride: {attribute: 'die-override', type: Number},
       modifierOverride: {attribute: 'modifier-override', type: Number},
@@ -127,7 +54,7 @@ export class CritButton extends LitElement {
     this.class = null;
     this.level = 0;
     this.luck = null;
-    this.luckySign = null;
+    this.birthAugur = null;
     this.multiplierOverride = null;
     this.dieOverride = null;
     this.modifierOverride = null;
@@ -138,18 +65,23 @@ export class CritButton extends LitElement {
     return html`
       <stat-display
         name="Crit"
-        modifier="${this.multiplier}d"
-        value="${this.die}"
-        suffix="${this.formatModifier(this.modifier)} ${this.table}"
-        clickable
+        value="${this.multiplier}d${this.die}${formatModifier(
+          this.modifier.total,
+          true
+        )} ${this.critTable}"
+        value-clickable
         @value-clicked="${this.onClick}"
       ></stat-display>
     `;
   }
 
+  get classSlug() {
+    return slug(this.class || '');
+  }
+
   get multiplier() {
     if (this.multiplierOverride) return Number(this.multiplierOverride);
-    return classInfo[this.class][this.level].multiplier;
+    return this.critDieQty;
   }
 
   get die() {
@@ -159,80 +91,115 @@ export class CritButton extends LitElement {
       }
       return this.dieOverride;
     }
-    return classInfo[this.class][this.level].die;
+    return this.critDie;
   }
 
   get modifier() {
+    if (this.modifierOverride) {
+      return {
+        breakdown: [{name: 'Modifier Override', value: this.modifierOverride}],
+        total: Number(this.modifierOverride),
+      };
+    }
+
+    let total = 0;
+    const breakdown = [];
     // luck modifies crits
-    let mod = this.modifierFor(this.luck);
+    const luckModifier = modifierFor(this.luck);
+
     // the warriors arm lucky sign doubles the luck effect on crits
     // we do some processing on the input to make it as flexible as possible
     // eg. Warrior´s arm and warriors-arm work
-    if (this.luckySignSlug === 'warriors-arm') {
-      mod = mod * 2;
+    if (slug(this.birthAugur || '') === 'warriors-arm') {
+      total += luckModifier * 2;
+      breakdown.push({
+        name: 'Luck Modifier (Warriors Arm)',
+        value: luckModifier * 2,
+      });
+    } else {
+      total += luckModifier;
+      breakdown.push({name: 'Luck Modifier', value: luckModifier});
     }
 
-		// the thief has a modifier at higher levels
-		if (classInfo[this.class][this.level].modifier) {
-			mod = mod + classInfo[this.class][this.level].modifier;
-		}
-
-    if (this.modifierOverride) mod = Number(this.modifierOverride);
-    return mod;
-  }
-
-  get luckySignSlug() {
-    if (
-      this.luckySign &&
-      this.luckySign
-        .toLowerCase()
-        .replaceAll(' ', '-')
-        .replace(/['´]/g, '')
-        .startsWith('warriors-arm')
-    ) {
-      return 'warriors-arm';
+    // the thief has a modifier at higher levels
+    if (this.critModifier) {
+      total += this.critModifier;
+      breakdown.push({
+        name: 'Class Modifier',
+        value: this.critModifier,
+      });
     }
-    return '';
+
+    return {breakdown, total};
   }
 
-  formatModifier(mod) {
-    if (mod < 0) return String(mod);
-    if (mod === 0) return '';
-    return `+${mod}`;
+  /**
+   * Get the number of dice to roll from the class data using class and level
+   * This is using 1 but not always. For example high level warriors
+   * @returns {number}
+   */
+  get critDieQty() {
+    const die = characterClasses
+      .get(this.classSlug)
+      ?.get(Number(this.level || 0))?.critDie;
+    return Number(die.split('d')[0] || 1);
   }
 
-  get table() {
+  /**
+   * Get the type of die to roll from the class data using class and level
+   * @returns {number}
+   */
+  get critDie() {
+    const die = characterClasses
+      .get(this.classSlug)
+      ?.get(Number(this.level || 0))?.critDie;
+    return Number(die.split('d')[1].split('+')[0]);
+  }
+
+  /**
+   * Get the modifier from the class data using class and level
+   * This is almost always 0 except for high level thieves
+   * @returns {number}
+   */
+  get critModifier() {
+    const die = characterClasses
+      .get(this.classSlug)
+      ?.get(Number(this.level || 0))?.critDie;
+    return Number(die.split('d')[1].split('+')[1] || 0);
+  }
+
+  /**
+   * Get the crit table from the class data using class and level
+   * This is a roman numeral from I to V.
+   * @returns {string}
+   */
+  get critTable() {
     if (this.tableOverride) return this.tableOverride;
-    return classInfo[this.class][this.level].table;
+    return characterClasses.get(this.classSlug)?.get(Number(this.level || 0))
+      ?.critTable;
   }
 
   onClick() {
     const roll = new DiceRoll();
     roll.name = 'Crit Roll';
-    roll.description = 'A crit roll was made';
+    roll.description = `Crit roll on table ${this.critTable}`;
+    roll.roll = {
+      qty: this.multiplier,
+      die: this.die,
+      // @ts-ignore
+      modifier: this.modifier,
+    };
+    roll.birthAugur = this.birthAugur;
     roll.luck = this.luck;
-    roll.luckySign = this.luckySign;
-    roll.multiplier = this.multiplier;
-    roll.die = this.die;
-    roll.modifier = this.modifier;
-    roll.table = this.table;
+    roll.critTable = this.critTable;
+    roll.class = this.classSlug;
+    roll.level = Number(this.level);
 
     this.dispatchEvent(
       new CustomEvent('crit-roll', {
         detail: roll,
       })
     );
-  }
-
-  modifierFor(stat) {
-    if (stat <= 3) return -3;
-    if (stat >= 4 && stat <= 5) return -2;
-    if (stat >= 6 && stat <= 8) return -1;
-    if (stat >= 9 && stat <= 12) return 0;
-    if (stat >= 13 && stat <= 15) return +1;
-    if (stat >= 16 && stat <= 17) return +2;
-    if (stat >= 18) return +3;
-    return 0;
   }
 }
 

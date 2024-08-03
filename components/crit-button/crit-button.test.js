@@ -25,7 +25,7 @@ suite('fumble-button', () => {
         class="warrior"
         level="10"
         luck="7"
-        lucky-sign="warriors-arm"
+        birth-augur="warriors-arm"
         @crit-roll="${roll}"
       ></crit-button>`
     );
@@ -37,13 +37,20 @@ suite('fumble-button', () => {
 
     assert.deepEqual(event.detail, {
       name: 'Crit Roll',
-      description: 'A crit roll was made',
+      description: 'Crit roll on table V',
+      roll: {
+        qty: 2,
+        die: 20,
+        modifier: {
+          breakdown: [{name: 'Luck Modifier (Warriors Arm)', value: -2}],
+          total: -2,
+        },
+      },
+      class: 'warrior',
+      level: 10,
       luck: 7,
-      multiplier: 2,
-      die: 20,
-      modifier: -2,
-      table: 'V',
-			luckySign: 'warriors-arm',
+      birthAugur: 'warriors-arm',
+      critTable: 'V',
     });
   });
 });
