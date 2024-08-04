@@ -22,7 +22,11 @@ suite('willpower-save', () => {
 
   test('personality=8 and birth augur', async () => {
     const el = await fixture(
-      html`<willpower-save personality="8" birth-augur="Lucky Sign" starting-luck="16"></willpower-save>`
+      html`<willpower-save
+        personality="8"
+        birth-augur="Lucky Sign"
+        starting-luck="16"
+      ></willpower-save>`
     );
     assert.shadowDom.equal(
       el,
@@ -46,7 +50,11 @@ suite('willpower-save', () => {
 
   test('character class dwarf', async () => {
     const el = await fixture(
-      html`<willpower-save personality="12" character-class="Dwarf" level="4"></willpower-save>`
+      html`<willpower-save
+        personality="12"
+        character-class="Dwarf"
+        level="4"
+      ></willpower-save>`
     );
     assert.shadowDom.equal(
       el,
@@ -58,7 +66,12 @@ suite('willpower-save', () => {
 
   test('adjustment', async () => {
     const el = await fixture(
-      html`<willpower-save personality="12" character-class="Elf" level="7" adjustment="2"></willpower-save>`
+      html`<willpower-save
+        personality="12"
+        character-class="Elf"
+        level="7"
+        adjustment="2"
+      ></willpower-save>`
     );
     assert.shadowDom.equal(
       el,
@@ -70,7 +83,12 @@ suite('willpower-save', () => {
 
   test('lowest possible value', async () => {
     const el = await fixture(
-      html`<willpower-save personality="3" adjustment="-3" birth-augur="lucky-sign" starting-luck="3"></willpower-save>`
+      html`<willpower-save
+        personality="3"
+        adjustment="-3"
+        birth-augur="lucky-sign"
+        starting-luck="3"
+      ></willpower-save>`
     );
     assert.shadowDom.equal(
       el,

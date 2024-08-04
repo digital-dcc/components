@@ -111,7 +111,7 @@ export class FortitudeSave extends LitElement {
     ) {
       characterClassBonus =
         characterClasses.get(slug(this.characterClass))?.get(Number(this.level))
-          ?.ref || 0;
+          ?.fort || 0;
       breakdown.push({
         name: 'Character Class Bonus',
         value: characterClassBonus,
