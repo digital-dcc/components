@@ -76,7 +76,7 @@ suite('willpower-save', () => {
     assert.shadowDom.equal(
       el,
       `
-      <stat-display text-position="bottom" name="Will" value="+5" value-clickable></stat-display>
+      <stat-display text-position="bottom" name="Will" value="+6" value-clickable></stat-display>
     `
     );
   });

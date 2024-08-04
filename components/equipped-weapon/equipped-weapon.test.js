@@ -102,6 +102,6 @@ suite('equipped-weapon', () => {
     await el.updateComplete;
     assert.equal(diceRoll.roll.qty, 1);
     assert.equal(diceRoll.roll.die, 20);
-    assert.equal(diceRoll.roll.mod, -3);
+    assert.equal(diceRoll.roll.modifier.total, -3);
   });
 });

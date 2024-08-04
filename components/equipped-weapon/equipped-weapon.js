@@ -1,8 +1,73 @@
 import {LitElement, html} from 'lit';
 import {modifierFor} from '../../utilities/modifier-for.js';
-import {diceChain, DiceRoll} from '../../utilities/dice.js';
+import {diceChain} from '../../utilities/dice-chain.js';
 import {weaponStatsFor, weapons} from '../../utilities/weapons.js';
 import {styles} from './styles.js';
+
+class DiceRoll {
+  // attack or damage
+  type = '';
+  // attack name eg. Melee Attack
+  name = '';
+  // attack description eg. Foofi makes a melee attack with a longsword
+  description = '';
+
+  // roll details
+  roll = {
+    // number of dice to roll
+    qty: 1,
+    // number of die sides
+    die: 20,
+    // any modifier to the die roll
+    modifier: {
+      breakdown: [],
+      total: +0,
+    },
+    // manual attack die adjustment up or down the dice chain
+    // not sure this needs to be included
+    attackDieAdjustment: 0,
+    // if weapon supports double damage while mounted charging,
+    // and mounted and charging are checked, set this to 2
+    damageMultiplier: 1,
+  };
+
+  // weapon details
+  weapon = {
+    // melee or missile
+    type: 'melee',
+    // name of the weapon. Needs to be correctly spelt and capitalised as per DCC rulebook
+    name: '',
+    // how the weapon is being wielded
+    wielding: '',
+    // blackjack should automatically turn this on, turning it off should disable the weapon
+    // other weapons are not affected by this checkbox
+    subdualDamage: false,
+    // range the weapon is being shot at if missile fire, short, medium, long
+    range: '',
+  };
+
+  // various conditions that may have affected the selection of die and modifier
+  conditions = {
+    attacker: {
+      invisible: false,
+      onHigherGround: false,
+      squeezing: false,
+      entangled: false,
+      untrained: false,
+      mounted: false,
+      charging: false,
+      sneakAttacking: false,
+      firingIntoMelee: false,
+    },
+    opponent: {
+      behindCover: false,
+      blinded: false,
+      entangled: false,
+      helpless: false,
+      prone: false,
+    },
+  };
+}
 
 const wielding = {
   ONE_HANDED: 'one-handed',
@@ -411,10 +476,10 @@ export class EquippedWeapon extends LitElement {
 
   _attackRoll() {
     const dr = new DiceRoll();
-    dr.name = this.type === 'melee' ? 'Melee Attack' : 'Missile Attack';
-    dr.description = `A ${
-      this.type
-    } attack roll was made with a ${this.weapon?.toLowerCase()}`;
+    dr.name = 'Attack Roll';
+    dr.description = `${
+      this.type === 'melee' ? `Melee` : 'Missile'
+    } attack roll with a ${this.weapon?.toLowerCase()}`;
     dr.type = 'attack';
 
     dr.weapon.type = /** @type {string} */ (this.type);
@@ -426,9 +491,8 @@ export class EquippedWeapon extends LitElement {
     const [qty, die] = this._attackDie.split('d');
     dr.roll.qty = Number(qty || 1);
     dr.roll.die = Number(die || 20);
-    dr.roll.mod = this._attackModifier;
-    dr.roll.attackDieAdjustment = this.attackDieAdjustment;
-
+    // @ts-ignore
+    dr.roll.modifier = this._attackModifier;
     dr.conditions.attacker.charging = this.attackerCharging;
     dr.conditions.attacker.entangled = this.attackerCharging;
     dr.conditions.attacker.attackerFiringIntoMelee =
@@ -448,10 +512,10 @@ export class EquippedWeapon extends LitElement {
 
   _damageRoll() {
     const dr = new DiceRoll();
-    dr.name = this.type === 'melee' ? 'Melee Damage' : 'Missile Damage';
-    dr.description = `A ${
-      this.type
-    } damage roll was made with a ${this.weapon?.toLowerCase()}`;
+    dr.name = 'Damage Roll';
+    dr.description = `${
+      this.type === 'melee' ? `Melee` : 'Missile'
+    } damage roll with a ${this.weapon?.toLowerCase()}`;
     dr.type = 'damage';
 
     dr.weapon.type = /** @type {string} */ (this.type);
@@ -463,7 +527,8 @@ export class EquippedWeapon extends LitElement {
     const [qty, die] = this._damageDie.split('d');
     dr.roll.qty = Number(qty || 1);
     dr.roll.die = Number(die || 4);
-    dr.roll.mod = this._damageModifier;
+    // @ts-ignore
+    dr.roll.modifier = this._damageModifier;
 
     dr.conditions.attacker.charging = this.attackerCharging;
     dr.conditions.attacker.entangled = this.attackerCharging;
@@ -588,68 +653,144 @@ export class EquippedWeapon extends LitElement {
   }
 
   get _attackModifier() {
+    const breakdown = [];
     let modifier = 0;
+
+    if (this.attackModifierOverride) {
+      return {
+        breakdown: [
+          {name: 'Modifier Overridden', value: this.attackModifierOverride},
+        ],
+        total: this.attackModifierOverride,
+      };
+    }
 
     if (this.type === 'melee') {
       modifier = modifierFor(this.strength);
-      if (this.attackerInvisible) modifier += 2;
-      if (this.attackerOnHigherGround) modifier += 1;
-      if (this.opponentProne) modifier += 2;
+      breakdown.push({
+        name: 'Strength Modifier',
+        value: modifierFor(this.strength),
+      });
+      if (this.attackerInvisible) {
+        modifier += 2;
+        breakdown.push({name: 'Attacker Invisible', value: 2});
+      }
+      if (this.attackerOnHigherGround) {
+        modifier += 1;
+        breakdown.push({name: 'Attacker On Higher Ground', value: 1});
+      }
+      if (this.opponentProne) {
+        modifier += 2;
+        breakdown.push({name: 'Opponent Prone', value: 2});
+      }
 
       // apply luck to melee attacks
       if (this.birthAugur === 'The bull') {
         modifier += modifierFor(this.luck);
+        breakdown.push({
+          name: 'Birth Augur (The Bull)',
+          value: modifierFor(this.luck),
+        });
       }
 
       // unarmed weapon attacks
       if (this.birthAugur === 'Raised by wolves' && this.weapon === 'Unarmed') {
         modifier += modifierFor(this.luck);
+        breakdown.push({
+          name: 'Birth Augur (Raised By Wolves)',
+          value: modifierFor(this.luck),
+        });
       }
     }
 
     if (this.type === 'missile') {
       modifier = modifierFor(this.agility);
-      if (this.range === 'medium') modifier -= 2;
-      if (this.attackerFiringIntoMelee) modifier -= 1;
-      if (this.opponentProne) modifier -= 2;
+      breakdown.push({
+        name: 'Agility Modifier',
+        value: modifierFor(this.agility),
+      });
+      if (this.range === 'medium') {
+        modifier -= 2;
+        breakdown.push({name: 'Firing From Medium Range', value: -2});
+      }
+      if (this.attackerFiringIntoMelee) {
+        modifier -= 1;
+        breakdown.push({name: 'Firing Into Melee', value: -1});
+      }
+      if (this.opponentProne) {
+        breakdown.push({name: 'Opponent Prone', value: -2});
+        modifier -= 2;
+      }
 
       // apply luck to missile attacks
       if (this.birthAugur === 'Fortunate date') {
         modifier += modifierFor(this.luck);
+        breakdown.push({
+          name: 'Birth Augur (Fortunate date)',
+          value: modifierFor(this.luck),
+        });
       }
     }
 
     // apply luck to all attacks
     if (this.birthAugur === 'Harsh winter') {
       modifier += modifierFor(this.luck);
+      breakdown.push({
+        name: 'Birth Augur (Harsh Winter)',
+        value: modifierFor(this.luck),
+      });
     }
 
     // apply luck to mounted attacks
     if (this.birthAugur === 'Conceived on horseback' && this.attackerMounted) {
       modifier += modifierFor(this.luck);
+      breakdown.push({
+        name: 'Birth Augur (Conceived On Horseback)',
+        value: modifierFor(this.luck),
+      });
     }
 
     // apply luck to melee and damage to starting weapons
     if (this.birthAugur === 'Pack hunter' && this.startingWeapon) {
       modifier += modifierFor(this.luck);
+      breakdown.push({
+        name: 'Birth Augur (Pack Hunter)',
+        value: modifierFor(this.luck),
+      });
     }
 
     // apply luck to warrior's lucky weapon
-    if (this.lucky) modifier += modifierFor(this.luck);
+    if (this.lucky) {
+      modifier += modifierFor(this.luck);
+      breakdown.push({name: 'Lucky Weapon', value: modifierFor(this.luck)});
+    }
 
-    if (this.opponentBehindCover) modifier -= 2;
-    if (this.opponentBlinded) modifier += 2;
+    if (this.opponentBehindCover) {
+      modifier -= 2;
+      breakdown.push({name: 'Opponent Behind Cover', value: -2});
+    }
+    if (this.opponentBlinded) {
+      modifier += 2;
+      breakdown.push({name: 'Opponent Blinded', value: 2});
+    }
 
-    if (this.attackModifierAdjustment)
+    if (this.attackModifierAdjustment) {
       modifier += this.attackModifierAdjustment;
+      breakdown.push({
+        name: 'Modifier Adjustment',
+        value: this.attackModifierAdjustment,
+      });
+    }
 
-    if (this.attackModifierOverride) modifier = this.attackModifierOverride;
-    return modifier;
+    return {
+      breakdown,
+      total: modifier,
+    };
   }
 
   get attackDisplay() {
     const die = this._attackDie;
-    const mod = this._attackModifier;
+    const mod = this._attackModifier.total;
     return `${die}${mod ? (mod > 0 ? `+${mod}` : mod) : ''}`;
   }
 
@@ -674,24 +815,48 @@ export class EquippedWeapon extends LitElement {
   get _damageModifier() {
     // start with zero modifier
     let modifier = 0;
+    const breakdown = [];
 
-    // if the weapon is a melee weapon or the weapon is a missle weapon being shot at short range...
+    // allow complete override
+    if (this.damageModifierOverride) {
+      return {
+        breakdown: [
+          {
+            name: 'Damage Modifier Override',
+            value: this.damageModifierOverride,
+          },
+        ],
+        total: this.damageModifierOverride,
+      };
+    }
+
+    // if the weapon is a melee weapon or the weapon is being thrown at short range...
     if (
       this.type === 'melee' ||
-      (this.type === 'missile' && this.range === 'short')
+      (this.range === 'short' &&
+        weaponStatsFor(this.weapon)?.addStrengthToDamageAtShortRange)
     ) {
       modifier = modifierFor(this.strength);
+      breakdown.push({name: 'Strength Modifier', value: modifier});
     }
 
     // apply luck to all damage rolls
     if (this.birthAugur === 'Born on the battlefield') {
       modifier += modifierFor(this.luck);
+      breakdown.push({
+        name: 'Birth Augur (Born on the Battlefield)',
+        value: modifierFor(this.luck),
+      });
     }
 
     // apply luck to melee damage rolls
     if (this.type === 'melee') {
       if (this.birthAugur === 'Path of the bear') {
         modifier += modifierFor(this.luck);
+        breakdown.push({
+          name: 'Birth Augur (Path of the Bear)',
+          value: modifierFor(this.luck),
+        });
       }
     }
 
@@ -699,25 +864,39 @@ export class EquippedWeapon extends LitElement {
     if (this.type === 'missile') {
       if (this.birthAugur === 'Hawkeye') {
         modifier += modifierFor(this.luck);
+        breakdown.push({
+          name: 'Birth Augur (Hawkeye)',
+          value: modifierFor(this.luck),
+        });
       }
     }
 
     // apply luck to melee attack and damage rolls for starting weapons
     if (this.birthAugur === 'Pack hunter' && this.startingWeapon) {
       modifier += modifierFor(this.luck);
+      breakdown.push({
+        name: 'Birth Augur (Pack Hunter)',
+        value: modifierFor(this.luck),
+      });
     }
 
     // apply any attribute based adjustment
-    if (this.damageModifierAdjustment)
+    if (this.damageModifierAdjustment) {
       modifier += this.damageModifierAdjustment;
+      breakdown.push({
+        name: 'Modifier Adjustment',
+        value: this.damageModifierAdjustment,
+      });
+    }
 
-    // allow complete override
-    if (this.damageModifierOverride) modifier = this.damageModifierOverride;
-    return modifier;
+    return {
+      breakdown,
+      total: modifier,
+    };
   }
 
   get damageDisplay() {
-    const mod = this._damageModifier;
+    const mod = this._damageModifier.total;
     return `${this._damageDie}${mod ? (mod > 0 ? `+${mod}` : mod) : ''}`;
   }
 }
