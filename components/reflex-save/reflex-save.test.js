@@ -9,9 +9,7 @@ suite('reflex-save', () => {
   });
 
   test('agility=13', async () => {
-    const el = await fixture(
-      html`<reflex-save agility="13"></reflex-save>`
-    );
+    const el = await fixture(html`<reflex-save agility="13"></reflex-save>`);
     assert.shadowDom.equal(
       el,
       `
@@ -22,7 +20,11 @@ suite('reflex-save', () => {
 
   test('agility=8 and birth augur', async () => {
     const el = await fixture(
-      html`<reflex-save agility="8" birth-augur="Lucky Sign" starting-luck="16"></reflex-save>`
+      html`<reflex-save
+        agility="8"
+        birth-augur="Lucky Sign"
+        starting-luck="16"
+      ></reflex-save>`
     );
     assert.shadowDom.equal(
       el,
@@ -46,7 +48,11 @@ suite('reflex-save', () => {
 
   test('character class', async () => {
     const el = await fixture(
-      html`<reflex-save agility="12" character-class="warrior" level="4"></reflex-save>`
+      html`<reflex-save
+        agility="12"
+        character-class="warrior"
+        level="4"
+      ></reflex-save>`
     );
     assert.shadowDom.equal(
       el,
@@ -58,7 +64,12 @@ suite('reflex-save', () => {
 
   test('adjustment', async () => {
     const el = await fixture(
-      html`<reflex-save agility="12" character-class="warrior" level="4" adjustment="2"></reflex-save>`
+      html`<reflex-save
+        agility="12"
+        character-class="warrior"
+        level="4"
+        adjustment="2"
+      ></reflex-save>`
     );
     assert.shadowDom.equal(
       el,
@@ -70,7 +81,12 @@ suite('reflex-save', () => {
 
   test('lowest possible value', async () => {
     const el = await fixture(
-      html`<reflex-save agility="3" adjustment="-3" birth-augur="lucky-sign" starting-luck="3"></reflex-save>`
+      html`<reflex-save
+        agility="3"
+        adjustment="-3"
+        birth-augur="lucky-sign"
+        starting-luck="3"
+      ></reflex-save>`
     );
     assert.shadowDom.equal(
       el,

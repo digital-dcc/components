@@ -32,22 +32,59 @@
       <reflex-save agility="12"></reflex-save>
       <reflex-save agility="12" character-class="none" level="0"></reflex-save>
       <h2>class warrior, but level 0, 13 agility</h2>
-      <reflex-save agility="13" character-class="warrior" level="0"></reflex-save>
+      <reflex-save
+        agility="13"
+        character-class="warrior"
+        level="0"
+      ></reflex-save>
       <h2>class warrior, 13 agility</h2>
-      <reflex-save agility="12" character-class="warrior" level="1"></reflex-save>
+      <reflex-save
+        agility="12"
+        character-class="warrior"
+        level="1"
+      ></reflex-save>
       <h2>Maxed out theif</h2>
-      <reflex-save agility="18" character-class="thief" level="10" birth-augur="lucky-sign" starting-luck="18"></reflex-save>
+      <reflex-save
+        agility="18"
+        character-class="thief"
+        level="10"
+        birth-augur="lucky-sign"
+        starting-luck="18"
+      ></reflex-save>
       <h2>Min wizard</h2>
-      <reflex-save agility="3" character-class="wizard" level="1" birth-augur="lucky-sign" starting-luck="3"></reflex-save>
+      <reflex-save
+        agility="3"
+        character-class="wizard"
+        level="1"
+        birth-augur="lucky-sign"
+        starting-luck="3"
+      ></reflex-save>
       <h2>adjustment</h2>
-      <reflex-save id="ref1" agility="18" character-class="wizard" level="10" birth-augur="lucky-sign" starting-luck="18" adjustment="+5"></reflex-save>
-			<script type="module">
-				document.querySelector('#ref1').addEventListener('reflex-saving-throw', (e) => {
-					console.log(e.detail);
-				});
-			</script>
+      <reflex-save
+        id="ref1"
+        agility="18"
+        character-class="wizard"
+        level="10"
+        birth-augur="lucky-sign"
+        starting-luck="18"
+        adjustment="+5"
+      ></reflex-save>
+      <script type="module">
+        document
+          .querySelector('#ref1')
+          .addEventListener('reflex-saving-throw', (e) => {
+            console.log(e.detail);
+          });
+      </script>
       <h2>Override</h2>
-      <reflex-save agility="18" character-class="wizard" level="10" birth-augur="lucky-sign" starting-luck="18" override="+5"></reflex-save>
+      <reflex-save
+        agility="18"
+        character-class="wizard"
+        level="10"
+        birth-augur="lucky-sign"
+        starting-luck="18"
+        override="+5"
+      ></reflex-save>
     </div>
   </body>
 </html>
