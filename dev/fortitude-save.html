@@ -30,24 +30,65 @@
     <div class="wrapper">
       <h2>no class, 12 stamina</h2>
       <fortitude-save stamina="12"></fortitude-save>
-      <fortitude-save stamina="12" character-class="none" level="0"></fortitude-save>
+      <fortitude-save
+        stamina="12"
+        character-class="none"
+        level="0"
+      ></fortitude-save>
       <h2>class warrior, but level 0, 13 stamina</h2>
-      <fortitude-save stamina="13" character-class="warrior" level="0"></fortitude-save>
+      <fortitude-save
+        stamina="13"
+        character-class="warrior"
+        level="0"
+      ></fortitude-save>
       <h2>class warrior, 13 stamina</h2>
-      <fortitude-save stamina="12" character-class="warrior" level="1"></fortitude-save>
+      <fortitude-save
+        stamina="12"
+        character-class="warrior"
+        level="1"
+      ></fortitude-save>
       <h2>Maxed out theif</h2>
-      <fortitude-save stamina="18" character-class="thief" level="10" birth-augur="lucky-sign" starting-luck="18"></fortitude-save>
+      <fortitude-save
+        stamina="18"
+        character-class="thief"
+        level="10"
+        birth-augur="lucky-sign"
+        starting-luck="18"
+      ></fortitude-save>
       <h2>Min wizard</h2>
-      <fortitude-save stamina="3" character-class="wizard" level="1" birth-augur="lucky-sign" starting-luck="3"></fortitude-save>
+      <fortitude-save
+        stamina="3"
+        character-class="wizard"
+        level="1"
+        birth-augur="lucky-sign"
+        starting-luck="3"
+      ></fortitude-save>
       <h2>adjustment</h2>
-      <fortitude-save id="ref1" stamina="18" character-class="wizard" level="10" birth-augur="lucky-sign" starting-luck="18" adjustment="+5"></fortitude-save>
-			<script type="module">
-				document.querySelector('#ref1').addEventListener('fortitude-saving-throw', (e) => {
-					console.log(e.detail);
-				});
-			</script>
+      <fortitude-save
+        id="ref1"
+        stamina="18"
+        character-class="wizard"
+        level="10"
+        birth-augur="lucky-sign"
+        starting-luck="18"
+        adjustment="+5"
+      ></fortitude-save>
+      <script type="module">
+        document
+          .querySelector('#ref1')
+          .addEventListener('fortitude-saving-throw', (e) => {
+            console.log(e.detail);
+          });
+      </script>
       <h2>Override</h2>
-      <fortitude-save stamina="18" character-class="wizard" level="10" birth-augur="lucky-sign" starting-luck="18" override="+5"></fortitude-save>
+      <fortitude-save
+        stamina="18"
+        character-class="wizard"
+        level="10"
+        birth-augur="lucky-sign"
+        starting-luck="18"
+        override="+5"
+      ></fortitude-save>
     </div>
   </body>
 </html>

@@ -22,7 +22,11 @@ suite('fortitude-save', () => {
 
   test('stamina=8 and birth augur', async () => {
     const el = await fixture(
-      html`<fortitude-save stamina="8" birth-augur="Lucky Sign" starting-luck="16"></fortitude-save>`
+      html`<fortitude-save
+        stamina="8"
+        birth-augur="Lucky Sign"
+        starting-luck="16"
+      ></fortitude-save>`
     );
     assert.shadowDom.equal(
       el,
@@ -46,7 +50,11 @@ suite('fortitude-save', () => {
 
   test('character class dwarf', async () => {
     const el = await fixture(
-      html`<fortitude-save stamina="12" character-class="Dwarf" level="4"></fortitude-save>`
+      html`<fortitude-save
+        stamina="12"
+        character-class="Dwarf"
+        level="4"
+      ></fortitude-save>`
     );
     assert.shadowDom.equal(
       el,
@@ -58,7 +66,12 @@ suite('fortitude-save', () => {
 
   test('adjustment', async () => {
     const el = await fixture(
-      html`<fortitude-save stamina="12" character-class="Elf" level="7" adjustment="2"></fortitude-save>`
+      html`<fortitude-save
+        stamina="12"
+        character-class="Elf"
+        level="7"
+        adjustment="2"
+      ></fortitude-save>`
     );
     assert.shadowDom.equal(
       el,
@@ -70,7 +83,12 @@ suite('fortitude-save', () => {
 
   test('lowest possible value', async () => {
     const el = await fixture(
-      html`<fortitude-save stamina="3" adjustment="-3" birth-augur="lucky-sign" starting-luck="3"></fortitude-save>`
+      html`<fortitude-save
+        stamina="3"
+        adjustment="-3"
+        birth-augur="lucky-sign"
+        starting-luck="3"
+      ></fortitude-save>`
     );
     assert.shadowDom.equal(
       el,
