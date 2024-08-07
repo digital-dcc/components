@@ -38,21 +38,21 @@ class DiceRollResult {
 
 export class DiceRoller extends LitElement {
   static styles = css`
-		:host {
-			font-family: var(
-				--primary-font,
-				-apple-system,
-				BlinkMacSystemFont,
-				'Segoe UI',
-				Roboto,
-				Helvetica,
-				Arial,
-				sans-serif,
-				'Apple Color Emoji',
-				'Segoe UI Emoji',
-				'Segoe UI Symbol'
-			);
-		}
+    :host {
+      font-family: var(
+        --primary-font,
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif,
+        'Apple Color Emoji',
+        'Segoe UI Emoji',
+        'Segoe UI Symbol'
+      );
+    }
     h1,
     .roll-description {
       text-align: center;
@@ -68,6 +68,11 @@ export class DiceRoller extends LitElement {
       align-items: center;
       gap: 20px;
       margin-bottom: 20px;
+    }
+    @media (max-width: 400px) {
+      .roll-adjustment-section {
+        flex-direction: column;
+      }
     }
     .roll-adjustment-section {
       display: flex;
@@ -108,23 +113,23 @@ export class DiceRoller extends LitElement {
     .roll-result p {
       text-align: center;
     }
-		.modifier-breakdown {
-			padding-top: 10px;
-			margin-bottom: 20px;
-			border-top: 1px dashed #f2f2f2;
-			border-bottom: 1px dashed #f2f2f2;
-		}
-		.modifier-breakdown-entry {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-			width: 100%;
-			margin-bottom: 20px;
-		}
-		.modifier-breakdown-entry li {
-			display: flex;
-			justify-content: space-between;
-		}
+    .modifier-breakdown {
+      padding-top: 10px;
+      margin-bottom: 20px;
+      border-top: 1px dashed #f2f2f2;
+      border-bottom: 1px dashed #f2f2f2;
+    }
+    .modifier-breakdown-entry {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .modifier-breakdown-entry li {
+      display: flex;
+      justify-content: space-between;
+    }
   `;
 
   static properties = {
@@ -229,7 +234,7 @@ export class DiceRoller extends LitElement {
       <modal-dialog ?open="${this.open}">
         <h1>${this.diceRoll?.name}</h1>
         <p class="roll-description">${this.diceRoll?.description}</p>
-				<div class="modifier-breakdown">${this.modifierBreakdown}</div>
+        <div class="modifier-breakdown">${this.modifierBreakdown}</div>
         <div class="roll-adjustment">
           <div class="roll-adjustment-section">
             <button @click="${this.decrementQuantity}">-</button>
