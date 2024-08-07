@@ -6,6 +6,8 @@ import '../modal-dialog/modal-dialog.js';
 class DiceRollResult {
   #diceRolls = [];
   #modifier = 0;
+  name = '';
+  description = '';
 
   addRoll(roll) {
     this.#diceRolls.push(roll);
@@ -216,6 +218,8 @@ export class DiceRoller extends LitElement {
 
   roll() {
     const rollResult = new DiceRollResult();
+    rollResult.name = this.diceRoll?.name;
+    rollResult.description = this.diceRoll?.description;
     rollResult.modifier = this.modifier;
     const qty = this.qty || 1;
     const die = this.die?.split('d')[1] || 20;
@@ -226,6 +230,12 @@ export class DiceRoller extends LitElement {
     }
 
     this.rollResult = rollResult;
+
+    this.dispatchEvent(
+      new CustomEvent('dice-roll-result', {
+        detail: rollResult,
+      })
+    );
   }
 
   render() {
