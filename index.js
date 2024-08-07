@@ -22,3 +22,4 @@ import './components/strength-stat/strength-stat.js';
 import './components/untrained-input/untrained-input.js';
 import './components/weapons-panel/weapons-panel.js';
 import './components/willpower-save/willpower-save.js';
+import './components/modal-dialog/modal-dialog.js';

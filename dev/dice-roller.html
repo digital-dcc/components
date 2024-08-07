@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;dice-roller> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/dice-roller/dice-roller.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <div>
+        <dice-roller id="ref1"></dice-roller>
+        <script>
+          document.querySelector('#ref1').diceRoll = {
+            name: 'Saving Throw',
+            description: 'Fortitude saving throw',
+            qty: 1,
+            die: 20,
+            modifier: {
+              total: 3,
+              breakdown: [
+								{name: 'Stamina Modifier', value: 1},
+								{name: 'Luck Modifier', value: 1},
+								{name: 'Class Bonus', value: 1},
+							],
+            },
+          };
+        </script>
+      </div>
+    </div>
+  </body>
+</html>
