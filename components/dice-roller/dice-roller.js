@@ -211,7 +211,6 @@ export class DiceRoller extends LitElement {
   }
 
   decrementModifier() {
-    // if (this.modifier === 0) return;
     this.modifierAdjustment--;
   }
 
