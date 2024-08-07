@@ -234,7 +234,11 @@ export class DiceRoller extends LitElement {
       <modal-dialog ?open="${this.open}">
         <h1>${this.diceRoll?.name}</h1>
         <p class="roll-description">${this.diceRoll?.description}</p>
-        <div class="modifier-breakdown">${this.modifierBreakdown}</div>
+        ${this.diceRoll?.modifier?.breakdown?.length
+          ? html`<div class="modifier-breakdown">
+              ${this.modifierBreakdown}
+            </div>`
+          : html``}
         <div class="roll-adjustment">
           <div class="roll-adjustment-section">
             <button @click="${this.decrementQuantity}">-</button>
