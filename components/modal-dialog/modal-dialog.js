@@ -8,6 +8,14 @@ export class ModalDialog extends LitElement {
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       padding: 16px;
     }
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+    }
   `;
 
   static properties = {
@@ -23,6 +31,7 @@ export class ModalDialog extends LitElement {
     return html`
       <dialog @click="${this._stopPropagation}">
         <slot></slot>
+        <button @click="${this._close}" class="close-button">x</button>
       </dialog>
     `;
   }
