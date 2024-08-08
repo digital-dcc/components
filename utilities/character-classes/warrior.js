@@ -140,3 +140,40 @@ export const warrior = new Map([
     },
   ],
 ]);
+
+export const features = [
+  {name: 'Hit points', description: '1d12{{stamina}} hit points at each level'},
+  {
+    name: 'Weapon training',
+    description:
+      'battleaxe, club, crossbow, dagger, dart, flail, handaxe, javelin, lance, longbow, longsword, mace, polearm, shortbow, short sword, sling, spear, staff, two-handed sword, and warhammer. Any armor.',
+  },
+  {
+    name: 'Attack modifier',
+    description:
+      'Your attack and damage rolls are modified by your deed die ({{attack}}).',
+  },
+  {
+    name: 'Mighty Deed of Arms',
+    description:
+      'You may declare mighty deeds of arms using your deed die ({{attack}}). You achieve success with a 3 or better.',
+  },
+  {
+    name: 'Critical hits',
+    description: 'You deal critical hits on attack rolls of {{threatRange}}.',
+  },
+  {
+    name: 'Initiative',
+    description: 'You add your level to initiative checks (+{{level}}).',
+  },
+  {
+    name: 'Luck',
+    description:
+      'At 1st level, you may choose a lucky weapon type. Your luck modifier (at that time) applies to attacks with this type of weapon. This modifier does not change as your luck changes.',
+  },
+  {
+    name: 'Action dice',
+    description:
+      '{{actionDice}}. You may only use your action dice for attacks.',
+  },
+];

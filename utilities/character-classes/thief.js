@@ -798,3 +798,12 @@ export const skills = new Map([
     ]),
   ],
 ]);
+
+export const features = [
+	{ name: 'Hit points', description: '1d6{{stamina}} hit points at each level.' },
+	{ name: 'Weapon training', description: 'blackjack, blowgun, crossbow, dagger, dart, garrote, longsword, short sword, sling, and staff. Armor affects skill usage.' },
+	{ name: `Thieves' Cant`, description: 'Thieves know a secret spoken language called cant.' },
+	{ name: 'Thieving skills', description: 'Thieves know a set of skills ' },
+	{ name: 'Luck and Wits', description: 'You gain a {{luckDie}} bonus to rolls for each luck point burned. You recover luck by +{{level}} per nights rest. Your luck cannot be increased beyond its starting value.' },
+	{ name: 'Action dice', description: '{{actionDice}}. Your action dice can be used for any action.' },
+];

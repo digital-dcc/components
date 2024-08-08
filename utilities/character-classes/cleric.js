@@ -200,3 +200,44 @@ export const cleric = new Map([
     },
   ],
 ]);
+
+export const features = [
+  {name: 'Hit points', description: '1d8{{stamina}} hit points at each level'},
+  {
+    name: 'Choosing a god',
+    description: 'At 1st level, you must select a god to worship.',
+  },
+  {
+    name: 'Weapon training',
+    description: `You may use weapons as appropriate to your god (see page 32 of the DCC Core Rulebook). You may wear any armor (your spell checks are not hindered).`,
+  },
+  {name: 'Alignment', description: `Your alignment must match your god's`},
+  {
+    name: 'Caster level',
+    description: `Your caster level is a measure of your power in channeling your god's energy and is typically equal to your level (+{{level}}).`,
+  },
+  {
+    name: 'Magic',
+    description: `You perform idol magic in the form of spells by rolling 1d20 + personality modifier ({{personality}}) + caster level (+{{level}}).`,
+  },
+  {
+    name: 'Turn unholy',
+    description: `You may wield your holy symbol to turn away abominations by rolling 1d20 + personality modifier ({{personality}}) + caster level (+{{level}}) + luck modifier ({{luck}}).`,
+  },
+  {
+    name: 'Lay on hands',
+    description: `You may make a spell check to "lay on hands" and heal damage to any living creature by rolling 1d20 + personality modifier ({{personality}}) + caster level (+{{level}}).`,
+  },
+  {
+    name: 'Divine aid',
+    description: `You are entitled to beseech your deity for divine aid by rolling 1d20 + personality modifier ({{personality}}) + caster level (+{{level}}). When you do so, your disapproval range increases by +10.`,
+  },
+  {
+    name: 'Luck',
+    description: `Your luck modifier applies when you attempt to turn unholy creatures.`,
+  },
+  {
+    name: 'Action dice',
+    description: `{{actionDice}}. You may use your action dice for attack rolls or checks to cast spells, turn unholy creatures, lay on hands or ask your god for divine aid.`,
+  },
+];

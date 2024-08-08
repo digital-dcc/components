@@ -150,3 +150,6 @@ export const wizard = new Map([
     },
   ],
 ]);
+
+export const features = [
+];
