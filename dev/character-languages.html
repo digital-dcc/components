@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;character-languages> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/character-languages/character-languages.js"
+    ></script>
+    <script
+      type="module"
+      src="../components/character-language-item/character-language-item.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <div>
+        <h2>Character Languages</h2>
+        <character-languages>
+					<character-language-item name="Common"></character-language-item>
+					<character-language-item name="Dwarvish"></character-language-item>
+					<character-language-item name="Elvish"></character-language-item>
+				</character-languages>
+    </div>
+  </body>
+</html>
