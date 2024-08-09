@@ -147,7 +147,7 @@ export const thief = new Map([
 export const skills = new Map([
   [
     'backstab',
-		// modified by str or agility depending on melee or missile as well as attack bonus from class and magic weapon bonus if applicable
+    // modified by str or agility depending on melee or missile as well as attack bonus from class and magic weapon bonus if applicable
     new Map([
       [
         'lawful',
@@ -198,7 +198,7 @@ export const skills = new Map([
   ],
   [
     'sneakSilently',
-		// modified by agility
+    // modified by agility
     new Map([
       [
         'lawful',
@@ -800,10 +800,28 @@ export const skills = new Map([
 ]);
 
 export const features = [
-	{ name: 'Hit points', description: '1d6{{stamina}} hit points at each level.' },
-	{ name: 'Weapon training', description: 'blackjack, blowgun, crossbow, dagger, dart, garrote, longsword, short sword, sling, and staff. Armor affects skill usage.' },
-	{ name: `Thieves' Cant`, description: 'Thieves know a secret spoken language called cant.' },
-	{ name: 'Thieving skills', description: 'Thieves know a set of skills ' },
-	{ name: 'Luck and Wits', description: 'You gain a {{luckDie}} bonus to rolls for each luck point burned. You recover luck by +{{level}} per nights rest. Your luck cannot be increased beyond its starting value.' },
-	{ name: 'Action dice', description: '{{actionDice}}. Your action dice can be used for any action.' },
+  {name: 'Hit points', description: '1d6{{stamina}} hit points at each level.'},
+  {
+    name: 'Weapon training',
+    description:
+      'blackjack, blowgun, crossbow, dagger, dart, garrote, longsword, short sword, sling, and staff. As a thief, you prefer light armor because your armor check penalty affects your skill usage.',
+  },
+  {
+    name: `Thieves' Cant`,
+    description: 'You know a secret spoken thief language called cant.',
+  },
+  {
+    name: 'Thieving skills',
+    description:
+      'You know a set of illicit thieving skills. Backstab, sneak silently, hide in shadows, pick pocket, climb sheer surfaces, pick lock, find trap, disable trap, disguise self, read languages, handle poison, and cast spell from scroll.',
+  },
+  {
+    name: 'Luck and Wits',
+    description:
+      'You gain a {{luckDie}} bonus to rolls for each luck point burned. You recover luck by +{{level}} per nights rest. Your luck cannot be increased beyond its starting value.',
+  },
+  {
+    name: 'Action dice',
+    description: '{{actionDice}}. Your action dice can be used for any action.',
+  },
 ];

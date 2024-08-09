@@ -15,28 +15,29 @@ export class CharacterFeatures extends LitElement {
         padding: 0;
         margin: 0;
       }
-			h1 {
-				margin: 0;
-				padding: 0;
-				font-size: 0.8em;
-				text-align: center;
-				margin-bottom: 10px;
-			}
-			ul, li {
-				margin: 0;
-				padding: 0;
-				list-style-type: none;
-				font-size: 1rem;
-			}
-			li {
-				margin-bottom: 10px;
-			}
-			.wrapper {
-				border-radius: 5px;
-				padding: 10px;
-				border: 1px black solid;
-				margin-bottom: 10px;
-			}
+      h1 {
+        margin: 0;
+        padding: 0;
+        font-size: 0.8em;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      ul,
+      li {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        font-size: 1rem;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+      .wrapper {
+        border-radius: 5px;
+        padding: 10px;
+        border: 1px black solid;
+        margin-bottom: 10px;
+      }
     `;
   }
 
@@ -47,6 +48,7 @@ export class CharacterFeatures extends LitElement {
       stamina: {type: Number},
       luck: {type: Number},
       personality: {type: Number},
+      intelligence: {type: Number},
     };
   }
 
@@ -54,33 +56,47 @@ export class CharacterFeatures extends LitElement {
     super();
     this.characterClass = null;
     this.level = 0;
-		this.stamina = 11;
-		this.luck = 11;
-		this.personality = 11;
+    this.stamina = 11;
+    this.luck = 11;
+    this.personality = 11;
+    this.intelligence = 11;
   }
 
   feature(feature) {
-		// get classData for given class and level
+    // get classData for given class and level
     const classData = characterClasses
       .get(slug(this.characterClass))
       ?.get(this.level);
 
-		// look for dynamic template keys in description and replace with values from character data
-		let description = feature.description;
-		const regex = /{{(.*?)}}/g;
-		const matches = description.match(regex);
-		for (const match of matches || []) {
-			const key = match.slice(2, -2).trim();
-			const replacement = classData[key];
-			// replace stamina
-			description = description.replaceAll('{{luck}}', formatModifier(modifierFor(this.luck)));
-			description = description.replaceAll('{{personality}}', formatModifier(modifierFor(this.personality)));
-			description = description.replaceAll('{{stamina}}', formatModifier(modifierFor(this.stamina), true));
-			// replace dynamic template keys with values from class data
-			description = description.replaceAll(match, replacement);
-		}
+    // look for dynamic template keys in description and replace with values from character data
+    let description = feature.description;
+    const regex = /{{(.*?)}}/g;
+    const matches = description.match(regex);
+    for (const match of matches || []) {
+      const key = match.slice(2, -2).trim();
+      const replacement = classData[key];
+      // replace stamina
+      description = description.replaceAll(
+        '{{luck}}',
+        formatModifier(modifierFor(this.luck))
+      );
+      description = description.replaceAll(
+        '{{personality}}',
+        formatModifier(modifierFor(this.personality))
+      );
+      description = description.replaceAll(
+        '{{intelligence}}',
+        formatModifier(modifierFor(this.intelligence))
+      );
+      description = description.replaceAll(
+        '{{stamina}}',
+        formatModifier(modifierFor(this.stamina), true)
+      );
+      // replace dynamic template keys with values from class data
+      description = description.replaceAll(match, replacement);
+    }
 
-    return { name: feature.name, description };
+    return {name: feature.name, description};
   }
 
   render() {
@@ -88,7 +104,7 @@ export class CharacterFeatures extends LitElement {
 
     return html`
       <div part="wrapper" class="wrapper">
-        <h1>Class Features</h1>
+        <h2>Class Features</h2>
         <ul>
           ${features.map((feature) => {
             const {name, description} = this.feature(feature);

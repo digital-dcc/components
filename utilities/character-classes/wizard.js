@@ -152,4 +152,38 @@ export const wizard = new Map([
 ]);
 
 export const features = [
+  {name: 'Hit points', description: '1d4{{stamina}} hit points at each level.'},
+  {
+    name: 'Weapon training',
+    description: `dagger, longbow, longsword, shortbow, short sword, and staff. You prefer not to wear armor since it's armor check penalty negatively affects your spellcasting ability.`,
+  },
+  {name: 'Alignment', description: `Any.`},
+  {
+    name: 'Caster level',
+    description: `({{level}}). Your caster level is a reflection of your mastery of spells. This is typically the same as your level.`,
+  },
+  {
+    name: 'Magic',
+    description: `You know {{knownSpells}} + your intelligence modifier ({{intelligence}}) spells. The spells you know can have a maximum level of {{maxSpellLevel}}.`,
+  },
+  {
+    name: 'Supernatural patrons',
+    description: `Once you have learned the spell "Invoke Patron" you have the option of forming a bond with a powerful otherworldly being. See page 49 of the DCC core book.`,
+  },
+  {
+    name: 'Familiars',
+    description: `Once you have learned the spell "Find Familiar" you may use it to form a bond with a familiar. See page 50 of the DCC core book.`,
+  },
+  {
+    name: 'Luck',
+    description: `Your luck modifier applies to corruption and mecurial magic rolls.`,
+  },
+  {
+    name: 'Languages',
+    description: `You know 2 additional languages for each point of intelligence modifier ({{intelligence}})`,
+  },
+  {
+    name: 'Action Dice',
+    description: `Your first action die can be used for attacks or spell casting. Any additional action dice may only be used for spellcasting. ({{actionDice}})`,
+  },
 ];

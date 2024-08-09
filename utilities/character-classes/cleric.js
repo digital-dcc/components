@@ -214,7 +214,7 @@ export const features = [
   {name: 'Alignment', description: `Your alignment must match your god's`},
   {
     name: 'Caster level',
-    description: `Your caster level is a measure of your power in channeling your god's energy and is typically equal to your level (+{{level}}).`,
+    description: `({{level}}). Your caster level is a measure of your power in channeling your god's energy and is typically equal to your level.`,
   },
   {
     name: 'Magic',
