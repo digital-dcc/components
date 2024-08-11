@@ -1,3 +1,5 @@
+export const displayName = 'Dwarf';
+
 export const dwarf = new Map([
   [
     1,
@@ -179,3 +181,47 @@ export const features = [
       '{{actionDice}}. You may only use your action dice for attacks.',
   },
 ];
+
+// @ts-ignore
+export const titles = new Map([
+  [
+    1,
+    new Map([
+      ['lawful', 'Agent'],
+      ['neutral', 'Apprentice'],
+      ['chaotic', 'Rebel'],
+    ]),
+  ],
+  [
+    2,
+    new Map([
+      ['lawful', 'Broker'],
+      ['neutral', 'Novice'],
+      ['chaotic', 'Dissident'],
+    ]),
+  ],
+  [
+    3,
+    new Map([
+      ['lawful', 'Delegate'],
+      ['neutral', 'Journeyer'],
+      ['chaotic', 'Exile'],
+    ]),
+  ],
+  [
+    4,
+    new Map([
+      ['lawful', 'Envoy'],
+      ['neutral', 'Crafter'],
+      ['chaotic', 'Iconoclast'],
+    ]),
+  ],
+  [
+    5,
+    new Map([
+      ['lawful', 'Syndic'],
+      ['neutral', 'Thegn'],
+      ['chaotic', 'Renegade'],
+    ]),
+  ],
+]);

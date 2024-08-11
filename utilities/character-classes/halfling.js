@@ -1,3 +1,5 @@
+export const displayName = 'Halfling';
+
 export const halfling = new Map([
   [
     1,
@@ -181,3 +183,47 @@ export const features = [
       '({{actionDice}}). You can use your action dice for attacks or skill checks.',
   },
 ];
+
+// @ts-ignore
+export const titles = new Map([
+  [
+    1,
+    new Map([
+      ['lawful', 'Wanderer'],
+      ['neutral', 'Wanderer'],
+      ['chaotic', 'Wanderer'],
+    ]),
+  ],
+  [
+    2,
+    new Map([
+      ['lawful', 'Explorer'],
+      ['neutral', 'Explorer'],
+      ['chaotic', 'Explorer'],
+    ]),
+  ],
+  [
+    3,
+    new Map([
+      ['lawful', 'Collector'],
+      ['neutral', 'Collector'],
+      ['chaotic', 'Collector'],
+    ]),
+  ],
+  [
+    4,
+    new Map([
+      ['lawful', 'Accumulator'],
+      ['neutral', 'Accumulator'],
+      ['chaotic', 'Accumulator'],
+    ]),
+  ],
+  [
+    5,
+    new Map([
+      ['lawful', 'Wise one'],
+      ['neutral', 'Wise one'],
+      ['chaotic', 'Wise one'],
+    ]),
+  ],
+]);

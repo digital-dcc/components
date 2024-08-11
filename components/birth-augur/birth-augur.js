@@ -35,16 +35,16 @@ export class BirthAugur extends LitElement {
         padding: 5px 10px 0px 10px;
         min-width: fit-content;
       }
-      h1,
       h2,
       h3,
+      h4,
       p {
         margin: 0;
         margin-bottom: 5px;
         padding: 0;
       }
-      h1 {
-        font-size: 1.2rem;
+      h2 {
+        font-size: 0.8rem;
       }
     `;
   }
@@ -78,9 +78,9 @@ export class BirthAugur extends LitElement {
     }; // pointless TS appeasement
     return html`
       <div part="wrapper" class="wrapper">
-        <h1>Birth Augur and Lucky Roll</h1>
-        <h2>${augur.birthAugur}</h2>
-        <h3>${augur.luckyRoll} ${this.luckModifier(augur)}</h3>
+        <h2>Birth Augur and Lucky Roll</h2>
+        <h3>${augur.birthAugur}</h3>
+        <h4>${augur.luckyRoll} ${this.luckModifier(augur)}</h4>
         <p>${this.extra(augur)}</p>
       </div>
     `;

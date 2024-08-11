@@ -1,3 +1,5 @@
+export const displayName = 'Warrior';
+
 export const warrior = new Map([
   [
     1,
@@ -177,3 +179,47 @@ export const features = [
       '{{actionDice}}. You may only use your action dice for attacks.',
   },
 ];
+
+// @ts-ignore
+export const titles = new Map([
+  [
+    1,
+    new Map([
+      ['lawful', 'Squire'],
+      ['neutral', 'Wildling'],
+      ['chaotic', 'Bandit'],
+    ]),
+  ],
+  [
+    2,
+    new Map([
+      ['lawful', 'Champion'],
+      ['neutral', 'Barbarian'],
+      ['chaotic', 'Brigand'],
+    ]),
+  ],
+  [
+    3,
+    new Map([
+      ['lawful', 'Knight'],
+      ['neutral', 'Berserker'],
+      ['chaotic', 'Marauder'],
+    ]),
+  ],
+  [
+    4,
+    new Map([
+      ['lawful', 'Cavalier'],
+      ['neutral', 'Headman/Headwoman'],
+      ['chaotic', 'Ravager'],
+    ]),
+  ],
+  [
+    5,
+    new Map([
+      ['lawful', 'Paladin'],
+      ['neutral', 'Chieftain'],
+      ['chaotic', 'Reaver'],
+    ]),
+  ],
+]);

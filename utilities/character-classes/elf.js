@@ -1,3 +1,5 @@
+export const displayName = 'Elf';
+
 export const elf = new Map([
   [
     1,
@@ -204,3 +206,47 @@ export const features = [
       '({{actionDice}}) You can use your action dice for attacks or spellcasting.',
   },
 ];
+
+// @ts-ignore
+export const titles = new Map([
+  [
+    1,
+    new Map([
+      ['lawful', 'Wanderer'],
+      ['neutral', 'Wanderer'],
+      ['chaotic', 'Wanderer'],
+    ]),
+  ],
+  [
+    2,
+    new Map([
+      ['lawful', 'Seer'],
+      ['neutral', 'Seer'],
+      ['chaotic', 'Seer'],
+    ]),
+  ],
+  [
+    3,
+    new Map([
+      ['lawful', 'Quester'],
+      ['neutral', 'Quester'],
+      ['chaotic', 'Quester'],
+    ]),
+  ],
+  [
+    4,
+    new Map([
+      ['lawful', 'Savant'],
+      ['neutral', 'Savant'],
+      ['chaotic', 'Savant'],
+    ]),
+  ],
+  [
+    5,
+    new Map([
+      ['lawful', 'Elder'],
+      ['neutral', 'Elder'],
+      ['chaotic', 'Elder'],
+    ]),
+  ],
+]);

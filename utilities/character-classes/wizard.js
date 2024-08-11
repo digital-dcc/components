@@ -1,3 +1,5 @@
+export const displayName = 'Wizard';
+
 export const wizard = new Map([
   [
     1,
@@ -187,3 +189,47 @@ export const features = [
     description: `Your first action die can be used for attacks or spell casting. Any additional action dice may only be used for spellcasting. ({{actionDice}})`,
   },
 ];
+
+// @ts-ignore
+export const titles = new Map([
+  [
+    1,
+    new Map([
+      ['lawful', 'Evoker'],
+      ['neutral', 'Astrologist'],
+      ['chaotic', 'Cultist'],
+    ]),
+  ],
+  [
+    2,
+    new Map([
+      ['lawful', 'Controller'],
+      ['neutral', 'Enchanter'],
+      ['chaotic', 'Shaman'],
+    ]),
+  ],
+  [
+    3,
+    new Map([
+      ['lawful', 'Conjurer'],
+      ['neutral', 'Magician'],
+      ['chaotic', 'Diabolist'],
+    ]),
+  ],
+  [
+    4,
+    new Map([
+      ['lawful', 'Summoner'],
+      ['neutral', 'Thaumaturgist'],
+      ['chaotic', 'Warlock / Witch'],
+    ]),
+  ],
+  [
+    5,
+    new Map([
+      ['lawful', 'Elementalist'],
+      ['neutral', 'Sorcerer'],
+      ['chaotic', 'Necromancer'],
+    ]),
+  ],
+]);

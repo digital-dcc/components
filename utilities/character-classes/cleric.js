@@ -1,3 +1,5 @@
+export const displayName = 'Cleric';
+
 export const cleric = new Map([
   [
     1,
@@ -241,3 +243,47 @@ export const features = [
     description: `{{actionDice}}. You may use your action dice for attack rolls or checks to cast spells, turn unholy creatures, lay on hands or ask your god for divine aid.`,
   },
 ];
+
+// @ts-ignore
+export const titles = new Map([
+  [
+    1,
+    new Map([
+      ['lawful', 'Acolyte'],
+      ['neutral', 'Witness'],
+      ['chaotic', 'Zeolot'],
+    ]),
+  ],
+  [
+    2,
+    new Map([
+      ['lawful', 'Heathen-slayer'],
+      ['neutral', 'Pupil'],
+      ['chaotic', 'Convert'],
+    ]),
+  ],
+  [
+    3,
+    new Map([
+      ['lawful', 'Brother'],
+      ['neutral', 'Chronicler'],
+      ['chaotic', 'Cultist'],
+    ]),
+  ],
+  [
+    4,
+    new Map([
+      ['lawful', 'Curate'],
+      ['neutral', 'Judge'],
+      ['chaotic', 'Apostle'],
+    ]),
+  ],
+  [
+    5,
+    new Map([
+      ['lawful', 'Father'],
+      ['neutral', 'Druid'],
+      ['chaotic', 'High priest'],
+    ]),
+  ],
+]);

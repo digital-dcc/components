@@ -1,3 +1,5 @@
+export const displayName = 'Thief';
+
 export const thief = new Map([
   [
     1,
@@ -825,3 +827,47 @@ export const features = [
     description: '{{actionDice}}. Your action dice can be used for any action.',
   },
 ];
+
+// @ts-ignore
+export const titles = new Map([
+  [
+    1,
+    new Map([
+      ['lawful', 'Bravo'],
+      ['neutral', 'Beggar'],
+      ['chaotic', 'Thug'],
+    ]),
+  ],
+  [
+    2,
+    new Map([
+      ['lawful', 'Apprentice'],
+      ['neutral', 'Cutpurse'],
+      ['chaotic', 'Murderer'],
+    ]),
+  ],
+  [
+    3,
+    new Map([
+      ['lawful', 'Rogue'],
+      ['neutral', 'Burglar'],
+      ['chaotic', 'Cutthroat'],
+    ]),
+  ],
+  [
+    4,
+    new Map([
+      ['lawful', 'Capo'],
+      ['neutral', 'Robber'],
+      ['chaotic', 'Executioner'],
+    ]),
+  ],
+  [
+    5,
+    new Map([
+      ['lawful', 'Boss'],
+      ['neutral', 'Swindler'],
+      ['chaotic', 'Assassin'],
+    ]),
+  ],
+]);

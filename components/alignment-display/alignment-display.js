@@ -1,11 +1,11 @@
 import {LitElement, html, css} from 'lit';
 
 const alignmentMap = new Map([
-	['law', 'Law'],
-	['lawful', 'Law'],
-	['neutral', 'Neutral'],
-	['chaos', 'Chaos'],
-	['chaotic', 'Chaos'],
+  ['law', 'Lawful'],
+  ['lawful', 'Lawful'],
+  ['neutral', 'Neutral'],
+  ['chaos', 'Chaotic'],
+  ['chaotic', 'Chaotic'],
 ]);
 
 export class AlignmentDisplay extends LitElement {
@@ -19,7 +19,7 @@ export class AlignmentDisplay extends LitElement {
         border-radius: 5px;
         border: 1px black solid;
         display: flex;
-				flex-direction: column;
+        flex-direction: column;
         min-height: 25px;
         font-family: var(
           --primary-font,
@@ -35,18 +35,19 @@ export class AlignmentDisplay extends LitElement {
           'Segoe UI Symbol'
         );
         font-size: 1rem;
-				align-items: center;
-				min-width: fit-content;
-				max-width: 120px;
-				padding: 10px 0px;
+        align-items: center;
+        min-width: fit-content;
+        max-width: 120px;
+        padding: 10px 0px;
       }
-			h1 {
-				margin: 0;
-				padding: 0;
-			}
-			.alignment-name {
-				text-align: center;
-			}
+      h2 {
+        margin: 0;
+        padding: 0;
+        font-size: 0.8rem;
+      }
+      .alignment-name {
+        text-align: center;
+      }
     `;
   }
 
@@ -61,14 +62,16 @@ export class AlignmentDisplay extends LitElement {
     this.alignment = null;
   }
 
-	get alignmentText() {
-		return alignmentMap.get(this.alignment.toLowerCase());
-	}
+  get alignmentText() {
+    return alignmentMap.get(this.alignment.toLowerCase());
+  }
 
   render() {
     return html`
       <div part="wrapper" class="wrapper">
-        <h1 class="alignment-name" part="alignment-name">${this.alignmentText}</h1>
+        <h2 class="alignment-name" part="alignment-name">
+          ${this.alignmentText}
+        </h2>
       </div>
     `;
   }

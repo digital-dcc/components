@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;title-box> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script type="module" src="../components/title-box/title-box.js"></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <h2>Gimble the 0th level</h2>
+      <title-box name="Gimble" level="0" alignment="lawful"></title-box>
+      <h2>Rikkon the 3rd level warrior</h2>
+      <title-box
+        name="Rikkon"
+        level="3"
+        alignment="lawful"
+        character-class="cleric"
+      ></title-box>
+      <h2>Bob the 1st level wizard</h2>
+      <title-box
+        name="Bob"
+        level="1"
+        alignment="chaotic"
+        character-class="wizard"
+      ></title-box>
+      <h2>Samson the 5th level thief</h2>
+      <title-box
+        name="Samson"
+        level="5"
+        alignment="neutral"
+        character-class="thief"
+      ></title-box>
+      <h2>Gimle the 7th level dwarf</h2>
+      <title-box
+        name="Gimle"
+        level="7"
+        alignment="lawful"
+        character-class="dwarf"
+      ></title-box>
+      <h2>Galadrial the 9th level elf</h2>
+      <title-box
+        name="Galadrial"
+        level="9"
+        alignment="chaotic"
+        character-class="elf"
+      ></title-box>
+      <h2>Bimbo the 2nd level halfling</h2>
+      <title-box
+        name="Bimbo"
+        level="2"
+        alignment="neutral"
+        character-class="halfling"
+      ></title-box>
+    </div>
+  </body>
+</html>
