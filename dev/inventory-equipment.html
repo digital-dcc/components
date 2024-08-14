@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;inventory-equipment> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/inventory-equipment/inventory-equipment.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <h2>Ammunition</h2>
+      <inventory-equipment name="Rope, 50"></inventory-equipment>
+      <script type="module">
+        document.querySelectorAll('inventory-equipment').forEach((weapon) => {
+          weapon.addEventListener('remove', (event) => {
+            console.log('remove', event.detail);
+          });
+          weapon.addEventListener('quantity-change', (event) => {
+            console.log('quantity-change', event.detail);
+          });
+        });
+      </script>
+    </div>
+  </body>
+</html>
