@@ -5,31 +5,31 @@ export class InventoryWeapon extends LitElement {
   static get styles() {
     return css`
       :host {
-        margin: 0px;
+        display: block;
         padding: 0px;
-        display: table-row;
+        margin: 0px;
+        font-family: var(
+          --primary-font,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif,
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+          'Segoe UI Symbol'
+        );
+      }
+      .wrapper {
+        display: flex;
+        justify-content: space-between;
         border-bottom: 1px black dotted;
-        width: 100%;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        justify-items: center;
       }
-
-      .td {
-        margin: 0px;
-        padding: 0px;
-        display: table-cell;
-        vertical-align: middle;
-        text-align: center;
-      }
-      .td.first {
-        text-align: left;
-      }
-      .td.last {
-        text-align: right;
-      }
-			.buttons {
-				display: flex;
-				justify-content: right;
-				gap: 10px;
-			}
       button {
         border: none;
         margin: 0px;
@@ -38,16 +38,54 @@ export class InventoryWeapon extends LitElement {
         cursor: pointer;
       }
       .equip-button {
+        padding: 5px;
+        border-radius: 5px;
       }
-      .delete-button {
+      .equip-button:hover {
+        background-color: #f2f2f2;
+      }
+      .remove-button {
         border-radius: 100%;
         width: 25px;
         height: 25px;
-        background-color: #00ff00;
+        background-color: #f2f2f2;
         text-align: center;
         justify-items: center;
         font-size: 0.8rem;
         line-height: 0.8rem;
+      }
+      .remove-button:hover {
+        background-color: #c3c3c3;
+      }
+      .name {
+        width: 100px;
+        display: flex;
+        align-items: center;
+      }
+      .damage {
+        width: 40px;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+      }
+      .range {
+        width: 90px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .cost {
+        width: 75px;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+      }
+      .buttons {
+        width: 100px;
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        gap: 10px;
       }
     `;
   }
@@ -76,9 +114,9 @@ export class InventoryWeapon extends LitElement {
     );
   }
 
-  onDelete() {
+  onRemove() {
     this.dispatchEvent(
-      new CustomEvent('delete', {
+      new CustomEvent('remove', {
         detail: {
           name: this.name,
         },
@@ -93,16 +131,16 @@ export class InventoryWeapon extends LitElement {
       range = `${stats.range.short}/${stats.range.medium}/${stats.range.long}`;
     }
     return html`
-      <div class="td first name">${this.name}</div>
-      <div class="td damage">${stats?.damage}</div>
-      <div class="td range">${range || '-'}</div>
-      <div class="td cost">${stats?.cost}gp</div>
-      <div class="td last">
+      <div class="wrapper" part="wrapper">
+        <div class="name">${this.name}</div>
+        <div class="damage">${stats?.damage}</div>
+        <div class="range">${range || '-'}</div>
+        <div class="cost">${stats?.cost}gp</div>
         <div class="buttons">
           <button class="equip-button" @click=${this.onTogglEquip}>
             ${this.equipped ? 'unequip' : 'equip'}
           </button>
-          <button class="delete-button" @click=${this.onDelete}>x</button>
+          <button class="remove-button" @click=${this.onRemove}>x</button>
         </div>
       </div>
     `;

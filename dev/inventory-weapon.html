@@ -6,7 +6,10 @@
     <title>&lt;inventory-weapon> Demo</title>
     <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../node_modules/lit/polyfill-support.js"></script>
-    <script type="module" src="../components/inventory-weapon/inventory-weapon.js"></script>
+    <script
+      type="module"
+      src="../components/inventory-weapon/inventory-weapon.js"
+    ></script>
     <style>
       .wrapper {
         font-size: 14px;
@@ -25,14 +28,25 @@
   <body>
     <a href="/">back</a>
     <div class="wrapper">
-      <h2>Longsword</h2>
-			<div style="display: table; width:100%;">
+      <h2>Weapons</h2>
       <inventory-weapon name="Longsword"></inventory-weapon>
       <inventory-weapon name="Mace"></inventory-weapon>
       <inventory-weapon name="Staff"></inventory-weapon>
-      <inventory-weapon name="Crossbox"></inventory-weapon>
+      <inventory-weapon name="Crossbow"></inventory-weapon>
       <inventory-weapon name="Dagger"></inventory-weapon>
-			</div>
+      <script type="module">
+        document.querySelectorAll('inventory-weapon').forEach((weapon) => {
+          weapon.addEventListener('remove', (event) => {
+            console.log('remove', event.detail);
+          });
+          weapon.addEventListener('equip', (event) => {
+            console.log('equip', event.detail);
+          });
+          weapon.addEventListener('unequip', (event) => {
+            console.log('unequip', event.detail);
+          });
+        });
+      </script>
     </div>
   </body>
 </html>
