@@ -148,14 +148,14 @@ export class InventoryEquipment extends LitElement {
         <div class="name">${stats?.name}</div>
         <div class="quantity">
           <button
-            class="quantity-adjustment-button decrement-by-one"
+            class="quantity-adjustment-button decrement"
             @click="${this.decrementQuantity(1)}"
           >
             -1
           </button>
           ${this.quantity}
           <button
-            class="quantity-adjustment-button increment-by-quantity"
+            class="quantity-adjustment-button increment"
             @click="${this.incrementQuantity(1)}"
           >
             +1
