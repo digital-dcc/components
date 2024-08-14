@@ -62,22 +62,28 @@ export class InventoryArmor extends LitElement {
         display: flex;
         align-items: center;
       }
-      .damage {
+      .ac-bonus {
         width: 40px;
-        justify-content: center;
-        display: flex;
-        align-items: center;
-      }
-      .range {
-        width: 90px;
         display: flex;
         justify-content: center;
         align-items: center;
       }
-      .cost {
-        width: 75px;
-        justify-content: center;
+      .check-penalty {
+        width: 40px;
         display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .speed {
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .fumble-die {
+        width: 40px;
+        display: flex;
+        justify-content: center;
         align-items: center;
       }
       .buttons {
@@ -133,7 +139,6 @@ export class InventoryArmor extends LitElement {
         <div class="check-penalty">${stats?.checkPenalty}</div>
         <div class="speed">${stats?.speedModifier}</div>
         <div class="fumble-die">${stats?.fumbleDie}</div>
-        <div class="cost">${stats?.cost}gp</div>
         <div class="buttons">
           <button class="equip-button" @click=${this.onTogglEquip}>
             ${this.equipped ? 'unequip' : 'equip'}
