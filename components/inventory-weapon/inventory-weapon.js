@@ -74,12 +74,6 @@ export class InventoryWeapon extends LitElement {
         justify-content: center;
         align-items: center;
       }
-      .cost {
-        width: 75px;
-        justify-content: center;
-        display: flex;
-        align-items: center;
-      }
       .buttons {
         width: 100px;
         display: flex;
@@ -135,7 +129,6 @@ export class InventoryWeapon extends LitElement {
         <div class="name">${this.name}</div>
         <div class="damage">${stats?.damage}</div>
         <div class="range">${range || '-'}</div>
-        <div class="cost">${stats?.cost}gp</div>
         <div class="buttons">
           <button class="equip-button" @click=${this.onTogglEquip}>
             ${this.equipped ? 'unequip' : 'equip'}
