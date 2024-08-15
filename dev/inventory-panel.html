@@ -49,7 +49,14 @@
     <a href="/">back</a>
     <div class="wrapper">
       <h2>Inventory</h2>
-      <inventory-panel id="ref1">
+      <inventory-panel
+        id="ref1"
+        pp="10"
+        gp="10"
+        ep="10"
+        cp="10"
+        treasure="2 large gems"
+      >
         <inventory-weapon slot="weapon" name="Longsword"></inventory-weapon>
         <inventory-weapon slot="weapon" name="Dagger"></inventory-weapon>
         <inventory-weapon slot="weapon" name="Longbow"></inventory-weapon>
@@ -82,7 +89,14 @@
         ></inventory-mount-gear>
       </inventory-panel>
       <script type="module">
-        document.querySelector('#ref1').addEventListener('add-item', (e) => {
+        const el = document.querySelector('#ref1');
+        el.addEventListener('add-item', (e) => {
+          console.log(e.detail);
+        });
+        el.addEventListener('coin-change', (e) => {
+          console.log(e.detail);
+        });
+        el.addEventListener('treasure-change', (e) => {
           console.log(e.detail);
         });
       </script>

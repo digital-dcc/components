@@ -21,6 +21,15 @@ export class InventoryPanel extends LitElement {
           'Segoe UI Symbol'
         );
       }
+      ul,
+      li,
+      h3 {
+        margin: 0;
+        padding: 0;
+      }
+      ul {
+        list-style-type: none;
+      }
       .wrapper {
         display: flex;
         flex-direction: column;
@@ -51,14 +60,13 @@ export class InventoryPanel extends LitElement {
       .pre-tab,
       .post-tab {
         border-bottom: 1px dotted #ccc;
-        width: 50%;
         display: flex;
         justify-content: right;
         align-items: center;
         padding-right: 10px;
       }
-      .pre-tab {
-        width: 50%;
+      .post-tab {
+        width: 100%;
       }
       .spacer-tab {
         border-bottom: 1px dotted #ccc;
@@ -150,12 +158,59 @@ export class InventoryPanel extends LitElement {
       .add-button:hover {
         background-color: #c3c3c3;
       }
+      .treasure {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 20px;
+      }
+      .coins {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .coins h3 {
+        text-align: center;
+        font-size: 0.8rem;
+      }
+      .coins ul {
+        display: flex;
+        flex-direction: column;
+      }
+      .coins li {
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+        align-items: center;
+      }
+      .coins span {
+        width: 20px;
+        padding: 10px;
+      }
+      .coins input {
+        width: 40px;
+        border: none;
+        padding: 10px;
+      }
+      .other-treasure {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .other-treasure h3 {
+        text-align: center;
+        font-size: 0.8rem;
+      }
+      .other-treasure textarea {
+        padding: 10px;
+      }
 
       /* Responsive styling */
-      @media (max-width: 600px) {
+      @media (max-width: 700px) {
         .tab {
           padding: 8px 10px; /* Reduce padding for smaller screens */
           font-size: 1rem; /* Reduce font size */
+          border-radius: 0;
         }
         .tabs {
           flex-direction: column; /* Stack tabs vertically on small screens */
@@ -172,9 +227,25 @@ export class InventoryPanel extends LitElement {
           border-right: none;
         }
         .pre-tab,
-        .post-tab,
         .spacer-tab {
           display: none;
+        }
+        .post-tab {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .add-button {
+          border-top: 1px #ccc solid;
+          border-radius: 0;
+          width: 100%;
+          height: 35px;
+          font-size: 1rem;
+          line-height: 1rem;
+        }
+        .treasure {
+          flex-direction: column;
+          gap: 30px;
         }
       }
     `;
@@ -182,13 +253,26 @@ export class InventoryPanel extends LitElement {
 
   static get properties() {
     return {
+      treasure: {type: String, reflect: true},
+      pp: {type: Number, reflect: true},
+      ep: {type: Number, reflect: true},
+      gp: {type: Number, reflect: true},
+      sp: {type: Number, reflect: true},
+      cp: {type: Number, reflect: true},
       selected: {type: Number, state: true},
     };
   }
 
   constructor() {
     super();
+    this.treasure = '';
+    this.pp = 0;
+    this.ep = 0;
+    this.gp = 0;
+    this.sp = 0;
+    this.cp = 0;
     this.selected = 0;
+    this.debounceTimeout;
   }
 
   selectTab(index) {
@@ -219,6 +303,32 @@ export class InventoryPanel extends LitElement {
         },
       })
     );
+  }
+
+  onCoinChange(e) {
+    this[`${e.target.name}`] = e.target.value;
+    this.dispatchEvent(
+      new CustomEvent('coin-change', {
+        detail: {
+          type: e.target.name,
+          value: e.target.value,
+        },
+      })
+    );
+  }
+
+  onTreasureChange(e) {
+    this.treasure = e.target.value;
+    clearTimeout(this.debounceTimeout);
+    this.debounceTimeout = setTimeout(() => {
+      this.dispatchEvent(
+        new CustomEvent('treasure-change', {
+          detail: {
+            value: this.treasure,
+          },
+        })
+      );
+    }, 300);
   }
 
   render() {
@@ -260,14 +370,24 @@ export class InventoryPanel extends LitElement {
           </div>
           <div class="spacer-tab"></div>
           <div
-            class="tab last"
+            class="tab"
             ?selected=${this.selected === 4}
             @click=${() => this.selectTab(4)}
           >
             Mount Gear
           </div>
+          <div class="spacer-tab"></div>
+          <div
+            class="tab last"
+            ?selected=${this.selected === 5}
+            @click=${() => this.selectTab(5)}
+          >
+            Treasure
+          </div>
           <div class="post-tab">
-            <button class="add-button" @click=${this.onAdd}>+</button>
+            ${this.selected !== 5
+              ? html`<button class="add-button" @click=${this.onAdd}>+</button>`
+              : html``}
           </div>
         </div>
         ${this.selected === 0
@@ -313,6 +433,69 @@ export class InventoryPanel extends LitElement {
                 <div class="table-filler"></div>
               </div>
               <slot name="mount-gear"></slot>`
+          : html``}
+        ${this.selected === 5
+          ? html` <div class="treasure">
+              <div class="coins">
+                <h3>Coins</h3>
+                <ul>
+                  <li>
+                    <span>PP</span
+                    ><input
+                      name="pp"
+                      type="number"
+                      .value="${String(this.pp)}"
+                      @input=${this.onCoinChange}
+                    />
+                  </li>
+                  <li>
+                    <span>EP</span
+                    ><input
+                      name="ep"
+                      type="number"
+                      .value="${String(this.ep)}"
+                      @input=${this.onCoinChange}
+                    />
+                  </li>
+                  <li>
+                    <span>GP</span
+                    ><input
+                      name="gp"
+                      type="number"
+                      .value="${String(this.gp)}"
+                      @input=${this.onCoinChange}
+                    />
+                  </li>
+                  <li>
+                    <span>SP</span
+                    ><input
+                      name="sp"
+                      type="number"
+                      .value="${String(this.sp)}"
+                      @input=${this.onCoinChange}
+                    />
+                  </li>
+                  <li>
+                    <span>CP</span
+                    ><input
+                      name="cp"
+                      type="number"
+                      .value="${String(this.cp)}"
+                      @input=${this.onCoinChange}
+                    />
+                  </li>
+                </ul>
+              </div>
+              <div class="other-treasure">
+                <h3>Other Treasure</h3>
+                <textarea
+                  .value="${this.treasure}"
+                  rows="7"
+                  cols="50"
+                  @input=${this.onTreasureChange}
+                ></textarea>
+              </div>
+            </div>`
           : html``}
       </div>
     `;
