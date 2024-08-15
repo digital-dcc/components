@@ -26,8 +26,8 @@ export class InventoryArmor extends LitElement {
         display: flex;
         justify-content: space-between;
         border-bottom: 1px black dotted;
-        padding-bottom: 10px;
-        margin-bottom: 10px;
+        padding: 15px 10px;
+        margin: 0;
         justify-items: center;
       }
       button {
