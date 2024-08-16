@@ -280,13 +280,17 @@ export class EquippedWeapon extends LitElement {
       <div class="wrapper" part="wrapper">
         <header part="header">
           <div class="text">
-            <h1 part="title">${this.weapon}</h1>
-            <h2 part="subtitle">
+            <h2 part="title">${this.weapon}</h2>
+            <h3 part="subtitle">
               ${this.type === 'melee' ? 'Melee' : 'Missile'}
-            </h2>
-            ${this.weaponRangeSelector}
+            </h3>
           </div>
-          <div class="buttons">
+          <div class="keywords">
+            ${isSubdual ? html`<em>subdual only</em>` : html``}
+            ${this.lucky ? html`<em>lucky</em>` : html``}
+            ${this.startingWeapon ? html`<em>starting weapon</em>` : html``}
+          </div>
+          <div class="middle-column">
             <div class="wielding-and-subdual" part="wielding-and-subdual">
               <select @change="${this.handleWieldingChange}">
                 <option
@@ -315,27 +319,11 @@ export class EquippedWeapon extends LitElement {
                   ${wieldingDisplayText[wielding.DUAL_WIELD_OFF_HAND]}
                 </option>
               </select>
-              <label>
-                ${isSubdual ? html`<em>subdual only</em>` : html``}
-                ${this.lucky ? html`<em>lucky</em>` : html``}
-                ${this.startingWeapon ? html`<em>starting weapon</em>` : html``}
-              </label>
             </div>
+            ${this.weaponRangeSelector}
+          </div>
+          <div class="buttons">
             <div class="attack" part="attack">
-              <div class="dice-chain-adjustment-buttons">
-                <button
-                  id="increment-dice-chain"
-                  @click="${this.adjustAttackDieUp}"
-                >
-                  +
-                </button>
-                <button
-                  id="decrement-dice-chain"
-                  @click="${this.adjustAttackDieDown}"
-                >
-                  -
-                </button>
-              </div>
               <button
                 class="attack-display-button"
                 @click="${this._attackRoll}"
@@ -370,12 +358,12 @@ export class EquippedWeapon extends LitElement {
     }
 
     return html`
-      <div class="range" part="range">
+      <div class="range radio-group" part="range">
         <ul>
           ${weaponStats.melee
             ? html`
                 <li>
-                  <label>
+                  <label class="custom-radio">
                     <input
                       id="range-melee"
                       type="radio"
@@ -384,13 +372,13 @@ export class EquippedWeapon extends LitElement {
                       .checked="${this.range === 'melee'}"
                       @change="${this.handleRangeChange}"
                     />
-                    Melee
+                    <span class="radio-label">Melee</span>
                   </label>
                 </li>
               `
             : html``}
           <li>
-            <label>
+            <label class="custom-radio">
               <input
                 id="range-short"
                 type="radio"
@@ -399,11 +387,13 @@ export class EquippedWeapon extends LitElement {
                 .checked="${this.range === 'short'}"
                 @change="${this.handleRangeChange}"
               />
-              Short (${weaponStats?.range?.short})
+              <span class="radio-label"
+                >Short (${weaponStats?.range?.short})</span
+              >
             </label>
           </li>
           <li>
-            <label>
+            <label class="custom-radio">
               <input
                 id="range-medium"
                 type="radio"
@@ -412,11 +402,13 @@ export class EquippedWeapon extends LitElement {
                 .checked="${this.range === 'medium'}"
                 @change="${this.handleRangeChange}"
               />
-              Medium (${weaponStats?.range?.medium})
+              <span class="radio-label"
+                >Medium (${weaponStats?.range?.medium})</span
+              >
             </label>
           </li>
           <li>
-            <label>
+            <label class="custom-radio">
               <input
                 id="range-long"
                 type="radio"
@@ -425,7 +417,9 @@ export class EquippedWeapon extends LitElement {
                 .checked="${this.range === 'long'}"
                 @change="${this.handleRangeChange}"
               />
-              Long (${weaponStats?.range?.long})
+              <span class="radio-label"
+                >Long (${weaponStats?.range?.long})</span
+              >
             </label>
           </li>
         </ul>

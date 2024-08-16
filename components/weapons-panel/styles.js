@@ -4,17 +4,31 @@ export const styles = css`
   :host {
     display: block;
     padding: 0px;
-    font-family: var(--main-font, 'Arial', sans-serif);
+    font-family: var(
+      --primary-font,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      Helvetica,
+      Arial,
+      sans-serif,
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol'
+    );
     font-size: 1em;
     --primary-text-color: black;
     --secondary-text-color: rgb(113, 133, 122);
     --background-color: #ffffff;
   }
+  /*
   :host([theme='dark']) {
     --primary-text-color: #ffffff;
     --secondary-text-color: #c3c3c3;
     --background-color: #000000;
   }
+	*/
   .disabled {
     opacity: 0.5;
     pointer-events: none;
