@@ -123,7 +123,7 @@ export const armor = new Map([
   [
     'shield',
     {
-      name: 'Full-plate',
+      name: 'Shield',
       checkPenalty: -1,
       bonus: +1,
       speedModifier: 0,

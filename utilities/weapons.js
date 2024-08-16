@@ -2,14 +2,17 @@ export const weapons = new Map([
   [
     'Unarmed',
     {
+			name: 'Unarmed',
       damage: '1d3',
       melee: true,
       subdualDamage: true,
+			cost: 0,
     },
   ],
   [
     'Battleaxe',
     {
+			name: 'Battleaxe',
       damage: '1d10',
       twoHanded: true,
       cost: 7,
@@ -19,6 +22,7 @@ export const weapons = new Map([
   [
     'Blackjack',
     {
+			name: 'Blackjack',
       damage: '1d3',
       sneakDamage: '2d6',
       cost: 3,
@@ -29,6 +33,7 @@ export const weapons = new Map([
   [
     'Hammer',
     {
+			name: 'Hammer',
       damage: '1d4',
       cost: 3,
       melee: true,
@@ -37,6 +42,7 @@ export const weapons = new Map([
   [
     'Crowbar',
     {
+			name: 'Crowbar',
       damage: '1d4',
       cost: 3,
       melee: true,
@@ -45,6 +51,7 @@ export const weapons = new Map([
   [
     'Pick',
     {
+			name: 'Pick',
       damage: '1d4',
       cost: 3,
       melee: true,
@@ -53,6 +60,7 @@ export const weapons = new Map([
   [
     'Stick',
     {
+			name: 'Stick',
       damage: '1d4',
       cost: 3,
       melee: true,
@@ -61,6 +69,7 @@ export const weapons = new Map([
   [
     'Club',
     {
+			name: 'Club',
       damage: '1d4',
       cost: 3,
       melee: true,
@@ -69,6 +78,7 @@ export const weapons = new Map([
   [
     'Flail',
     {
+			name: 'Flail',
       damage: '1d6',
       cost: 6,
       melee: true,
@@ -77,6 +87,7 @@ export const weapons = new Map([
   [
     'Garrote',
     {
+			name: 'Garrote',
       damage: '1',
       sneakDamage: '3d4',
       cost: 2,
@@ -86,6 +97,7 @@ export const weapons = new Map([
   [
     'Lance',
     {
+			name: 'Lance',
       damage: '1d12',
       cost: 25,
       onlyUsableWhileMounted: true,
@@ -96,6 +108,7 @@ export const weapons = new Map([
   [
     'Longsword',
     {
+			name: 'Longsword',
       damage: '1d8',
       cost: 10,
       melee: true,
@@ -104,6 +117,7 @@ export const weapons = new Map([
   [
     'Mace',
     {
+			name: 'Mace',
       damage: '1d6',
       cost: 5,
       melee: true,
@@ -112,6 +126,7 @@ export const weapons = new Map([
   [
     'Polearm',
     {
+			name: 'Polearm',
       damage: '1d10',
       cost: 7,
       twoHanded: true,
@@ -121,6 +136,7 @@ export const weapons = new Map([
   [
     'Short sword',
     {
+			name: 'Short sword',
       damage: '1d6',
       cost: 7,
       melee: true,
@@ -129,6 +145,7 @@ export const weapons = new Map([
   [
     'Spear',
     {
+			name: 'Spear',
       damage: '1d8',
       cost: 3,
       doubleDamageMountedCharging: true,
@@ -138,6 +155,7 @@ export const weapons = new Map([
   [
     'Pitchfork',
     {
+			name: 'Pitchfork',
       damage: '1d8',
       cost: 3,
       doubleDamageMountedCharging: true,
@@ -147,6 +165,7 @@ export const weapons = new Map([
   [
     'Staff',
     {
+			name: 'Staff',
       damage: '1d4',
       cost: 0.5,
       melee: true,
@@ -155,6 +174,7 @@ export const weapons = new Map([
   [
     'Cudgel',
     {
+			name: 'Cudgel',
       damage: '1d4',
       cost: 0.5,
       melee: true,
@@ -163,6 +183,7 @@ export const weapons = new Map([
   [
     'Shovel',
     {
+			name: 'Shovel',
       damage: '1d4',
       cost: 0.5,
       melee: true,
@@ -171,6 +192,7 @@ export const weapons = new Map([
   [
     'Pole',
     {
+			name: 'Pole',
       damage: '1d4',
       cost: 0.5,
       melee: true,
@@ -179,6 +201,7 @@ export const weapons = new Map([
   [
     'Two-handed sword',
     {
+			name: 'Two-handed sword',
       damage: '1d10',
       cost: 15,
       twoHanded: true,
@@ -188,6 +211,7 @@ export const weapons = new Map([
   [
     'Warhammer',
     {
+			name: 'Warhammer',
       damage: '1d8',
       cost: 5,
       melee: true,
@@ -196,6 +220,7 @@ export const weapons = new Map([
   [
     'Blowgun',
     {
+			name: 'Blowgun',
       range: {short: 20, medium: 40, long: 60},
       damage: '1d3',
       sneakDamage: '1d5',
@@ -207,6 +232,7 @@ export const weapons = new Map([
   [
     'Crossbow',
     {
+			name: 'Crossbow',
       range: {short: 80, medium: 160, long: 240},
       damage: '1d6',
       twoHanded: true,
@@ -218,6 +244,7 @@ export const weapons = new Map([
   [
     'Dagger',
     {
+			name: 'Dagger',
       range: {short: 10, medium: 20, long: 30},
       damage: '1d4',
       sneakDamage: '1d10',
@@ -231,6 +258,7 @@ export const weapons = new Map([
   [
     'Razor',
     {
+			name: 'Razor',
       range: {short: 10, medium: 20, long: 30},
       damage: '1d4',
       sneakDamage: '1d10',
@@ -244,6 +272,7 @@ export const weapons = new Map([
   [
     'Awl',
     {
+			name: 'Awl',
       range: {short: 10, medium: 20, long: 30},
       damage: '1d4',
       sneakDamage: '1d10',
@@ -257,6 +286,7 @@ export const weapons = new Map([
   [
     'Knife',
     {
+			name: 'Knife',
       range: {short: 10, medium: 20, long: 30},
       damage: '1d4',
       sneakDamage: '1d10',
@@ -270,6 +300,7 @@ export const weapons = new Map([
   [
     'Chisel',
     {
+			name: 'Chisel',
       range: {short: 10, medium: 20, long: 30},
       damage: '1d4',
       sneakDamage: '1d10',
@@ -283,6 +314,7 @@ export const weapons = new Map([
   [
     'Scissors',
     {
+			name: 'Scissors',
       range: {short: 10, medium: 20, long: 30},
       damage: '1d4',
       sneakDamage: '1d10',
@@ -296,6 +328,7 @@ export const weapons = new Map([
   [
     'Trowel',
     {
+			name: 'Trowel',
       range: {short: 10, medium: 20, long: 30},
       damage: '1d4',
       sneakDamage: '1d10',
@@ -309,6 +342,7 @@ export const weapons = new Map([
   [
     'Dart',
     {
+			name: 'Dart',
       range: {short: 20, medium: 40, long: 60},
       damage: '1d3',
       thrown: true,
@@ -321,6 +355,7 @@ export const weapons = new Map([
   [
     'Quill',
     {
+			name: 'Quill',
       range: {short: 20, medium: 40, long: 60},
       damage: '1d3',
       thrown: true,
@@ -333,6 +368,7 @@ export const weapons = new Map([
   [
     'Handaxe',
     {
+			name: 'Handaxe',
       range: {short: 10, medium: 20, long: 30},
       damage: '1d3',
       thrown: true,
@@ -345,6 +381,7 @@ export const weapons = new Map([
   [
     'Cleaver',
     {
+			name: 'Cleaver',
       range: {short: 10, medium: 20, long: 30},
       damage: '1d3',
       thrown: true,
@@ -357,6 +394,7 @@ export const weapons = new Map([
   [
     'Javelin',
     {
+			name: 'Javelin',
       range: {short: 30, medium: 60, long: 90},
       damage: '1d3',
       thrown: true,
@@ -369,6 +407,7 @@ export const weapons = new Map([
   [
     'Longbow',
     {
+			name: 'Longbow',
       range: {short: 70, medium: 140, long: 210},
       damage: '1d6',
       twoHanded: true,
@@ -380,6 +419,7 @@ export const weapons = new Map([
   [
     'Shortbow',
     {
+			name: 'Shortbow',
       range: {short: 50, medium: 100, long: 150},
       damage: '1d6',
       twoHanded: true,
@@ -391,6 +431,7 @@ export const weapons = new Map([
   [
     'Sling',
     {
+			name: 'Sling',
       range: {short: 40, medium: 80, long: 160},
       damage: '1d3',
       cost: 2,
