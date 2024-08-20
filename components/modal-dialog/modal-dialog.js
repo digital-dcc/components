@@ -29,7 +29,7 @@ export class ModalDialog extends LitElement {
 
   render() {
     return html`
-      <dialog @click="${this._stopPropagation}">
+      <dialog @click="${this._stopPropagation}" @close="${this._close}">
         <slot></slot>
         <button @click="${this._close}" class="close-button">x</button>
       </dialog>
@@ -43,6 +43,7 @@ export class ModalDialog extends LitElement {
         dialog?.showModal();
       } else {
         dialog?.close();
+				this.dispatchEvent(new CustomEvent('close'));
       }
     }
   }

@@ -18,7 +18,7 @@ export class TitleBox extends LitElement {
         margin: 0;
         padding: 0;
         font-size: 1.2rem;
-        text-align: center;
+        text-align: left;
         margin-bottom: 10px;
       }
       p {
@@ -28,7 +28,6 @@ export class TitleBox extends LitElement {
       .wrapper {
         border-radius: 5px;
         padding: 10px;
-        border: 1px black solid;
         margin-bottom: 10px;
         list-style-type: none;
       }

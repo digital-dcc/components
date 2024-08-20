@@ -17,7 +17,7 @@ class DiceRoll {
     },
   };
   luck;
-  class;
+  characterClass;
   level;
   birthAugur;
   critTable;
@@ -38,7 +38,7 @@ export class CritButton extends LitElement {
 
   static get properties() {
     return {
-      class: {type: String},
+      characterClass: {type: String},
       level: {type: String},
       luck: {type: Number},
       birthAugur: {attribute: 'birth-augur', type: String},
@@ -51,7 +51,7 @@ export class CritButton extends LitElement {
 
   constructor() {
     super();
-    this.class = null;
+    this.characterClass = null;
     this.level = 0;
     this.luck = null;
     this.birthAugur = null;
@@ -75,8 +75,8 @@ export class CritButton extends LitElement {
     `;
   }
 
-  get classSlug() {
-    return slug(this.class || '');
+  get characterClassSlug() {
+    return slug(this.characterClass || '');
   }
 
   get multiplier() {
@@ -134,48 +134,51 @@ export class CritButton extends LitElement {
   }
 
   /**
-   * Get the number of dice to roll from the class data using class and level
+   * Get the number of dice to roll from the characterClass data using characterClass and level
    * This is using 1 but not always. For example high level warriors
    * @returns {number}
    */
   get critDieQty() {
     const die = characterClasses
-      .get(this.classSlug)
+      .get(this.characterClassSlug)
       ?.get(Number(this.level || 0))?.critDie;
-    return Number(die.split('d')[0] || 1);
+		if (!die) return 1;
+    return Number(die?.split('d')[0] || 1);
   }
 
   /**
-   * Get the type of die to roll from the class data using class and level
+   * Get the type of die to roll from the characterClass data using characterClass and level
    * @returns {number}
    */
   get critDie() {
     const die = characterClasses
-      .get(this.classSlug)
+      .get(this.characterClassSlug)
       ?.get(Number(this.level || 0))?.critDie;
+		if (!die) return 4;
     return Number(die.split('d')[1].split('+')[0]);
   }
 
   /**
-   * Get the modifier from the class data using class and level
+   * Get the modifier from the characterClass data using characterClass and level
    * This is almost always 0 except for high level thieves
    * @returns {number}
    */
   get critModifier() {
     const die = characterClasses
-      .get(this.classSlug)
+      .get(this.characterClassSlug)
       ?.get(Number(this.level || 0))?.critDie;
+		if (!die) return 0;
     return Number(die.split('d')[1].split('+')[1] || 0);
   }
 
   /**
-   * Get the crit table from the class data using class and level
+   * Get the crit table from the characterClass data using characterClass and level
    * This is a roman numeral from I to V.
    * @returns {string}
    */
   get critTable() {
     if (this.tableOverride) return this.tableOverride;
-    return characterClasses.get(this.classSlug)?.get(Number(this.level || 0))
+    return characterClasses.get(this.characterClassSlug)?.get(Number(this.level || 0))
       ?.critTable;
   }
 
@@ -192,7 +195,7 @@ export class CritButton extends LitElement {
     roll.birthAugur = this.birthAugur;
     roll.luck = this.luck;
     roll.critTable = this.critTable;
-    roll.class = this.classSlug;
+    roll.characterClass = this.characterClassSlug;
     roll.level = Number(this.level);
 
     this.dispatchEvent(

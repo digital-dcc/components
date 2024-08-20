@@ -30,9 +30,11 @@ class DiceRoll {
 export class LuckStat extends LitElement {
   static get styles() {
     return css`
-      :host {
-        display: block;
-        padding: 0px;
+      .wrapper {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
       }
     `;
   }
@@ -106,15 +108,17 @@ export class LuckStat extends LitElement {
 
   render() {
     return html`
-      <stat-display
-        name="Luck"
-        value="${this.displayLuck}"
-        base="${formatModifier(this.modifier.total)}"
-        value-clickable
-        base-clickable
-        @base-clicked="${this.onLuckModifierClick}"
-        @value-clicked="${this.onLuckScoreClick}"
-      ></stat-display>
+      <div class="wrapper">
+        <stat-display
+          name="Luck"
+          value="${this.displayLuck}"
+          base="${formatModifier(this.modifier.total)}"
+          value-clickable
+          base-clickable
+          @base-clicked="${this.onLuckModifierClick}"
+          @value-clicked="${this.onLuckScoreClick}"
+        ></stat-display>
+      </div>
     `;
   }
 

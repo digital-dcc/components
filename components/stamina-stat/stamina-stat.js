@@ -31,9 +31,11 @@ class DiceRoll {
 export class StaminaStat extends LitElement {
   static get styles() {
     return css`
-      :host {
-        display: block;
-        padding: 0px;
+      .wrapper {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
       }
     `;
   }
@@ -85,9 +87,7 @@ export class StaminaStat extends LitElement {
         total: this.modifierOverride,
       };
     }
-    const staminaModifier = modifierFor(
-      this.stamina || this.maxStamina
-    );
+    const staminaModifier = modifierFor(this.stamina || this.maxStamina);
     const adjustment = this.modifierAdjustment;
     const breakdown = [
       {name: 'Stamina Modifier', value: staminaModifier},
@@ -110,10 +110,7 @@ export class StaminaStat extends LitElement {
   }
 
   get displayStamina() {
-    if (
-      this.maxStamina === this.stamina ||
-      this.stamina === null
-    ) {
+    if (this.maxStamina === this.stamina || this.stamina === null) {
       return this.maxStamina;
     }
     return `${this.stamina}/${this.maxStamina}`;
@@ -121,13 +118,15 @@ export class StaminaStat extends LitElement {
 
   render() {
     return html`
-      <stat-display
-        name="Sta"
-        value="${formatModifier(this.modifier.total)}"
-        base="${this.displayStamina}"
-        value-clickable
-        @value-clicked="${this.onClick}"
-      ></stat-display>
+      <div class="wrapper">
+        <stat-display
+          name="Sta"
+          value="${formatModifier(this.modifier.total)}"
+          base="${this.displayStamina}"
+          value-clickable
+          @value-clicked="${this.onClick}"
+        ></stat-display>
+      </div>
     `;
   }
 

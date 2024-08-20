@@ -5,8 +5,11 @@ export class StatDisplay extends LitElement {
     return css`
       :host {
         display: block;
+        margin: 0px;
         padding: 0px;
-        font-family: var(
+      }
+      .wrapper {
+				font-family: var(
           --primary-font,
           -apple-system,
           BlinkMacSystemFont,
@@ -20,22 +23,19 @@ export class StatDisplay extends LitElement {
           'Segoe UI Symbol'
         );
         font-size: 1rem;
-      }
-      .wrapper {
         position: relative;
         border: 1px black solid;
-        width: fit-content;
-        aspect-ratio: 1 / 1;
         padding: 5px;
-        border-radius: 10px;
-        min-width: 60px;
-        max-width: min-content;
+        border-radius: 5px;
         display: flex;
         flex-direction: column;
+        aspect-ratio: 1 / 1;
+				width: 100%;
+				height: 100%;
+				box-sizing: border-box;
       }
       h1 {
         margin: 0 auto;
-        width: max-content;
         font-size: 1rem;
         flex: 0.6;
       }

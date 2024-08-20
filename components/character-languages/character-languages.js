@@ -25,7 +25,7 @@ export class CharacterLanguages extends LitElement {
         border-radius: 5px;
         padding: 10px;
         border: 1px black solid;
-        margin-bottom: 10px;
+        margin-bottom: 0px;
 				list-style-type: none;
       }
 			ul {

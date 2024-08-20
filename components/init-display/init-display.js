@@ -4,13 +4,24 @@ import {formatModifier} from '../../utilities/format-modifier.js';
 import {slug} from '../../utilities/slug.js';
 import '../stat-display/stat-display.js';
 
-/**
- * An example element.
- *
- * @fires count-changed - Indicates when the count changes
- * @slot - This element has a slot
- * @csspart button - The button
- */
+class DiceRoll {
+  name;
+  description;
+  roll = {
+    qty: 1,
+    die: 20,
+    modifier: {
+      breakdown: [],
+      total: 0,
+    },
+  };
+  startingLuck;
+  characterClass;
+  characterLevel;
+  birthAugur;
+  agility;
+}
+
 export class InitDisplay extends LitElement {
   static get styles() {
     return css`
@@ -50,33 +61,61 @@ export class InitDisplay extends LitElement {
   }
 
   get init() {
-    if (this.initOverride) return this.initOverride;
+		if (this.initOverride) {
+      return {
+        breakdown: [{name: 'Modifier Override', value: this.initOverride}],
+        total: Number(this.initOverride),
+      };
+    }
+
+		let total = 0;
+    const breakdown = [];
+
     // Some character classes get to add their level to their init
-    let classInit = 0;
     if (slug(this.characterClass || '') === 'warrior') {
-      classInit = this.characterLevel;
+			total += this.characterLevel;
+			breakdown.push({name: 'Character Level', value: this.characterLevel});
     }
 
     // Agility modifier always modifies init
-    let agilityInit = 0;
     if (this.agility) {
-      agilityInit = modifierFor(this.agility);
+			total += modifierFor(this.agility);
+			breakdown.push({name: 'Agility Modifier', value: modifierFor(this.agility)});
     }
 
     // The speed-of-the-cobra birth augur increases or reduces init per point of starting luck modifier
-    let luckAdjustment = 0;
     if (slug(this.birthAugur || '') === 'speed-of-the-cobra') {
-      luckAdjustment = modifierFor(this.startingLuck);
+			total += modifierFor(this.startingLuck);
+			breakdown.push({name: 'Birth Augur', value: modifierFor(this.startingLuck)});
     }
 
-    return classInit + agilityInit + luckAdjustment + this.initAdjustment;
+    return {
+			breakdown,
+			total,
+		};
   }
+
+	onInitRoll() {
+		const roll = new DiceRoll();
+		roll.characterClass = slug(this.characterClass || '');
+		roll.characterLevel = this.characterLevel || 0;
+		roll.birthAugur = slug(this.birthAugur || '');
+		roll.agility = this.agility;
+		roll.startingLuck = this.startingLuck;
+		roll.roll.die = 20;
+		roll.roll.qty = 1;
+		// @ts-ignore
+		roll.roll.modifier = this.init;
+		this.dispatchEvent(new CustomEvent('init-roll', {detail: roll}));
+	}
 
   render() {
     return html`
       <stat-display
         name="Init"
-        value="${formatModifier(this.init)}"
+				value-clickable
+        value="${formatModifier(this.init.total)}"
+				@value-clicked="${this.onInitRoll}"
       ></stat-display>
     `;
   }

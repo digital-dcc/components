@@ -11,16 +11,11 @@ const alignmentMap = new Map([
 export class AlignmentDisplay extends LitElement {
   static get styles() {
     return css`
-      :host {
-        display: block;
-        padding: 0px;
-      }
       .wrapper {
         border-radius: 5px;
         border: 1px black solid;
         display: flex;
         flex-direction: column;
-        min-height: 25px;
         font-family: var(
           --primary-font,
           -apple-system,
@@ -36,17 +31,29 @@ export class AlignmentDisplay extends LitElement {
         );
         font-size: 1rem;
         align-items: center;
-        min-width: fit-content;
-        max-width: 120px;
-        padding: 10px 0px;
+        padding: 5px;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
       }
       h2 {
         margin: 0;
         padding: 0;
         font-size: 0.8rem;
       }
-      .alignment-name {
+      .title {
         text-align: center;
+      }
+      .alignment-name-wrapper {
+        display: flex;
+        flex-direction: column;
+      }
+      .alignment-name {
+        margin-top: 15px;
+        font-size: 1rem;
+        text-align: center;
+        align-items: center;
       }
     `;
   }
@@ -69,9 +76,10 @@ export class AlignmentDisplay extends LitElement {
   render() {
     return html`
       <div part="wrapper" class="wrapper">
-        <h2 class="alignment-name" part="alignment-name">
-          ${this.alignmentText}
-        </h2>
+        <h2 class="title" part="title">Alignment</h2>
+        <div class="alignment-name-wrapper">
+          <div class="alignment-name">${this.alignmentText}</div>
+        </div>
       </div>
     `;
   }

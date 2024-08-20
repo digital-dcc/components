@@ -9,6 +9,16 @@ export class OccupationBox extends LitElement {
         display: block;
         padding: 0;
         margin: 0;
+				box-sizing: border-box;
+      }
+			.wrapper {
+        border-radius: 5px;
+        padding: 10px;
+				margin: 0;
+        border: 1px black solid;
+        list-style-type: none;
+				height: 72px;
+				box-sizing: border-box;
       }
       h2,
       p {
@@ -21,14 +31,7 @@ export class OccupationBox extends LitElement {
       p {
         font-size: 1rem;
         margin-bottom: 0;
-        font-size: 0.8em;
-      }
-      .wrapper {
-        border-radius: 5px;
-        padding: 10px;
-        border: 1px black solid;
-        margin-bottom: 10px;
-        list-style-type: none;
+        font-size: 0.8rem;
       }
     `;
   }

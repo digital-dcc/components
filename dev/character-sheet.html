@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&lt;character-sheet> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/character-sheet/character-sheet.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <character-sheet id="ref1"></character-sheet>
+      <script>
+        document.querySelector('#ref1').data = {
+					name: 'John Doe',
+					alignment: 'lawful',
+					characterClass: null,
+					birthAugur: 'lucky-sign',
+					level: 0,
+					maxStrength: 15,
+					strength: 15,
+					maxAgility: 7,
+					agility: 7,
+					maxStamina: 13,
+					stamina: 13,
+					maxIntelligence: 12,
+					intelligence: 12,
+					maxPersonality: 4,
+					personality: 4,
+					startingLuck: 18,
+					maxLuck: 18,
+					luck: 18,
+					armor: 'leather',
+					shield: false,
+					hp: 7,
+					maxHP: 13,
+					xp: 5,
+					occupation: 'alchemist',
+					alignment: 'neutral',
+					languages: ['common', 'dwarvish'],
+				};
+      </script>
+    </div>
+  </body>
+</html>

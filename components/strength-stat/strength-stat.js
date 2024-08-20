@@ -35,6 +35,12 @@ export class StrengthStat extends LitElement {
         display: block;
         padding: 0px;
       }
+      .wrapper {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
+      }
     `;
   }
 
@@ -116,13 +122,15 @@ export class StrengthStat extends LitElement {
 
   render() {
     return html`
-      <stat-display
-        name="Str"
-        value="${formatModifier(this.modifier.total)}"
-        base="${this.displayStrength}"
-        value-clickable
-        @value-clicked="${this.onClick}"
-      ></stat-display>
+      <div class="wrapper">
+        <stat-display
+          name="Str"
+          value="${formatModifier(this.modifier.total)}"
+          base="${this.displayStrength}"
+          value-clickable
+          @value-clicked="${this.onClick}"
+        ></stat-display>
+      </div>
     `;
   }
 

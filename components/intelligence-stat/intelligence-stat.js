@@ -31,9 +31,11 @@ class DiceRoll {
 export class IntelligenceStat extends LitElement {
   static get styles() {
     return css`
-      :host {
-        display: block;
-        padding: 0px;
+      .wrapper {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
       }
     `;
   }
@@ -121,13 +123,15 @@ export class IntelligenceStat extends LitElement {
 
   render() {
     return html`
-      <stat-display
-        name="Int"
-        value="${formatModifier(this.modifier.total)}"
-        base="${this.displayIntelligence}"
-        value-clickable
-        @value-clicked="${this.onClick}"
-      ></stat-display>
+      <div class="wrapper">
+        <stat-display
+          name="Int"
+          value="${formatModifier(this.modifier.total)}"
+          base="${this.displayIntelligence}"
+          value-clickable
+          @value-clicked="${this.onClick}"
+        ></stat-display>
+      </div>
     `;
   }
 

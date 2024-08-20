@@ -17,18 +17,35 @@ import '../stat-display/stat-display.js';
 export class HitPoints extends LitElement {
   static get styles() {
     return css`
-      :host {
-        display: block;
-      }
       .wrapper {
-        max-width: fit-content;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
       }
-      ::part(value) {
-        font-size: 1.2em;
+      h2,
+      div {
+        margin: 0;
+        padding: 0;
       }
-      ::part(name) {
-        font-size: 0.8em;
+      .title {
+        font-size: 0.8rem;
+        text-align: center;
       }
+      .hit-points {
+				margin-top: 10px;
+        font-size: 2rem;
+        text-align: center;
+      }
+			.current-hp {
+				
+			}
       button {
         background: none;
         border: none;
@@ -77,10 +94,8 @@ export class HitPoints extends LitElement {
   render() {
     return html`
       <div class="wrapper">
-        <stat-display
-          name="Hit Points"
-          value="${this.displayCurrentHP}${this.maxHP}"
-        ></stat-display>
+        <h2 class="title">Hit Points</h2>
+        <div class="hit-points"><span class="current-hp">${this.displayCurrentHP}</span>${this.maxHP}</div>
         <div class="buttons">
           <button
             part="decrement-button"

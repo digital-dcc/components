@@ -160,21 +160,21 @@ export class DiceRoller extends LitElement {
   }
 
   get qty() {
-    return this.diceRoll?.qty + this.qtyAdjustment;
+    return this.diceRoll?.roll?.qty + this.qtyAdjustment;
   }
 
   get die() {
     const index =
-      diceChain.indexOf(`d${this.diceRoll?.die}`) + this.dieAdjustment;
+      diceChain.indexOf(`d${this.diceRoll?.roll?.die}`) + this.dieAdjustment;
     return diceChain[index];
   }
 
   get modifier() {
-    return this.diceRoll?.modifier?.total + this.modifierAdjustment;
+    return this.diceRoll?.roll?.modifier?.total + this.modifierAdjustment;
   }
 
   get modifierBreakdown() {
-    return this.diceRoll?.modifier?.breakdown?.map(({name, value}) => {
+    return this.diceRoll?.roll?.modifier?.breakdown?.map(({name, value}) => {
       return html`<ul class="modifier-breakdown-entry">
         <li><span>${name}</span><span>${formatModifier(value)}</span></li>
       </ul>`;
@@ -238,12 +238,19 @@ export class DiceRoller extends LitElement {
     );
   }
 
+	onClose() {
+		// this.open = false;
+		this.rollResult = null;
+		this.diceRoll = null;
+		this.dispatchEvent(new CustomEvent('close'));
+	}
+
   render() {
     return html`
-      <modal-dialog ?open="${this.open}">
+      <modal-dialog .open="${this.open}" @close="${this.onClose}">
         <h1>${this.diceRoll?.name}</h1>
         <p class="roll-description">${this.diceRoll?.description}</p>
-        ${this.diceRoll?.modifier?.breakdown?.length
+        ${this.diceRoll?.roll?.modifier?.breakdown?.length
           ? html`<div class="modifier-breakdown">
               ${this.modifierBreakdown}
             </div>`

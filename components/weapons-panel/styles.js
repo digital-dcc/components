@@ -40,12 +40,16 @@ export const styles = css`
     color: var(--primary-text-color);
     padding: 10px;
     padding-bottom: 20px;
-    border-radius: 10px;
+    border-radius: 5px;
     min-width: 390px;
     display: flex;
     flex-direction: column;
     gap: 15px;
   }
+	section, div {
+		margin: 0;
+		padding: 0;
+	}
   h1 {
     margin: 0;
     padding: 0;

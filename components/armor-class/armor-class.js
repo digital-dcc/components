@@ -7,9 +7,40 @@ import '../stat-display/stat-display.js';
 export class ArmorClass extends LitElement {
   static get styles() {
     return css`
-      :host {
-        display: block;
-        padding: 0px;
+      .wrapper {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
+      }
+      .shield {
+        padding: 5px;
+        height: 100%;
+        width: 100%;
+        border: 1px solid black;
+        border-radius: 50% 50% 50% 50% / 12% 12% 88% 88%;
+        box-sizing: border-box;
+      }
+      h2,
+      div {
+        margin: 0;
+        padding: 0;
+      }
+      .title {
+        font-size: 0.8rem;
+        text-align: center;
+      }
+			.armor-class-wrapper {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+      .armor-class {
+				margin-top: 15px;
+        font-size: 2.5rem;
+        display: absolute;
+        top: 50%;
+        left: 50%;
       }
     `;
   }
@@ -35,7 +66,14 @@ export class ArmorClass extends LitElement {
 
   render() {
     return html`
-      <stat-display name="AC" value="${this.armorClass}"></stat-display>
+      <div class="wrapper">
+        <div class="shield">
+          <h2 class="title">Armor Class</h2>
+          <div class="armor-class-wrapper">
+            <div class="armor-class">${this.armorClass}</div>
+          </div>
+        </div>
+      </div>
     `;
   }
 

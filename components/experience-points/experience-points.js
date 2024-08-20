@@ -12,15 +12,18 @@ import '../stat-display/stat-display.js';
 export class ExperiencePoints extends LitElement {
   static get styles() {
     return css`
-      :host {
-        display: block;
-      }
       ::part(value) {
         font-size: 1.2em;
       }
       ::part(name) {
         font-size: 0.8em;
       }
+			.wrapper {
+				box-sizing: border-box;
+				width: 100%;
+				height: 100%;
+				aspect-ratio: 1 / 1;
+			}
     `;
   }
 
@@ -39,11 +42,12 @@ export class ExperiencePoints extends LitElement {
     const currentLevel = levelForXp(this.xp);
     const requiredXP = xpForNextLevel(currentLevel);
     return html`
-      <stat-display
-        name="Level"
-        value="${String(currentLevel)}"
-        base="${this.xp}/${requiredXP}"
-      ></stat-display>
+      <div class="wrapper">
+        <stat-display
+          name="XP"
+          value="${this.xp}/${requiredXP}"
+        ></stat-display>
+      </div>
     `;
   }
 }

@@ -31,9 +31,11 @@ class DiceRoll {
 export class PersonalityStat extends LitElement {
   static get styles() {
     return css`
-      :host {
-        display: block;
-        padding: 0px;
+      .wrapper {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
       }
     `;
   }
@@ -110,10 +112,7 @@ export class PersonalityStat extends LitElement {
   }
 
   get displayPersonality() {
-    if (
-      this.maxPersonality === this.personality ||
-      this.personality === null
-    ) {
+    if (this.maxPersonality === this.personality || this.personality === null) {
       return this.maxPersonality;
     }
     return `${this.personality}/${this.maxPersonality}`;
@@ -121,13 +120,15 @@ export class PersonalityStat extends LitElement {
 
   render() {
     return html`
-      <stat-display
-        name="Per"
-        value="${formatModifier(this.modifier.total)}"
-        base="${this.displayPersonality}"
-        value-clickable
-        @value-clicked="${this.onClick}"
-      ></stat-display>
+      <div class="wrapper">
+        <stat-display
+          name="Per"
+          value="${formatModifier(this.modifier.total)}"
+          base="${this.displayPersonality}"
+          value-clickable
+          @value-clicked="${this.onClick}"
+        ></stat-display>
+      </div>
     `;
   }
 

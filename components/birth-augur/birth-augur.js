@@ -9,14 +9,20 @@ export class BirthAugur extends LitElement {
       :host {
         display: block;
         padding: 0px;
+				margin: 0px;
+				width: 100%;
+				height: 100%; /* Ensure the custom element fills the height */
+      	box-sizing: border-box;
       }
       .wrapper {
+				box-sizing: border-box;
         border-radius: 5px;
         border: 1px black solid;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        min-height: 25px;
+				height: 100%;
+				width: 100%;
         font-family: var(
           --primary-font,
           -apple-system,
@@ -32,8 +38,7 @@ export class BirthAugur extends LitElement {
         );
         font-size: 1rem;
         align-items: center;
-        padding: 5px 10px 0px 10px;
-        min-width: fit-content;
+        padding: 10px;
       }
       h2,
       h3,
@@ -46,12 +51,18 @@ export class BirthAugur extends LitElement {
       h2 {
         font-size: 0.8rem;
       }
+			h3, h4 {
+				font-size: 1rem;
+			}
+			h4 {
+				font-weight: normal;
+			}
     `;
   }
 
   static get properties() {
     return {
-      class: {type: String},
+      characterClass: {attribute: 'character-class', type: String},
       birthAugur: {attribute: 'birth-augur', type: String},
       startingLuck: {attribute: 'starting-luck', type: String},
     };
@@ -59,14 +70,14 @@ export class BirthAugur extends LitElement {
 
   constructor() {
     super();
-    this.class = null;
+    this.characterClass = null;
     this.birthAugur = null;
     this.startingLuck = null;
   }
 
   extra(augur) {
     if (!augur.extra) return html``;
-    if (augur.extra[this.class]) return html`${augur.extra[this.class]}`;
+    if (augur.extra[this.characterClass]) return html`${augur.extra[this.characterClass]}`;
     return html`${augur.extra.all}`;
   }
 

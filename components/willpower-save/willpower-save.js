@@ -7,8 +7,8 @@ import '../stat-display/stat-display.js';
 
 export class DiceRoll {
   type = 'saving-throw';
-  name = 'Willpower Saving Throw';
-  description = 'A willpower saving throw was made';
+  name = 'Saving Throw';
+  description = 'Willpower saving throw';
 
   // roll details
   roll = {
