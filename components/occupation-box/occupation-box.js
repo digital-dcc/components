@@ -5,28 +5,25 @@ import {occupations} from '../../utilities/occupations.js';
 export class OccupationBox extends LitElement {
   static get styles() {
     return css`
-      :host {
-        display: block;
-        padding: 0;
-        margin: 0;
-				box-sizing: border-box;
-      }
-			.wrapper {
+      .wrapper {
         border-radius: 5px;
         padding: 10px;
-				margin: 0;
+        margin: 0;
         border: 1px black solid;
         list-style-type: none;
-				height: 72px;
-				box-sizing: border-box;
+        box-sizing: border-box;
       }
       h2,
-      p {
+      p,
+      h3 {
         margin: 0;
         padding: 0;
         font-size: 1rem;
         text-align: center;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
+      }
+      h2 {
+        font-size: 0.8rem;
       }
       p {
         font-size: 1rem;
@@ -69,11 +66,10 @@ export class OccupationBox extends LitElement {
     const {occupation, trainedWeapon, tradeGoods} = this.occupationData || {};
     return html`
       <div part="wrapper" class="wrapper">
-        <h2>${this.raceIfNecessary}${occupation}</h2>
-        <p>
-          <em>Trained Weapon</em> <strong>${trainedWeapon}</strong>
-          <em>Trade Goods</em> <strong>${tradeGoods}</strong>
-        </p>
+        <h2>Occupation</h2>
+        <h3>${this.raceIfNecessary}${occupation}</h3>
+        <p><em>Trained Weapon</em> <strong>${trainedWeapon}</strong></p>
+        <p><em>Trade Goods</em> <strong>${tradeGoods}</strong></p>
       </div>
     `;
   }

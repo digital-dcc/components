@@ -111,6 +111,11 @@ export class CharacterSheet extends LitElement {
               level="${this.data.level}"
             ></title-box>
             <div class="row right-justify">
+              <speed-display
+                birth-augur="${this.data.birthAugur}"
+                occupation="${this.data.occupation}"
+                starting-luck="${this.data.startingLuck}"
+              ></speed-display>
               <alignment-display
                 alignment="${this.data.alignment}"
               ></alignment-display>
@@ -180,41 +185,47 @@ export class CharacterSheet extends LitElement {
           </section>
         </section>
         <section class="row">
-          <section class="column">
+          <section class="column item-1-3">
             <section class="saving-throws">
               <h2>Saving Throws</h2>
-              <div>
-                <reflex-save
-                  agility="${this.data.agility}"
-                  birth-augur="${this.data.birthAugur}"
-                  character-class="${this.data.characterClass}"
-                  level="${this.data.level}"
-                  starting-luck="${this.data.startingLuck}"
-                  @reflex-saving-throw="${this.handleDiceRollRequested}"
-                ></reflex-save>
-                <fortitude-save
-                  stamina="${this.data.stamina}"
-                  birth-augur="${this.data.birthAugur}"
-                  character-class="${this.data.characterClass}"
-                  level="${this.data.level}"
-                  starting-luck="${this.data.startingLuck}"
-                  @fortitude-saving-throw="${this.handleDiceRollRequested}"
-                ></fortitude-save>
-                <willpower-save
-                  personality="${this.data.personality}"
-                  birth-augur="${this.data.birthAugur}"
-                  character-class="${this.data.characterClass}"
-                  level="${this.data.level}"
-                  starting-luck="${this.data.startingLuck}"
-                  @willpower-saving-throw="${this.handleDiceRollRequested}"
-                ></willpower-save>
+              <div class="row-items">
+                <div class="item-1-3">
+                  <reflex-save
+                    agility="${this.data.agility}"
+                    birth-augur="${this.data.birthAugur}"
+                    character-class="${this.data.characterClass}"
+                    level="${this.data.level}"
+                    starting-luck="${this.data.startingLuck}"
+                    @reflex-saving-throw="${this.handleDiceRollRequested}"
+                  ></reflex-save>
+                </div>
+                <div class="item-1-3">
+                  <fortitude-save
+                    stamina="${this.data.stamina}"
+                    birth-augur="${this.data.birthAugur}"
+                    character-class="${this.data.characterClass}"
+                    level="${this.data.level}"
+                    starting-luck="${this.data.startingLuck}"
+                    @fortitude-saving-throw="${this.handleDiceRollRequested}"
+                  ></fortitude-save>
+                </div>
+                <div class="item-1-3">
+                  <willpower-save
+                    personality="${this.data.personality}"
+                    birth-augur="${this.data.birthAugur}"
+                    character-class="${this.data.characterClass}"
+                    level="${this.data.level}"
+                    starting-luck="${this.data.startingLuck}"
+                    @willpower-saving-throw="${this.handleDiceRollRequested}"
+                  ></willpower-save>
+                </div>
               </div>
             </section>
 
             <section class="combat">
               <h2>Combat</h2>
-              <div class="column">
-                <div class="row">
+              <div class="row-items">
+                <div class="item-1-3">
                   <init-display
                     character-class="${this.data.characterClass}"
                     agility=${this.data.agility}
@@ -223,6 +234,8 @@ export class CharacterSheet extends LitElement {
                     character-level="${this.data.level}"
                     @init-roll="${this.handleDiceRollRequested}"
                   ></init-display>
+                </div>
+                <div class="item-1-3">
                   <crit-button
                     birth-augur="${this.data.birthAugur}"
                     characterClass="${this.data.characterClass}"
@@ -230,6 +243,8 @@ export class CharacterSheet extends LitElement {
                     luck="${this.data.luck}"
                     @crit-roll="${this.handleDiceRollRequested}"
                   ></crit-button>
+                </div>
+                <div class="item-1-3">
                   <fumble-button
                     birth-augur="${this.data.birthAugur}"
                     luck="${this.data.luck}"
@@ -237,13 +252,6 @@ export class CharacterSheet extends LitElement {
                     ?shield=${this.data.shield}
                     @fumble-roll="${this.handleDiceRollRequested}"
                   ></fumble-button>
-                </div>
-                <div class="row">
-                  <speed-display
-                    birth-augur="${this.data.birthAugur}"
-                    occupation="${this.data.occupation}"
-                    starting-luck="${this.data.startingLuck}"
-                  ></speed-display>
                 </div>
               </div>
             </section>

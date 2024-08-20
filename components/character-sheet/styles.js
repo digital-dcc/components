@@ -11,8 +11,7 @@ export const styles = css`
     flex-wrap: wrap;
   }
   .row,
-  .stats div,
-  .saving-throws div {
+  .stats div {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -30,12 +29,19 @@ export const styles = css`
     border-radius: 5px;
     padding: 10px;
   }
-  .saving-throws,
-  .combat {
+  .combat, .saving-throws {
     border: 1px black solid;
     border-radius: 5px;
     padding: 10px;
   }
+	.row-items {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.item-1-3 {
+		width:30%;
+	}
   h2 {
     margin: 0 0 10px 0;
     padding: 0px;

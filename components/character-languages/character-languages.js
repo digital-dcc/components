@@ -11,7 +11,7 @@ export class CharacterLanguages extends LitElement {
       h2 {
         margin: 0;
         padding: 0;
-        font-size: 0.8em;
+        font-size: 0.8rem;
         text-align: center;
         margin-bottom: 10px;
       }
@@ -32,6 +32,7 @@ export class CharacterLanguages extends LitElement {
 				display: flex;
 				flex-direction: row;
 				flex-wrap: wrap;
+				justify-content: center;
 			}
 			::slotted(*) {
 				display: list-item;

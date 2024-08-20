@@ -14,8 +14,11 @@ import '../stat-display/stat-display.js';
 export class SpeedDisplay extends LitElement {
   static get styles() {
     return css`
-      :host {
-        display: block;
+      .wrapper {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
       }
       ::part(value) {
         font-size: 1.2em;
@@ -62,7 +65,9 @@ export class SpeedDisplay extends LitElement {
 
   render() {
     return html`
-      <stat-display name="Speed" value="${String(this.speed)}"></stat-display>
+      <div class="wrapper">
+        <stat-display name="Speed" value="${String(this.speed)}"></stat-display>
+      </div>
     `;
   }
 }

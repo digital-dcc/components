@@ -45,9 +45,11 @@ const fumbleDie = new Map([
 export class FumbleButton extends LitElement {
   static get styles() {
     return css`
-      :host {
-        display: block;
-        padding: 0px;
+      .wrapper {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
       }
       stat-display::part(value) {
         font-size: 0.8em;
@@ -80,15 +82,17 @@ export class FumbleButton extends LitElement {
 
   render() {
     return html`
-      <stat-display
-        name="Fumble"
-        value="${this.multiplier}d${this.fumbleDie}${formatModifier(
-          this.modifier.total,
-          true
-        )}"
-        value-clickable
-        @value-clicked="${this.onClick}"
-      ></stat-display>
+      <div class="wrapper">
+        <stat-display
+          name="Fumble"
+          value="${this.multiplier}d${this.fumbleDie}${formatModifier(
+            this.modifier.total,
+            true
+          )}"
+          value-clickable
+          @value-clicked="${this.onClick}"
+        ></stat-display>
+      </div>
     `;
   }
 
