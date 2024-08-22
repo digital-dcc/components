@@ -204,11 +204,10 @@ export class InventoryPanel extends LitElement {
       .other-treasure textarea {
         padding: 10px;
       }
-
-			slot {
-				max-height: 600px;
-				overflow-y: scroll;
-			}
+      .scroll {
+        overflow-y: auto;
+        max-height: 300px;
+      }
 
       /* Responsive styling */
       @media (max-width: 700px) {
@@ -402,7 +401,9 @@ export class InventoryPanel extends LitElement {
                 <div class="range">Range</div>
                 <div class="table-filler"></div>
               </div>
-              <slot name="weapon"></slot>`
+              <div class="scroll">
+                <slot name="weapon"></slot>
+              </div>`
           : html``}
         ${this.selected === 1
           ? html` <div class="table-header">
@@ -410,7 +411,9 @@ export class InventoryPanel extends LitElement {
                 <div class="quantity">Quantity</div>
                 <div class="table-filler"></div>
               </div>
-              <slot name="ammunition"></slot>`
+              <div class="scroll">
+                <slot name="ammunition"></slot>
+              </div>`
           : html``}
         ${this.selected === 2
           ? html` <div class="table-header">
@@ -421,7 +424,7 @@ export class InventoryPanel extends LitElement {
                 <div class="fumble-die">Fumble</div>
                 <div class="table-filler"></div>
               </div>
-              <slot name="armor"></slot>`
+              <div class="scroll"><slot name="armor"></slot></div>`
           : html``}
         ${this.selected === 3
           ? html` <div class="table-header">
@@ -429,7 +432,7 @@ export class InventoryPanel extends LitElement {
                 <div class="quantity">Quantity</div>
                 <div class="table-filler"></div>
               </div>
-              <slot name="equipment"></slot>`
+              <div class="scroll"><slot name="equipment"></slot></div>`
           : html``}
         ${this.selected === 4
           ? html` <div class="table-header">
@@ -437,7 +440,7 @@ export class InventoryPanel extends LitElement {
                 <div class="quantity">Quantity</div>
                 <div class="table-filler"></div>
               </div>
-              <slot name="mount-gear"></slot>`
+              <div class="scroll"><slot name="mount-gear"></slot></div>`
           : html``}
         ${this.selected === 5
           ? html` <div class="treasure">
