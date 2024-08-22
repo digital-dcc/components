@@ -3,6 +3,7 @@ import {modifierFor} from '../../utilities/modifier-for.js';
 import {occupations} from '../../utilities/occupations.js';
 import {slug} from '../../utilities/slug.js';
 import '../stat-display/stat-display.js';
+import {armorStatsFor} from '../../utilities/armor.js';
 
 /**
  * An example element.
@@ -33,6 +34,7 @@ export class SpeedDisplay extends LitElement {
     return {
       occupation: {type: String},
       birthAugur: {attribute: 'birth-augur', type: String},
+      armor: {type: String},
       startingLuck: {attribute: 'starting-luck', type: Number},
       speedAdjustment: {attribute: 'speed-adjustment', type: Number},
       speedOverride: {attribute: 'speed-override', type: Number},
@@ -43,6 +45,7 @@ export class SpeedDisplay extends LitElement {
     super();
     this.occupation = null;
     this.birthAugur = null;
+    this.armor = '';
     this.startingLuck = null;
     this.speedAdjustment = 0;
     this.speedOverride = null;
@@ -51,6 +54,7 @@ export class SpeedDisplay extends LitElement {
   get speed() {
     if (this.speedOverride) return this.speedOverride;
     const occupation = occupations.get(slug(this.occupation || ''));
+    const armor = armorStatsFor(this.armor);
     let baseSpeed = 30;
     if (['dwarf', 'halfling'].includes(occupation?.race || '')) baseSpeed = 20;
 
@@ -60,7 +64,9 @@ export class SpeedDisplay extends LitElement {
       luckAdjustment = modifierFor(this.startingLuck) * 5;
     }
 
-    return baseSpeed + luckAdjustment + this.speedAdjustment;
+    return (
+      baseSpeed + luckAdjustment + this.speedAdjustment + armor.speedModifier
+    );
   }
 
   render() {

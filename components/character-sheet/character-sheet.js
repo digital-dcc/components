@@ -370,6 +370,7 @@ export class CharacterSheet extends LitElement {
             ></title-box>
             <div class="row right-justify">
               <speed-display
+                armor=${this.equippedArmor?.name}
                 birth-augur="${this.data.birthAugur}"
                 occupation="${this.data.occupation}"
                 starting-luck="${this.data.startingLuck}"
