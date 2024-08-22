@@ -118,12 +118,21 @@ export class InventoryArmor extends LitElement {
         },
       })
     );
+		this.dispatchEvent(
+      new CustomEvent('toggle-equip', {
+        detail: {
+          name: this.name,
+					equipped: this.equipped,
+        },
+      })
+    );
   }
 
   onRemove() {
     this.dispatchEvent(
       new CustomEvent('remove', {
         detail: {
+					type: 'armor',
           name: this.name,
         },
       })

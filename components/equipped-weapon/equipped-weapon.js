@@ -498,7 +498,7 @@ export class EquippedWeapon extends LitElement {
     dr.conditions.attacker.squeezing = this.attackerSqueezing;
     dr.conditions.attacker.untrained = this.attackerUntrained;
 
-    this.dispatchEvent(new CustomEvent('dice-roll', {detail: {diceRoll: dr}}));
+    this.dispatchEvent(new CustomEvent('dice-roll', {detail: dr}));
 
     // reset attack die adjustment back to 0 after each roll
     this.attackDieAdjustment = 0;
@@ -535,7 +535,7 @@ export class EquippedWeapon extends LitElement {
     dr.conditions.attacker.squeezing = this.attackerSqueezing;
     dr.conditions.attacker.untrained = this.attackerUntrained;
 
-    this.dispatchEvent(new CustomEvent('dice-roll', {detail: {diceRoll: dr}}));
+    this.dispatchEvent(new CustomEvent('dice-roll', {detail: dr}));
   }
 
   incrementDiceChain(die, steps = 1) {

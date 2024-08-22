@@ -154,7 +154,7 @@ export class InventorySelector extends LitElement {
         .filter((item) => item.name)
         .map(this.formatObject)
         .sort(this.sortByName);
-    if (this.type === 'mounts-and-gear')
+    if (this.type === 'mount-gear')
       return Array.from(mountsAndGear.values())
         .filter((item) => item.name)
         .map(this.formatObject)
@@ -168,6 +168,7 @@ export class InventorySelector extends LitElement {
         new CustomEvent('add-item', {
           detail: {
             name: item.name,
+						type: this.type,
             quantity: item.quantity,
             cost: item.cost,
           },

@@ -120,7 +120,7 @@ export class WeaponsPanel extends LitElement {
   render() {
     return html`
       <div class="wrapper" part="wrapper">
-        <h1 class="title" part="title">Weapons</h1>
+        <h2 class="title" part="title">Attacks</h2>
         <slot @slotchange="${this.handleSlotChanged}"
           >You have no weapons currently equipped.</slot
         >

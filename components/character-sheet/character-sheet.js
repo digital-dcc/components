@@ -22,6 +22,7 @@ import '../inventory-armor/inventory-armor.js';
 import '../inventory-equipment/inventory-equipment.js';
 import '../inventory-mount-gear/inventory-mount-gear.js';
 import '../inventory-weapon/inventory-weapon.js';
+import '../inventory-selector/inventory-selector.js';
 import '../weapons-panel/weapons-panel.js';
 import '../birth-augur/birth-augur.js';
 import '../strength-stat/strength-stat.js';
@@ -48,6 +49,8 @@ export class CharacterSheet extends LitElement {
       diceRoll: {type: Boolean, state: true},
       diceRollerIsOpen: {type: Boolean, state: true},
       checkPenaltySelected: {type: Boolean, state: true},
+      inventorySelectorType: {type: String, state: true},
+      inventorySelectorOpen: {type: Boolean, state: true},
     };
   }
 
@@ -57,6 +60,8 @@ export class CharacterSheet extends LitElement {
     this.diceRoll = null;
     this.diceRollerIsOpen = false;
     this.checkPenaltySelected = false;
+    this.inventorySelectorType = '';
+    this.inventorySelectorOpen = false;
   }
 
   handleDiceRollRequested(e) {
@@ -77,19 +82,233 @@ export class CharacterSheet extends LitElement {
     this.checkPenaltySelected = !this.checkPenaltySelected;
   }
 
+  onHitPointsChanged(e) {
+    console.log(e.detail);
+    this.data.hp = e.detail.hp;
+    this.data.maxHP = e.detail.maxHP;
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data))},
+      })
+    );
+  }
+
   handleNotesChanged(e) {
     this.data.notes = e.detail;
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data))},
+      })
+    );
   }
 
   onCoinChange(e) {
     this.data[e.detail.type] = e.detail.value;
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data))},
+      })
+    );
   }
 
   onTreasureChange(e) {
     this.data.treasure = e.detail.value;
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data))},
+      })
+    );
   }
 
-  onAddInventoryItem() {}
+  onInventorySelectorOpen(e) {
+    this.inventorySelectorType = e.detail.type;
+    this.inventorySelectorOpen = true;
+  }
+
+  onAddInventoryItem(e) {
+    switch (e.detail.type) {
+      case 'ammunition':
+        this.data.ammunition.push({
+          name: e.detail.name,
+          quantity: e.detail.quantity,
+        });
+        break;
+      case 'armor':
+        this.data.armor.push({
+          name: e.detail.name,
+          equipped: false,
+          shield: false,
+        });
+        break;
+      case 'equipment':
+        this.data.equipment.push({
+          name: e.detail.name,
+          quantity: 1,
+        });
+        break;
+      case 'weapon':
+        this.data.weapons.push({
+          name: e.detail.name,
+          equipped: false,
+          lucky: false,
+        });
+        break;
+      case 'mount-gear':
+        this.data.mountGear.push({
+          name: e.detail.name,
+          quantity: 1,
+        });
+        break;
+    }
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data))},
+      })
+    );
+  }
+
+  onRemoveArmorItem(e) {
+    const patch = {
+      armor: this.data?.armor?.filter((item) => item.name !== e.detail.name),
+    };
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data)), ...patch},
+      })
+    );
+  }
+
+  onRemoveWeaponItem(e) {
+    const patch = {
+      weapons: this.data?.weapons?.filter(
+        (item) => item.name !== e.detail.name
+      ),
+    };
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data)), ...patch},
+      })
+    );
+  }
+
+  onRemoveEquipmentItem(e) {
+    const patch = {
+      equipment: this.data?.equipment?.filter(
+        (item) => item.name !== e.detail.name
+      ),
+    };
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data)), ...patch},
+      })
+    );
+  }
+
+  onRemoveMountGearItem(e) {
+    const patch = {
+      mountGear: this.data?.mountGear?.filter(
+        (item) => item.name !== e.detail.name
+      ),
+    };
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data)), ...patch},
+      })
+    );
+  }
+
+  onRemoveAmmunitionItem(e) {
+    const patch = {
+      ammunition: this.data?.ammunition?.filter(
+        (item) => item.name !== e.detail.name
+      ),
+    };
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data)), ...patch},
+      })
+    );
+  }
+
+  onAmmunitionQuantityChange(e) {
+    const item = this.data?.ammunition?.find(
+      (item) => item.name === e.detail.name
+    );
+    item.quantity = e.detail.quantity;
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data))},
+      })
+    );
+  }
+
+  onEquipmentQuantityChange(e) {
+    const item = this.data?.equipment?.find(
+      (item) => item.name === e.detail.name
+    );
+    item.quantity = e.detail.quantity;
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data))},
+      })
+    );
+  }
+
+  onMountGearQuantityChange(e) {
+    const item = this.data?.mountGear?.find(
+      (item) => item.name === e.detail.name
+    );
+    item.quantity = e.detail.quantity;
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data))},
+      })
+    );
+  }
+
+  onWeaponEquipChange(e) {
+    const item = this.data?.weapons?.find(
+      (item) => item.name === e.detail.name
+    );
+    item.equipped = e.detail.equipped;
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data))},
+      })
+    );
+  }
+
+  onArmorEquipChange(e) {
+    const item = this.data?.armor?.find((item) => item.name === e.detail.name);
+    if (item.shield) {
+      this.data?.armor
+        ?.filter((i) => i.shield)
+        .forEach((i) => {
+          i.equipped = false;
+          if (i.name === item.name && e.detail.equipped) i.equipped = true;
+        });
+    } else {
+      this.data?.armor
+        ?.filter((i) => !i.shield)
+        .forEach((i) => {
+          i.equipped = false;
+          if (i.name === item.name && e.detail.equipped) i.equipped = true;
+        });
+    }
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data))},
+      })
+    );
+  }
+
+  get equippedArmor() {
+    return this.data?.armor?.find((item) => item.equipped && !item.shield);
+  }
+
+  get equippedShield() {
+    return this.data?.armor?.find((item) => item.equipped && item.shield);
+  }
 
   render() {
     return html`
@@ -100,6 +319,11 @@ export class CharacterSheet extends LitElement {
         @close="${this.handleDiceRollClosed}"
         @ondice-roll-result="${this.handleDiceRollPerformed}"
       ></dice-roller>
+      <inventory-selector
+        .open="${this.inventorySelectorOpen}"
+        .type="${this.inventorySelectorType}"
+        @add-item="${this.onAddInventoryItem}"
+      ></inventory-selector>
       <!-- / Dice Roller Modal Component -->
       <div class="wrapper column">
         <section class="row">
@@ -127,37 +351,37 @@ export class CharacterSheet extends LitElement {
           <section class="column">
             <div class="row gap-20">
               <strength-stat
-                armor=${this.data.armor}
+                armor=${this.equippedArmor?.name}
                 max-strength=${this.data.maxStrength}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @strength-skill-check="${this.handleDiceRollRequested}"
               ></strength-stat>
               <agility-stat
-                armor=${this.data.armor}
+                armor=${this.equippedArmor?.name}
                 max-agility=${this.data.maxAgility}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @agility-skill-check="${this.handleDiceRollRequested}"
               ></agility-stat>
               <stamina-stat
-                armor=${this.data.armor}
+                armor=${this.equippedArmor?.name}
                 max-stamina=${this.data.maxStamina}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @stamina-skill-check="${this.handleDiceRollRequested}"
               ></stamina-stat>
               <intelligence-stat
-                armor=${this.data.armor}
+                armor=${this.equippedArmor?.name}
                 max-intelligence=${this.data.maxIntelligence}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @intelligence-skill-check="${this.handleDiceRollRequested}"
               ></intelligence-stat>
               <personality-stat
-                armor=${this.data.armor}
+                armor=${this.equippedArmor?.name}
                 max-personality=${this.data.maxPersonality}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @personality-skill-check="${this.handleDiceRollRequested}"
               ></personality-stat>
               <luck-stat
-                armor=${this.data.armor}
+                armor=${this.equippedArmor?.name}
                 max-luck=${this.data.maxLuck}
                 @luck-check="${this.handleDiceRollRequested}"
                 ?apply-check-penalty="${this.checkPenaltySelected}"
@@ -166,21 +390,22 @@ export class CharacterSheet extends LitElement {
             </div>
             <check-penalty
               ?checked="${this.checkPenaltySelected}"
-              armor=${this.data.armor}
+              armor=${this.equippedArmor?.name}
               display-modifier
-              ?shield=${this.data.shield}
+              ?shield=${this.equippedShield?.name}
               @change="${this.onCheckPenaltySelected}"
             ></check-penalty>
           </section>
           <section class="row right-justify">
             <armor-class
               agility=${this.data.agility}
-              armor=${this.data.armor}
-              ?shield=${this.data.shield}
+              armor=${this.equippedArmor?.name}
+              ?shield=${this.equippedShield?.name}
             ></armor-class>
             <hit-points
               hp=${this.data.hp}
               max-hp=${this.data.maxHP}
+              @change="${this.onHitPointsChanged}"
             ></hit-points>
           </section>
         </section>
@@ -248,8 +473,8 @@ export class CharacterSheet extends LitElement {
                   <fumble-button
                     birth-augur="${this.data.birthAugur}"
                     luck="${this.data.luck}"
-                    armor=${this.data.armor}
-                    ?shield=${this.data.shield}
+                    armor=${this.equippedArmor?.name}
+                    ?shield=${this.equippedShield?.name}
                     @fumble-roll="${this.handleDiceRollRequested}"
                   ></fumble-button>
                 </div>
@@ -267,7 +492,7 @@ export class CharacterSheet extends LitElement {
             ></occupation-box>
             <section class="languages">
               <character-languages>
-                ${this.data.languages.map(
+                ${this.data?.languages?.map(
                   (language) =>
                     html`<character-language-item
                       name="${language}"
@@ -279,12 +504,22 @@ export class CharacterSheet extends LitElement {
           <section class="column">
             <section class="attacks">
               <weapons-panel>
-                <equipped-weapon
-                  agility="${this.data.agility}"
-                  birth-augur="${this.data.birthAugur}"
-                  luck="${this.data.luck}"
-                  weapon="Longsword"
-                ></equipped-weapon>
+                ${this.data?.weapons
+                  ?.filter((weapon) => weapon.equipped)
+                  .map(
+                    (weapon) => html`
+                      <equipped-weapon
+                        agility="${this.data.agility}"
+                        strength="${this.data.strength}"
+                        character-class="${this.data.characterClass}"
+                        ?lucky="${false}"
+                        birth-augur="${this.data.birthAugur}"
+                        luck="${this.data.luck}"
+                        weapon="${weapon.name}"
+                        @dice-roll="${this.handleDiceRollRequested}"
+                      ></equipped-weapon>
+                    `
+                  )}
               </weapons-panel>
             </section>
             <section class="equipment">
@@ -297,8 +532,64 @@ export class CharacterSheet extends LitElement {
                 treasure="${this.data.treasure}"
                 @coin-change="${this.onCoinChange}"
                 @treasure-change="${this.onTreasureChange}"
-                @add-item="${this.onAddInventoryItem}"
-              ></inventory-panel>
+                @add-item="${this.onInventorySelectorOpen}"
+              >
+                ${this.data?.weapons?.map(
+                  (item) => html`
+                    <inventory-weapon
+                      slot="weapon"
+                      name="${item.name}"
+                      ?equipped="${item.equipped}"
+                      @toggle-equip="${this.onWeaponEquipChange}"
+                      @remove="${this.onRemoveWeaponItem}"
+                    ></inventory-weapon>
+                  `
+                )}
+                ${this.data?.armor?.map(
+                  (item) => html`
+                    <inventory-armor
+                      slot="armor"
+                      name="${item.name}"
+                      ?equipped="${item.equipped}"
+                      @toggle-equip="${this.onArmorEquipChange}"
+                      @remove="${this.onRemoveArmorItem}"
+                    ></inventory-armor>
+                  `
+                )}
+                ${this.data?.equipment?.map(
+                  (item) => html`
+                    <inventory-equipment
+                      slot="equipment"
+                      name="${item.name}"
+                      quantity="${item.quantity}"
+                      @quantity-change="${this.onEquipmentQuantityChange}"
+                      @remove="${this.onRemoveEquipmentItem}"
+                    ></inventory-equipment>
+                  `
+                )}
+                ${this.data?.ammunition?.map(
+                  (item) => html`
+                    <inventory-ammunition
+                      slot="ammunition"
+                      name="${item.name}"
+                      quantity="${item.quantity}"
+                      @quantity-change="${this.onAmmunitionQuantityChange}"
+                      @remove="${this.onRemoveAmmunitionItem}"
+                    ></inventory-ammunition>
+                  `
+                )}
+                ${this.data?.mountGear?.map(
+                  (item) => html`
+                    <inventory-mount-gear
+                      slot="mount-gear"
+                      name="${item.name}"
+                      quantity="${item.quantity}"
+                      @quantity-change="${this.onMountGearQuantityChange}"
+                      @remove="${this.onRemoveMountGearItem}"
+                    ></inventory-mount-gear>
+                  `
+                )}
+              </inventory-panel>
             </section>
             <section class="notes">
               <notes-box
@@ -322,12 +613,12 @@ export class CharacterSheet extends LitElement {
                 <thief-skills
                   agility="${this.data.agility}"
                   alignment="${this.data.alignment}"
-                  armor=${this.data.armor}
+                  armor=${this.equippedArmor?.name}
                   birth-augur="${this.data.birthAugur}"
                   intelligence="${this.data.intelligence}"
                   level="${this.data.level}"
                   personality="${this.data.personality}"
-                  ?shield=${this.data.shield}
+                  ?shield=${this.equippedShield?.name}
                   starting-luck="${this.data.startingLuck}"
                   ?apply-check-penalty="${this.checkPenaltySelected}"
                   @thief-skill-check="${this.handleDiceRollRequested}"

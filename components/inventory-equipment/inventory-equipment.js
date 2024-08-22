@@ -104,6 +104,7 @@ export class InventoryEquipment extends LitElement {
     this.dispatchEvent(
       new CustomEvent('remove', {
         detail: {
+					type: 'equipment',
           name: this.name,
         },
       })

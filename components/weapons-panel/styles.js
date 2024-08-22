@@ -17,18 +17,10 @@ export const styles = css`
       'Segoe UI Emoji',
       'Segoe UI Symbol'
     );
-    font-size: 1em;
     --primary-text-color: black;
-    --secondary-text-color: rgb(113, 133, 122);
+    --secondary-text-color: black;
     --background-color: #ffffff;
   }
-  /*
-  :host([theme='dark']) {
-    --primary-text-color: #ffffff;
-    --secondary-text-color: #c3c3c3;
-    --background-color: #000000;
-  }
-	*/
   .disabled {
     opacity: 0.5;
     pointer-events: none;
@@ -50,15 +42,9 @@ export const styles = css`
 		margin: 0;
 		padding: 0;
 	}
-  h1 {
-    margin: 0;
-    padding: 0;
-    font-size: 0.8em;
-  }
   h2 {
     margin: 0;
     padding: 0;
-    font-size: 0.6em;
   }
   .checkboxes {
     margin: 0;
@@ -71,7 +57,7 @@ export const styles = css`
   .checkboxes li {
     flex-direction: row;
     list-style: none;
-    font-size: 0.8em;
+    font-size: 0.8rem;
     min-width: fit-content;
   }
   .checkboxes label {
@@ -82,19 +68,19 @@ export const styles = css`
   }
   .you-are {
     color: var(--secondary-text-color);
-    font-size: 1.1em;
+    font-size: 1.1rem;
   }
   .your-target-is {
     color: var(--secondary-text-color);
-    font-size: 1.1em;
+    font-size: 1.1rem;
   }
   .title {
-    font-size: 1em;
+    font-size: 0.8rem;
     color: var(--primary-text-color);
     text-align: center;
   }
   .sub-title {
-    font-size: 1em;
+    font-size: 1rem;
     color: var(--primary-text-color);
     margin-bottom: 10px;
     font-weight: normal;

@@ -39,13 +39,12 @@ export class HitPoints extends LitElement {
         text-align: center;
       }
       .hit-points {
-				margin-top: 10px;
+        margin-top: 10px;
         font-size: 2rem;
         text-align: center;
       }
-			.current-hp {
-				
-			}
+      .current-hp {
+      }
       button {
         background: none;
         border: none;
@@ -95,7 +94,9 @@ export class HitPoints extends LitElement {
     return html`
       <div class="wrapper">
         <h2 class="title">Hit Points</h2>
-        <div class="hit-points"><span class="current-hp">${this.displayCurrentHP}</span>${this.maxHP}</div>
+        <div class="hit-points">
+          <span class="current-hp">${this.displayCurrentHP}</span>${this.maxHP}
+        </div>
         <div class="buttons">
           <button
             part="decrement-button"
@@ -139,8 +140,6 @@ export class HitPoints extends LitElement {
     this.dispatchEvent(
       new CustomEvent('change', {
         detail: {hp: this.hp, maxHP: this.maxHP},
-        bubbles: true,
-        composed: true,
       })
     );
   }

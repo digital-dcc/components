@@ -104,6 +104,7 @@ export class InventoryMountGear extends LitElement {
     this.dispatchEvent(
       new CustomEvent('remove', {
         detail: {
+					type: 'mount-gear',
           name: this.name,
         },
       })

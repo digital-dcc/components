@@ -205,6 +205,11 @@ export class InventoryPanel extends LitElement {
         padding: 10px;
       }
 
+			slot {
+				max-height: 600px;
+				overflow-y: scroll;
+			}
+
       /* Responsive styling */
       @media (max-width: 700px) {
         .tab {

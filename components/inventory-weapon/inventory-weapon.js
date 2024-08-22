@@ -106,12 +106,21 @@ export class InventoryWeapon extends LitElement {
         },
       })
     );
+    this.dispatchEvent(
+      new CustomEvent('toggle-equip', {
+        detail: {
+          name: this.name,
+					equipped: this.equipped,
+        },
+      })
+    );
   }
 
   onRemove() {
     this.dispatchEvent(
       new CustomEvent('remove', {
         detail: {
+					type: 'weapon',
           name: this.name,
         },
       })

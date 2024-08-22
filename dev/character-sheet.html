@@ -30,34 +30,53 @@
     <div class="wrapper">
       <character-sheet id="ref1"></character-sheet>
       <script>
-        document.querySelector('#ref1').data = {
-					name: 'John Doe',
-					alignment: 'lawful',
-					characterClass: null,
-					birthAugur: 'lucky-sign',
-					level: 0,
-					maxStrength: 15,
-					strength: 15,
-					maxAgility: 7,
-					agility: 7,
-					maxStamina: 13,
-					stamina: 13,
-					maxIntelligence: 12,
-					intelligence: 12,
-					maxPersonality: 4,
-					personality: 4,
-					startingLuck: 18,
-					maxLuck: 18,
-					luck: 18,
-					armor: 'leather',
-					shield: false,
-					hp: 7,
-					maxHP: 13,
-					xp: 5,
-					occupation: 'alchemist',
-					alignment: 'neutral',
-					languages: ['common', 'dwarvish'],
-				};
+        const el = document.querySelector('#ref1');
+        el.data = {
+          name: 'John Doe',
+          alignment: 'lawful',
+          characterClass: null,
+          birthAugur: 'lucky-sign',
+          level: 0,
+          maxStrength: 15,
+          strength: 15,
+          maxAgility: 7,
+          agility: 7,
+          maxStamina: 13,
+          stamina: 13,
+          maxIntelligence: 12,
+          intelligence: 12,
+          maxPersonality: 4,
+          personality: 4,
+          startingLuck: 18,
+          maxLuck: 18,
+          luck: 18,
+          hp: 7,
+          maxHP: 13,
+          xp: 5,
+          occupation: 'alchemist',
+          alignment: 'neutral',
+          languages: ['common', 'dwarvish'],
+          weapons: [
+            {name: 'Short sword', lucky: false, equipped: true},
+            {name: 'Dagger', lucky: false, equipped: true},
+          ],
+          armor: [
+            {name: 'Chainmail', equipped: false},
+            {name: 'Leather', equipped: true},
+            {name: 'Shield', shield: true, equipped: false},
+          ],
+          equipment: [
+            {name: 'Oil, 1 flask', quantity: 1},
+            {name: 'Backpack', quantity: 1},
+          ],
+          mountGear: [],
+          ammunition: [{name: 'Arrows', quantity: 20}],
+          notes: 'This is a note',
+        };
+        el.addEventListener('change', (e) => {
+          console.log(e.detail);
+          el.data = e.detail;
+        });
       </script>
     </div>
   </body>
