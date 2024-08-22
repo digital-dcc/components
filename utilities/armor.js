@@ -8,6 +8,7 @@ export const armor = new Map([
       speedModifier: 0,
       fumbleDie: 'd4',
       cost: 0,
+      shield: false,
     },
   ],
   [
@@ -19,6 +20,7 @@ export const armor = new Map([
       speedModifier: 0,
       fumbleDie: 'd4',
       cost: 0,
+      shield: false,
     },
   ],
   [
@@ -30,6 +32,7 @@ export const armor = new Map([
       speedModifier: 0,
       fumbleDie: 'd8',
       cost: 5,
+      shield: false,
     },
   ],
   [
@@ -41,6 +44,7 @@ export const armor = new Map([
       speedModifier: 0,
       fumbleDie: 'd8',
       cost: 20,
+      shield: false,
     },
   ],
   [
@@ -52,6 +56,7 @@ export const armor = new Map([
       speedModifier: 0,
       fumbleDie: 'd8',
       cost: 45,
+      shield: false,
     },
   ],
   [
@@ -63,6 +68,7 @@ export const armor = new Map([
       speedModifier: 0,
       fumbleDie: 'd12',
       cost: 30,
+      shield: false,
     },
   ],
   [
@@ -74,6 +80,7 @@ export const armor = new Map([
       speedModifier: -5,
       fumbleDie: 'd12',
       cost: 80,
+      shield: false,
     },
   ],
   [
@@ -85,6 +92,7 @@ export const armor = new Map([
       speedModifier: -5,
       fumbleDie: 'd12',
       cost: 150,
+      shield: false,
     },
   ],
   [
@@ -96,6 +104,7 @@ export const armor = new Map([
       speedModifier: -5,
       fumbleDie: 'd16',
       cost: 250,
+      shield: false,
     },
   ],
   [
@@ -107,6 +116,7 @@ export const armor = new Map([
       speedModifier: -10,
       fumbleDie: 'd16',
       cost: 550,
+      shield: false,
     },
   ],
   [
@@ -118,6 +128,7 @@ export const armor = new Map([
       speedModifier: -10,
       fumbleDie: 'd16',
       cost: 1200,
+      shield: false,
     },
   ],
   [
@@ -129,6 +140,7 @@ export const armor = new Map([
       speedModifier: 0,
       fumbleDie: 'd8',
       cost: 10,
+      shield: true,
     },
   ],
 ]);
@@ -152,6 +164,7 @@ export const armorStatsFor = (armor = 'unarmored') => {
       speedModifier: 0,
       fumbleDie: 'd4',
       cost: 0,
+      shield: false,
     }
   );
 };

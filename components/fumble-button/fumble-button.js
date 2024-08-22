@@ -22,17 +22,17 @@ class DiceRoll {
 }
 
 const fumbleDie = new Map([
-  ['Unarmored', 4],
-  ['Padded', 8],
-  ['Leather', 8],
-  ['Studded leather', 8],
-  ['Hide', 12],
-  ['Scale mail', 12],
-  ['Chainmail', 12],
-  ['Banded mail', 16],
-  ['Half-plate', 16],
-  ['Full plate', 16],
-  ['Shield', 8],
+  ['unarmored', 4],
+  ['padded', 8],
+  ['leather', 8],
+  ['studded-leather', 8],
+  ['hide', 12],
+  ['scale-mail', 12],
+  ['chainmail', 12],
+  ['banded-mail', 16],
+  ['half-plate', 16],
+  ['full-plate', 16],
+  ['shield', 8],
 ]);
 
 /**

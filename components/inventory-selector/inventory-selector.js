@@ -168,7 +168,7 @@ export class InventorySelector extends LitElement {
         new CustomEvent('add-item', {
           detail: {
             name: item.name,
-						type: this.type,
+            type: this.type,
             quantity: item.quantity,
             cost: item.cost,
           },
@@ -177,9 +177,13 @@ export class InventorySelector extends LitElement {
     };
   }
 
+  onClose() {
+    this.dispatchEvent(new CustomEvent('close'));
+  }
+
   render() {
     return html`
-      <modal-dialog ?open="${this.open}">
+      <modal-dialog ?open="${this.open}" @close="${this.onClose}">
         <h2>${this.displayType}</h2>
         <div class="wrapper">
           <table>

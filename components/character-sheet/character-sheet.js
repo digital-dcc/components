@@ -1,4 +1,5 @@
 import {LitElement, html} from 'lit';
+import {armorStatsFor} from '../../utilities/armor.js';
 import {styles} from './styles.js';
 
 import '../dice-roller/dice-roller.js';
@@ -125,39 +126,71 @@ export class CharacterSheet extends LitElement {
     this.inventorySelectorOpen = true;
   }
 
+  onInventorySelectorClose() {
+    this.inventorySelectorType = '';
+    this.inventorySelectorOpen = false;
+  }
+
+  addOrIncrementInventoryItem(type, name, quantity) {
+    // try to find existing item
+    const existingItem = this.data[type].find((item) => item.name === name);
+    if (existingItem) {
+      // if item exists, increment quantity
+      existingItem.quantity += quantity || 1;
+    } else {
+      // otherwise, add new item
+      const newItem = {
+        name: name,
+        quantity: quantity || 1,
+      };
+      if (type === 'armor') {
+        newItem.equipped = false;
+        newItem.shield = armorStatsFor(name).shield;
+      }
+      if (type === 'weapon') {
+        newItem.equipped = false;
+        newItem.lucky = false;
+      }
+      this.data[type].push(newItem);
+    }
+  }
+
   onAddInventoryItem(e) {
     switch (e.detail.type) {
       case 'ammunition':
-        this.data.ammunition.push({
-          name: e.detail.name,
-          quantity: e.detail.quantity,
-        });
+        this.addOrIncrementInventoryItem(
+          'ammunition',
+          e.detail.name,
+          e.detail.quantity
+        );
         break;
       case 'armor':
-        this.data.armor.push({
-          name: e.detail.name,
-          equipped: false,
-          shield: false,
-        });
+        this.addOrIncrementInventoryItem(
+          'armor',
+          e.detail.name,
+          e.detail.quantity
+        );
         break;
       case 'equipment':
-        this.data.equipment.push({
-          name: e.detail.name,
-          quantity: 1,
-        });
+        this.addOrIncrementInventoryItem(
+          'equipment',
+          e.detail.name,
+          e.detail.quantity
+        );
         break;
       case 'weapon':
-        this.data.weapons.push({
-          name: e.detail.name,
-          equipped: false,
-          lucky: false,
-        });
+        this.addOrIncrementInventoryItem(
+          'weapons',
+          e.detail.name,
+          e.detail.quantity
+        );
         break;
       case 'mount-gear':
-        this.data.mountGear.push({
-          name: e.detail.name,
-          quantity: 1,
-        });
+        this.addOrIncrementInventoryItem(
+          'equipment',
+          e.detail.name,
+          e.detail.quantity
+        );
         break;
     }
     this.dispatchEvent(
@@ -323,6 +356,7 @@ export class CharacterSheet extends LitElement {
         .open="${this.inventorySelectorOpen}"
         .type="${this.inventorySelectorType}"
         @add-item="${this.onAddInventoryItem}"
+        @close="${this.onInventorySelectorClose}"
       ></inventory-selector>
       <!-- / Dice Roller Modal Component -->
       <div class="wrapper column">
@@ -533,6 +567,7 @@ export class CharacterSheet extends LitElement {
                 @coin-change="${this.onCoinChange}"
                 @treasure-change="${this.onTreasureChange}"
                 @add-item="${this.onInventorySelectorOpen}"
+                @close="${this.onInventorySelectorClose}"
               >
                 ${this.data?.weapons?.map(
                   (item) => html`
