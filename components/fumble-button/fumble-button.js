@@ -52,7 +52,7 @@ export class FumbleButton extends LitElement {
         aspect-ratio: 1 / 1;
       }
       stat-display::part(value) {
-        font-size: 0.8em;
+        font-size: 1em;
       }
     `;
   }

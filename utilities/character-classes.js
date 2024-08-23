@@ -42,6 +42,16 @@ import {
 } from './character-classes/cleric.js';
 
 export const characterClassDisplayNames = new Map();
+characterClassDisplayNames.set('', {
+  level: 0,
+  Attack: +0,
+  critDie: '1d4',
+  critTable: 'I',
+  actionDice: '1d20',
+  Ref: +0,
+  Fort: +0,
+  Will: +0,
+});
 characterClassDisplayNames.set('thief', thiefDisplayName);
 characterClassDisplayNames.set('warrior', warriorDisplayName);
 characterClassDisplayNames.set('wizard', wizardDisplayName);

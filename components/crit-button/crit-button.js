@@ -31,7 +31,7 @@ export class CritButton extends LitElement {
         padding: 0px;
       }
       stat-display::part(value) {
-        font-size: 0.8em
+        font-size: 1em
       }
     `;
   }
@@ -179,7 +179,7 @@ export class CritButton extends LitElement {
   get critTable() {
     if (this.tableOverride) return this.tableOverride;
     return characterClasses.get(this.characterClassSlug)?.get(Number(this.level || 0))
-      ?.critTable;
+      ?.critTable || 'I';
   }
 
   onClick() {
