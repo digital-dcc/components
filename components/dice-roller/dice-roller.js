@@ -70,6 +70,8 @@ export class DiceRoller extends LitElement {
       align-items: center;
       gap: 20px;
       margin-bottom: 20px;
+      border-top: 1px dashed #f2f2f2;
+      padding-top: 10px;
     }
     @media (max-width: 400px) {
       .roll-adjustment-section {
@@ -116,21 +118,20 @@ export class DiceRoller extends LitElement {
       text-align: center;
     }
     .modifier-breakdown {
-      padding-top: 10px;
-      margin-bottom: 20px;
+      padding: 10px 0;
+      margin: 0;
       border-top: 1px dashed #f2f2f2;
-      border-bottom: 1px dashed #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
     .modifier-breakdown-entry {
+      display: flex;
+      justify-content: space-between;
       list-style-type: none;
       margin: 0;
       padding: 0;
       width: 100%;
-      margin-bottom: 20px;
-    }
-    .modifier-breakdown-entry li {
-      display: flex;
-      justify-content: space-between;
     }
   `;
 
@@ -174,11 +175,13 @@ export class DiceRoller extends LitElement {
   }
 
   get modifierBreakdown() {
-    return this.diceRoll?.roll?.modifier?.breakdown?.map(({name, value}) => {
-      return html`<ul class="modifier-breakdown-entry">
-        <li><span>${name}</span><span>${formatModifier(value)}</span></li>
-      </ul>`;
-    });
+    return this.diceRoll?.roll?.modifier?.breakdown
+      ?.filter(({value}) => value > 0 || value < 0)
+      ?.map(({name, value}) => {
+        return html`<li class="modifier-breakdown-entry">
+          <span>${name}</span><span>${formatModifier(value)}</span>
+        </li>`;
+      });
   }
 
   incrementQuantity() {
@@ -238,22 +241,22 @@ export class DiceRoller extends LitElement {
     );
   }
 
-	onClose() {
-		// this.open = false;
-		this.rollResult = null;
-		this.diceRoll = null;
-		this.dispatchEvent(new CustomEvent('close'));
-	}
+  onClose() {
+    // this.open = false;
+    this.rollResult = null;
+    this.diceRoll = null;
+    this.dispatchEvent(new CustomEvent('close'));
+  }
 
   render() {
     return html`
       <modal-dialog .open="${this.open}" @close="${this.onClose}">
         <h1>${this.diceRoll?.name}</h1>
         <p class="roll-description">${this.diceRoll?.description}</p>
-        ${this.diceRoll?.roll?.modifier?.breakdown?.length
-          ? html`<div class="modifier-breakdown">
+        ${this.modifierBreakdown?.length
+          ? html`<ul class="modifier-breakdown">
               ${this.modifierBreakdown}
-            </div>`
+            </ul>`
           : html``}
         <div class="roll-adjustment">
           <div class="roll-adjustment-section">
