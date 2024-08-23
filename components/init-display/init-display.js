@@ -5,8 +5,8 @@ import {slug} from '../../utilities/slug.js';
 import '../stat-display/stat-display.js';
 
 class DiceRoll {
-  name;
-  description;
+  name = 'Initiative Roll';
+  description = 'Initiative order roll';
   roll = {
     qty: 1,
     die: 20,
