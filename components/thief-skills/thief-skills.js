@@ -38,11 +38,6 @@ class DiceRoll {
 export class ThiefSkills extends LitElement {
   static get styles() {
     return css`
-      :host {
-        display: block;
-        padding: 0px;
-        margin: 0px;
-      }
       .outer-wrapper {
         border-radius: 5px;
         border: 1px black solid;
@@ -111,7 +106,7 @@ export class ThiefSkills extends LitElement {
       }
       @media (min-width: 1000px) {
         .inner-wrapper {
-          height: 125px;
+          height: 150px;
         }
       }
     `;

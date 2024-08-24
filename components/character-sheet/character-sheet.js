@@ -571,22 +571,20 @@ export class CharacterSheet extends LitElement {
             </section>
             <section>
               ${this.data.characterClass === 'thief'
-                ? html`<section class="row">
-                    <section class="thieves-skills">
-                      <thief-skills
-                        agility="${this.data.agility}"
-                        alignment="${this.data.alignment}"
-                        armor=${this.equippedArmor?.name}
-                        birth-augur="${this.data.birthAugur}"
-                        intelligence="${this.data.intelligence}"
-                        level="${this.data.level}"
-                        personality="${this.data.personality}"
-                        ?shield=${this.equippedShield?.name}
-                        starting-luck="${this.data.startingLuck}"
-                        ?apply-check-penalty="${this.checkPenaltySelected}"
-                        @thief-skill-check="${this.handleDiceRollRequested}"
-                      ></thief-skills>
-                    </section>
+                ? html`<section>
+                    <thief-skills
+                      agility="${this.data.agility}"
+                      alignment="${this.data.alignment}"
+                      armor=${this.equippedArmor?.name}
+                      birth-augur="${this.data.birthAugur}"
+                      intelligence="${this.data.intelligence}"
+                      level="${this.data.level}"
+                      personality="${this.data.personality}"
+                      ?shield=${this.equippedShield?.name}
+                      starting-luck="${this.data.startingLuck}"
+                      ?apply-check-penalty="${this.checkPenaltySelected}"
+                      @thief-skill-check="${this.handleDiceRollRequested}"
+                    ></thief-skills>
                   </section>`
                 : html``}
             </section>
