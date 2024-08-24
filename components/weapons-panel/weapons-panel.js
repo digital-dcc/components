@@ -223,7 +223,7 @@ export class WeaponsPanel extends LitElement {
                   .checked="${this.attackerSneakAttacking}"
                   @change="${this.handleCheckboxChange}"
                 />
-                sneak attacking
+                back stabbing
               </label>
             </li>
           </ul>
