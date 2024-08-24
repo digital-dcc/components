@@ -535,6 +535,18 @@ export class CharacterSheet extends LitElement {
                 )}
               </character-languages>
             </section>
+            ${this.data.characterClass && this.data.level > 0
+              ? html`<section class="character-features">
+                  <character-features
+                    character-class="${this.data.characterClass}"
+                    level="${this.data.level}"
+                    stamina="${this.data.stamina}"
+                    luck="${this.data.luck}"
+                    personality="${this.data.personality}"
+                    intelligence="${this.data.intelligence}"
+                  ></character-features>
+                </section>`
+              : html``}
           </section>
           <section class="column">
             <section class="attacks">
@@ -547,7 +559,7 @@ export class CharacterSheet extends LitElement {
                         agility="${this.data.agility}"
                         strength="${this.data.strength}"
                         character-class="${this.data.characterClass}"
-                        ?lucky="${false}"
+                        ?lucky="${weapon.lucky}"
                         birth-augur="${this.data.birthAugur}"
                         luck="${this.data.luck}"
                         weapon="${weapon.name}"
@@ -556,6 +568,27 @@ export class CharacterSheet extends LitElement {
                     `
                   )}
               </weapons-panel>
+            </section>
+            <section>
+              ${this.data.characterClass === 'thief'
+                ? html`<section class="row">
+                    <section class="thieves-skills">
+                      <thief-skills
+                        agility="${this.data.agility}"
+                        alignment="${this.data.alignment}"
+                        armor=${this.equippedArmor?.name}
+                        birth-augur="${this.data.birthAugur}"
+                        intelligence="${this.data.intelligence}"
+                        level="${this.data.level}"
+                        personality="${this.data.personality}"
+                        ?shield=${this.equippedShield?.name}
+                        starting-luck="${this.data.startingLuck}"
+                        ?apply-check-penalty="${this.checkPenaltySelected}"
+                        @thief-skill-check="${this.handleDiceRollRequested}"
+                      ></thief-skills>
+                    </section>
+                  </section>`
+                : html``}
             </section>
             <section class="equipment">
               <inventory-panel
@@ -575,6 +608,7 @@ export class CharacterSheet extends LitElement {
                     <inventory-weapon
                       slot="weapon"
                       name="${item.name}"
+                      quantity="${item.quantity}"
                       ?equipped="${item.equipped}"
                       @toggle-equip="${this.onWeaponEquipChange}"
                       @remove="${this.onRemoveWeaponItem}"
@@ -639,29 +673,14 @@ export class CharacterSheet extends LitElement {
         <section class="row"></section>
         <section class="row">
           ${this.data.characterClass && this.data.level > 0
-            ? html`<section class="class-features"></section>`
+            ? html`<section class="class-features">
+							<class-features characterClass="${this.data.characterClass}" level="${this.data.level}" stamina="${this.data.stamina}" luck="${this.data.luck}" personality="${this.data.personality}" intelligence="${this.data.intelligence}"></class-features>
+							</class-features>
+						</section>`
             : html``}
         </section>
         <section class="row"></section>
-        ${this.data.characterClass === 'thief'
-          ? html`<section class="row">
-              <section class="thieves-skills">
-                <thief-skills
-                  agility="${this.data.agility}"
-                  alignment="${this.data.alignment}"
-                  armor=${this.equippedArmor?.name}
-                  birth-augur="${this.data.birthAugur}"
-                  intelligence="${this.data.intelligence}"
-                  level="${this.data.level}"
-                  personality="${this.data.personality}"
-                  ?shield=${this.equippedShield?.name}
-                  starting-luck="${this.data.startingLuck}"
-                  ?apply-check-penalty="${this.checkPenaltySelected}"
-                  @thief-skill-check="${this.handleDiceRollRequested}"
-                ></thief-skills>
-              </section>
-            </section>`
-          : html``}
+
         <div class="row"></div>
         <section class="row"></section>
       </div>

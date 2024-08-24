@@ -245,6 +245,9 @@ export class DiceRoller extends LitElement {
     // this.open = false;
     this.rollResult = null;
     this.diceRoll = null;
+    this.qtyAdjustment = 0;
+    this.dieAdjustment = 0;
+    this.modifierAdjustment = 0;
     this.dispatchEvent(new CustomEvent('close'));
   }
 

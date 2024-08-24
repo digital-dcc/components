@@ -22,14 +22,6 @@ export class InventoryMountGear extends LitElement {
           'Segoe UI Symbol'
         );
       }
-      .wrapper {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px black dotted;
-        padding: 15px 10px;
-        margin: 0;
-        justify-items: center;
-      }
       button {
         border: none;
         margin: 0px;
@@ -65,23 +57,36 @@ export class InventoryMountGear extends LitElement {
       .remove-button:hover {
         background-color: #c3c3c3;
       }
-      .name {
-        width: 130px;
-        display: flex;
-        align-items: center;
-      }
-      .quantity {
-        min-width: 250px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-      }
       .buttons {
         width: 100px;
         display: flex;
         justify-content: right;
         align-items: center;
+        gap: 10px;
+      }
+      .table-row {
+        display: flex;
+        justify-content: space-between; /* Optional: Helps with spacing */
+        width: 100%;
+        border-bottom: 1px black dotted; /* Just for visual separation */
+      }
+      .table-cell {
+        flex: 1; /* Equal width for each column */
+        padding: 10px;
+        box-sizing: border-box;
+        text-align: center; /* Center the text */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .table-cell:nth-child(1) {
+        justify-content: left;
+        flex: 2; /* Make the first column wider */
+      }
+      .buttons {
+        justify-content: right;
+      }
+      .gap-10 {
         gap: 10px;
       }
     `;
@@ -104,7 +109,7 @@ export class InventoryMountGear extends LitElement {
     this.dispatchEvent(
       new CustomEvent('remove', {
         detail: {
-					type: 'mount-gear',
+          type: 'mount-gear',
           name: this.name,
         },
       })
@@ -145,9 +150,9 @@ export class InventoryMountGear extends LitElement {
   render() {
     const stats = mountsAndGearStatsFor(this.name);
     return html`
-      <div class="wrapper" part="wrapper">
-        <div class="name">${stats?.name}</div>
-        <div class="quantity">
+      <div class="table-row wrapper" part="wrapper">
+        <div class="table-cell">${stats?.name}</div>
+        <div class="table-cell gap-10">
           <button
             class="quantity-adjustment-button decrement"
             @click="${this.decrementQuantity(1)}"
@@ -162,7 +167,7 @@ export class InventoryMountGear extends LitElement {
             +1
           </button>
         </div>
-        <div class="buttons">
+        <div class="table-cell buttons">
           <button class="remove-button" @click=${this.onRemove}>x</button>
         </div>
       </div>

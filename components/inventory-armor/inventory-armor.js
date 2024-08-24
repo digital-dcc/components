@@ -22,14 +22,6 @@ export class InventoryArmor extends LitElement {
           'Segoe UI Symbol'
         );
       }
-      .wrapper {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px black dotted;
-        padding: 15px 10px;
-        margin: 0;
-        justify-items: center;
-      }
       button {
         border: none;
         margin: 0px;
@@ -57,37 +49,26 @@ export class InventoryArmor extends LitElement {
       .remove-button:hover {
         background-color: #c3c3c3;
       }
-      .name {
-        width: 110px;
+      .table-row {
         display: flex;
-        align-items: center;
+        justify-content: space-between; /* Optional: Helps with spacing */
+        width: 100%;
+        border-bottom: 1px black dotted; /* Just for visual separation */
       }
-      .ac-bonus {
-        width: 40px;
+      .table-cell {
+        flex: 1; /* Equal width for each column */
+        padding: 10px;
+        box-sizing: border-box;
+        text-align: center; /* Center the text */
         display: flex;
         justify-content: center;
         align-items: center;
       }
-      .check-penalty {
-        width: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .speed {
-        width: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .fumble-die {
-        width: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      .table-cell:nth-child(1) {
+        justify-content: left;
+        flex: 2; /* Make the first column wider */
       }
       .buttons {
-        width: 100px;
         display: flex;
         justify-content: right;
         align-items: center;
@@ -100,6 +81,7 @@ export class InventoryArmor extends LitElement {
     return {
       name: {type: String},
       equipped: {type: Boolean, reflect: true},
+      quantity: {type: Number, reflect: true},
     };
   }
 
@@ -107,6 +89,7 @@ export class InventoryArmor extends LitElement {
     super();
     this.name = null;
     this.equipped = false;
+    this.quantity = 1;
   }
 
   onTogglEquip() {
@@ -118,11 +101,11 @@ export class InventoryArmor extends LitElement {
         },
       })
     );
-		this.dispatchEvent(
+    this.dispatchEvent(
       new CustomEvent('toggle-equip', {
         detail: {
           name: this.name,
-					equipped: this.equipped,
+          equipped: this.equipped,
         },
       })
     );
@@ -132,7 +115,7 @@ export class InventoryArmor extends LitElement {
     this.dispatchEvent(
       new CustomEvent('remove', {
         detail: {
-					type: 'armor',
+          type: 'armor',
           name: this.name,
         },
       })
@@ -142,13 +125,14 @@ export class InventoryArmor extends LitElement {
   render() {
     const stats = armorStatsFor(this.name);
     return html`
-      <div class="wrapper" part="wrapper">
-        <div class="name">${this.name}</div>
-        <div class="ac-bonus">${stats?.bonus}</div>
-        <div class="check-penalty">${stats?.checkPenalty}</div>
-        <div class="speed">${stats?.speedModifier}</div>
-        <div class="fumble-die">${stats?.fumbleDie}</div>
-        <div class="buttons">
+      <div class="table-row wrapper" part="wrapper">
+        <div class="table-cell">${this.name}</div>
+        <div class="table-cell">${stats?.bonus}</div>
+        <div class="table-cell">${stats?.checkPenalty}</div>
+        <div class="table-cell">${stats?.speedModifier}</div>
+        <div class="table-cell">${stats?.fumbleDie}</div>
+        <div class="table-cell">${this.quantity}</div>
+        <div class="table-cell buttons">
           <button class="equip-button" @click=${this.onTogglEquip}>
             ${this.equipped ? 'unequip' : 'equip'}
           </button>

@@ -22,14 +22,6 @@ export class InventoryWeapon extends LitElement {
           'Segoe UI Symbol'
         );
       }
-      .wrapper {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px black dotted;
-        padding: 15px 10px;
-        margin: 0;
-        justify-items: center;
-      }
       button {
         border: none;
         margin: 0px;
@@ -57,29 +49,31 @@ export class InventoryWeapon extends LitElement {
       .remove-button:hover {
         background-color: #c3c3c3;
       }
-      .name {
-        width: 100px;
-        display: flex;
-        align-items: center;
-      }
-      .damage {
-        width: 40px;
-        justify-content: center;
-        display: flex;
-        align-items: center;
-      }
-      .range {
-        width: 90px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
       .buttons {
         width: 100px;
         display: flex;
         justify-content: right;
         align-items: center;
         gap: 10px;
+      }
+      .table-row {
+        display: flex;
+        justify-content: space-between; /* Optional: Helps with spacing */
+        width: 100%;
+        border-bottom: 1px black dotted; /* Just for visual separation */
+      }
+      .table-cell {
+        flex: 1; /* Equal width for each column */
+        padding: 10px;
+        box-sizing: border-box;
+        text-align: center; /* Center the text */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .table-cell:nth-child(1) {
+        justify-content: left;
+        flex: 2; /* Make the first column wider */
       }
     `;
   }
@@ -88,6 +82,7 @@ export class InventoryWeapon extends LitElement {
     return {
       name: {type: String},
       equipped: {type: Boolean, reflect: true},
+      quantity: {type: Number, reflect: true},
     };
   }
 
@@ -95,6 +90,7 @@ export class InventoryWeapon extends LitElement {
     super();
     this.name = null;
     this.equipped = false;
+    this.quantity = 1;
   }
 
   onTogglEquip() {
@@ -110,7 +106,7 @@ export class InventoryWeapon extends LitElement {
       new CustomEvent('toggle-equip', {
         detail: {
           name: this.name,
-					equipped: this.equipped,
+          equipped: this.equipped,
         },
       })
     );
@@ -120,7 +116,7 @@ export class InventoryWeapon extends LitElement {
     this.dispatchEvent(
       new CustomEvent('remove', {
         detail: {
-					type: 'weapon',
+          type: 'weapon',
           name: this.name,
         },
       })
@@ -134,11 +130,12 @@ export class InventoryWeapon extends LitElement {
       range = `${stats.range.short}/${stats.range.medium}/${stats.range.long}`;
     }
     return html`
-      <div class="wrapper" part="wrapper">
-        <div class="name">${this.name}</div>
-        <div class="damage">${stats?.damage}</div>
-        <div class="range">${range || '-'}</div>
-        <div class="buttons">
+      <div class="table-row wrapper" part="wrapper">
+        <div class="table-cell">${this.name}</div>
+        <div class="table-cell">${stats?.damage}</div>
+        <div class="table-cell">${range || '-'}</div>
+        <div class="table-cell">${this.quantity}</div>
+        <div class="table-cell buttons">
           <button class="equip-button" @click=${this.onTogglEquip}>
             ${this.equipped ? 'unequip' : 'equip'}
           </button>

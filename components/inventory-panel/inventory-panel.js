@@ -76,34 +76,6 @@ export class InventoryPanel extends LitElement {
         background-color: #fff;
         border-bottom: 1px solid #fff;
       }
-      .table-header {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px black dotted;
-        padding: 15px 10px;
-        margin: 0;
-        justify-items: center;
-      }
-      .name {
-        font-weight: bold;
-        width: 100px;
-        display: flex;
-        align-items: center;
-      }
-      .damage {
-        font-weight: bold;
-        width: 40px;
-        justify-content: center;
-        display: flex;
-        align-items: center;
-      }
-      .range {
-        font-weight: bold;
-        width: 90px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
       .ac-bonus {
         font-weight: bold;
         width: 40px;
@@ -131,17 +103,6 @@ export class InventoryPanel extends LitElement {
         display: flex;
         justify-content: center;
         align-items: center;
-      }
-      .quantity {
-        font-weight: bold;
-        min-width: 250px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-      }
-      .table-filler {
-        width: 100px;
       }
       .add-button {
         border: none;
@@ -207,6 +168,27 @@ export class InventoryPanel extends LitElement {
       .scroll {
         overflow-y: auto;
         max-height: 300px;
+      }
+
+      .table-header {
+        display: flex;
+        justify-content: space-between; /* Optional: Helps with spacing */
+        width: 100%;
+        border-bottom: 1px black dotted; /* Just for visual separation */
+      }
+
+      .table-cell {
+        flex: 1; /* Equal width for each column */
+        padding: 10px;
+        box-sizing: border-box;
+        text-align: center; /* Center the text */
+        font-weight: bold;
+      }
+
+      /* Optionally, you can adjust individual columns if necessary */
+      .table-cell:nth-child(1) {
+        text-align: left;
+        flex: 2; /* Make the first column wider */
       }
 
       /* Responsive styling */
@@ -396,10 +378,11 @@ export class InventoryPanel extends LitElement {
         </div>
         ${this.selected === 0
           ? html` <div class="table-header">
-                <div class="name">Name</div>
-                <div class="damage">Damage</div>
-                <div class="range">Range</div>
-                <div class="table-filler"></div>
+                <div class="table-cell">Name</div>
+                <div class="table-cell">Damage</div>
+                <div class="table-cell">Range</div>
+                <div class="table-cell">Quantity</div>
+                <div class="table-cell"></div>
               </div>
               <div class="scroll">
                 <slot name="weapon"></slot>
@@ -407,9 +390,9 @@ export class InventoryPanel extends LitElement {
           : html``}
         ${this.selected === 1
           ? html` <div class="table-header">
-                <div class="name">Name</div>
-                <div class="quantity">Quantity</div>
-                <div class="table-filler"></div>
+                <div class="table-cell">Name</div>
+                <div class="table-cell">Quantity</div>
+                <div class="table-cell"></div>
               </div>
               <div class="scroll">
                 <slot name="ammunition"></slot>
@@ -417,28 +400,29 @@ export class InventoryPanel extends LitElement {
           : html``}
         ${this.selected === 2
           ? html` <div class="table-header">
-                <div class="name">Name</div>
-                <div class="ac-bonus">Bonus</div>
-                <div class="check-penalty">Check</div>
-                <div class="speed">Speed</div>
-                <div class="fumble-die">Fumble</div>
-                <div class="table-filler"></div>
+                <div class="table-cell">Name</div>
+                <div class="table-cell">Bonus</div>
+                <div class="table-cell">Check</div>
+                <div class="table-cell">Speed</div>
+                <div class="table-cell">Fumble</div>
+                <div class="table-cell">Quantity</div>
+                <div class="table-cell"></div>
               </div>
               <div class="scroll"><slot name="armor"></slot></div>`
           : html``}
         ${this.selected === 3
           ? html` <div class="table-header">
-                <div class="name">Name</div>
-                <div class="quantity">Quantity</div>
-                <div class="table-filler"></div>
+                <div class="table-cell">Name</div>
+                <div class="table-cell">Quantity</div>
+                <div class="table-cell"></div>
               </div>
               <div class="scroll"><slot name="equipment"></slot></div>`
           : html``}
         ${this.selected === 4
           ? html` <div class="table-header">
-                <div class="name">Name</div>
-                <div class="quantity">Quantity</div>
-                <div class="table-filler"></div>
+                <div class="table-cell">Name</div>
+                <div class="table-cell">Quantity</div>
+                <div class="table-cell"></div>
               </div>
               <div class="scroll"><slot name="mount-gear"></slot></div>`
           : html``}
