@@ -386,7 +386,7 @@ export class ThiefSkills extends LitElement {
             <span>Cast Spell From Scroll</span>
             <button
               @click="${() =>
-                this.onClick('Cast Spell From Scroll', castSpellFromScroll)}"
+                this.onClick('Cast Spell From Scroll', castSpellFromScroll.modifier)}"
             >
               ${this.formatCastFromScrollModifier(castSpellFromScroll)}
             </button>
