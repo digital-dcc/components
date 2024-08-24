@@ -12,4 +12,5 @@ export const diceChain = [
   'd20',
   'd24',
   'd30',
+  'd100',
 ];
