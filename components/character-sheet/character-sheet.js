@@ -187,7 +187,7 @@ export class CharacterSheet extends LitElement {
         break;
       case 'mount-gear':
         this.addOrIncrementInventoryItem(
-          'equipment',
+          'mountGear',
           e.detail.name,
           e.detail.quantity
         );
