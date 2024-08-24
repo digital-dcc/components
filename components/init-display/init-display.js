@@ -29,10 +29,10 @@ export class InitDisplay extends LitElement {
         display: block;
       }
       ::part(value) {
-        font-size: 1.2em;
+        font-size: 1.2rem;
       }
       ::part(name) {
-        font-size: 0.8em;
+        font-size: 0.8rem;
       }
     `;
   }
@@ -61,61 +61,67 @@ export class InitDisplay extends LitElement {
   }
 
   get init() {
-		if (this.initOverride) {
+    if (this.initOverride) {
       return {
         breakdown: [{name: 'Modifier Override', value: this.initOverride}],
         total: Number(this.initOverride),
       };
     }
 
-		let total = 0;
+    let total = 0;
     const breakdown = [];
 
     // Some character classes get to add their level to their init
     if (slug(this.characterClass || '') === 'warrior') {
-			total += this.characterLevel;
-			breakdown.push({name: 'Character Level', value: this.characterLevel});
+      total += this.characterLevel;
+      breakdown.push({name: 'Character Level', value: this.characterLevel});
     }
 
     // Agility modifier always modifies init
     if (this.agility) {
-			total += modifierFor(this.agility);
-			breakdown.push({name: 'Agility Modifier', value: modifierFor(this.agility)});
+      total += modifierFor(this.agility);
+      breakdown.push({
+        name: 'Agility Modifier',
+        value: modifierFor(this.agility),
+      });
     }
 
     // The speed-of-the-cobra birth augur increases or reduces init per point of starting luck modifier
     if (slug(this.birthAugur || '') === 'speed-of-the-cobra') {
-			total += modifierFor(this.startingLuck);
-			breakdown.push({name: 'Birth Augur', value: modifierFor(this.startingLuck)});
+      total += modifierFor(this.startingLuck);
+      breakdown.push({
+        name: 'Birth Augur',
+        value: modifierFor(this.startingLuck),
+      });
     }
 
     return {
-			breakdown,
-			total,
-		};
+      breakdown,
+      total,
+    };
   }
 
-	onInitRoll() {
-		const roll = new DiceRoll();
-		roll.characterClass = slug(this.characterClass || '');
-		roll.characterLevel = this.characterLevel || 0;
-		roll.birthAugur = slug(this.birthAugur || '');
-		roll.agility = this.agility;
-		roll.startingLuck = this.startingLuck;
-		roll.roll.die = 20;
-		roll.roll.qty = 1;
-		// @ts-ignore
-		roll.roll.modifier = this.init;
-		this.dispatchEvent(new CustomEvent('init-roll', {detail: roll}));
-	}
+  onInitRoll() {
+    const roll = new DiceRoll();
+    roll.characterClass = slug(this.characterClass || '');
+    roll.characterLevel = this.characterLevel || 0;
+    roll.birthAugur = slug(this.birthAugur || '');
+    roll.agility = this.agility;
+    roll.startingLuck = this.startingLuck;
+    roll.roll.die = 20;
+    roll.roll.qty = 1;
+    // @ts-ignore
+    roll.roll.modifier = this.init;
+    this.dispatchEvent(new CustomEvent('init-roll', {detail: roll}));
+  }
 
   render() {
     return html`
       <stat-display
         name="Init"
-				value-clickable
+        value-clickable
         value="${formatModifier(this.init.total)}"
-				@value-clicked="${this.onInitRoll}"
+        @value-clicked="${this.onInitRoll}"
       ></stat-display>
     `;
   }

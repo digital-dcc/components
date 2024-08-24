@@ -62,8 +62,8 @@ export class ThiefSkills extends LitElement {
         flex-flow: column wrap;
         height: 400px;
       }
-      h1 {
-        font-size: 0.8em;
+      h2 {
+        font-size: 0.8rem;
         text-align: center;
       }
       .skill {
@@ -292,7 +292,7 @@ export class ThiefSkills extends LitElement {
 
     return html`
       <div class="outer-wrapper">
-        <h1>Thief Skills</h1>
+        <h2>Thief Skills</h2>
         <div class="inner-wrapper">
           <div class="skill backstab" part="backstab">
             <span>Backstab</span>
@@ -386,7 +386,10 @@ export class ThiefSkills extends LitElement {
             <span>Cast Spell From Scroll</span>
             <button
               @click="${() =>
-                this.onClick('Cast Spell From Scroll', castSpellFromScroll.modifier)}"
+                this.onClick(
+                  'Cast Spell From Scroll',
+                  castSpellFromScroll.modifier
+                )}"
             >
               ${this.formatCastFromScrollModifier(castSpellFromScroll)}
             </button>

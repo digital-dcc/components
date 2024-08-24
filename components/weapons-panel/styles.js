@@ -25,23 +25,22 @@ export const styles = css`
     opacity: 0.5;
     pointer-events: none;
   }
-
   .wrapper {
     border: 1px solid var(--secondary-text-color);
     background-color: var(--background-color);
     color: var(--primary-text-color);
-    padding: 10px;
+    padding-top: 10px;
     padding-bottom: 20px;
     border-radius: 5px;
     min-width: 390px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
   }
-	section, div {
-		margin: 0;
-		padding: 0;
-	}
+  section,
+  div {
+    margin: 0;
+    padding: 0;
+  }
   h2 {
     margin: 0;
     padding: 0;
@@ -73,16 +72,22 @@ export const styles = css`
   .your-target-is {
     color: var(--secondary-text-color);
     font-size: 1.1rem;
+    margin-top: 10px;
   }
   .title {
     font-size: 0.8rem;
     color: var(--primary-text-color);
     text-align: center;
+    border-bottom: 1px dotted black;
+    padding-bottom: 10px;
   }
   .sub-title {
     font-size: 1rem;
     color: var(--primary-text-color);
     margin-bottom: 10px;
     font-weight: normal;
+  }
+  .inset {
+    margin: 10px 10px 0 10px;
   }
 `;

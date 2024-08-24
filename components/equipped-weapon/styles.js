@@ -17,7 +17,7 @@ export const styles = css`
       'Segoe UI Emoji',
       'Segoe UI Symbol'
     );
-    font-size: 1em;
+    font-size: 1rem;
     --primary-text-color: black;
     --secondary-text-color: rgb(113, 133, 122);
     --background-color: #ffffff;
@@ -32,15 +32,14 @@ export const styles = css`
 
 	*/
   .wrapper {
-    border: 1px var(--secondary-text-color) solid;
+    border-bottom: 1px black dotted;
     background-color: var(--background-color);
     color: var(--primary-text-color);
-    padding: 15px;
-    border-radius: 10px;
     min-width: 390px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding: 10px;
   }
   .buttons {
     display: flex;
@@ -54,8 +53,7 @@ export const styles = css`
     border: 1px var(--secondary-text-color) solid;
     cursor: pointer;
     background: none;
-    min-width: 60px;
-    min-height: 60px;
+    width: 70px;
     margin: 0;
     padding: 0;
     color: var(--primary-text-color);
@@ -95,26 +93,26 @@ export const styles = css`
     gap: 5px;
     flex-wrap: wrap;
   }
-  h2 {
+  h3 {
     margin: 0;
     padding: 0;
     font-size: 1em;
   }
-  h3 {
+  h4 {
     margin: 0;
     padding: 0;
-    font-size: 0.8em;
+    font-size: 0.8rem;
+    font-weight: normal;
   }
   .range {
-    font-size: 0.8em;
+    font-size: 0.8rem;
   }
   ul {
-    font-size: 0.8em;
+    font-size: 0.8rem;
     list-style-type: none;
     margin: 0;
     padding: 0;
   }
-
   .checkboxes {
     margin: 0;
     padding: 0;
@@ -275,7 +273,6 @@ export const styles = css`
     flex-direction: column;
     gap: 10px;
     justify-content: center;
-    align-items: center;
   }
 
   @media (max-width: 800px) {

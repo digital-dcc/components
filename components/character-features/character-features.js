@@ -18,7 +18,7 @@ export class CharacterFeatures extends LitElement {
       h2 {
         margin: 0;
         padding: 0;
-        font-size: 0.8em;
+        font-size: 0.8rem;
         text-align: center;
         margin-bottom: 10px;
       }

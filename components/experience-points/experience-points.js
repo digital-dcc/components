@@ -13,10 +13,10 @@ export class ExperiencePoints extends LitElement {
   static get styles() {
     return css`
       ::part(value) {
-        font-size: 1.2em;
+        font-size: 1.2rem;
       }
       ::part(name) {
-        font-size: 0.8em;
+        font-size: 0.8rem;
       }
 			.wrapper {
 				box-sizing: border-box;

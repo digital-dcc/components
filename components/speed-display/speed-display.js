@@ -22,10 +22,10 @@ export class SpeedDisplay extends LitElement {
         aspect-ratio: 1 / 1;
       }
       ::part(value) {
-        font-size: 1.2em;
+        font-size: 1.2rem;
       }
       ::part(name) {
-        font-size: 0.8em;
+        font-size: 0.8rem;
       }
     `;
   }

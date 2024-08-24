@@ -280,10 +280,10 @@ export class EquippedWeapon extends LitElement {
       <div class="wrapper" part="wrapper">
         <header part="header">
           <div class="text">
-            <h2 part="title">${this.weapon}</h2>
-            <h3 part="subtitle">
+            <h3 part="title">${this.weapon}</h3>
+            <h4 part="subtitle">
               ${this.type === 'melee' ? 'Melee' : 'Missile'}
-            </h3>
+            </h4>
           </div>
           <div class="keywords">
             ${isSubdual ? html`<em>subdual only</em>` : html``}
@@ -328,7 +328,7 @@ export class EquippedWeapon extends LitElement {
                 class="attack-display-button"
                 @click="${this._attackRoll}"
               >
-                <h2 part="subtitle">Attack</h2>
+                <h3 part="subtitle">Attack</h3>
                 ${this.attackDisplay}
               </button>
             </div>
@@ -337,7 +337,7 @@ export class EquippedWeapon extends LitElement {
                 class="damage-display-button"
                 @click="${this._damageRoll}"
               >
-                <h2 part="subtitle">Damage</h2>
+                <h3 part="subtitle">Damage</h3>
                 ${this.damageDisplay}
               </button>
             </div>
