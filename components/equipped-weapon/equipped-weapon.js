@@ -2,6 +2,8 @@ import {LitElement, html} from 'lit';
 import {modifierFor} from '../../utilities/modifier-for.js';
 import {diceChain} from '../../utilities/dice-chain.js';
 import {weaponStatsFor, weapons} from '../../utilities/weapons.js';
+import {slug} from '../../utilities/slug.js';
+import {skills} from '../../utilities/character-classes/thief.js';
 import {styles} from './styles.js';
 
 class DiceRoll {
@@ -28,7 +30,7 @@ class DiceRoll {
     attackDieAdjustment: 0,
     // if weapon supports double damage while mounted charging,
     // and mounted and charging are checked, set this to 2
-    damageMultiplier: 1,
+    multiplier: 1,
   };
 
   // weapon details
@@ -174,6 +176,10 @@ export class EquippedWeapon extends LitElement {
         attribute: 'attacker-sneak-attacking',
         type: Boolean,
       },
+      attackerSubduing: {
+        attribute: 'attacker-subduing',
+        type: Boolean,
+      },
       opponentBehindCover: {
         attribute: 'opponent-behind-cover',
         type: Boolean,
@@ -210,6 +216,13 @@ export class EquippedWeapon extends LitElement {
         type: Boolean,
         attribute: 'starting-weapon',
       },
+      characterClass: {
+        type: String,
+        attribute: 'character-class',
+      },
+      level: {type: Number},
+      alignment: {type: String},
+      subdual: {type: Boolean},
       range: {state: true},
       attackDieAdjustment: {state: true},
       damageDieAdjustment: {state: true},
@@ -233,7 +246,6 @@ export class EquippedWeapon extends LitElement {
     this.attackModifierOverride = null;
     this.damageModifierAdjustment = 0;
     this.damageModifierOverride = null;
-
     this.attackerInvisible = false;
     this.attackerOnHigherGround = false;
     this.attackerSqueezing = false;
@@ -243,21 +255,22 @@ export class EquippedWeapon extends LitElement {
     this.attackerMounted = false;
     this.attackerCharging = false;
     this.attackerSneakAttacking = false;
+    this.attackerSubduing = false;
     this.opponentBehindCover = false;
     this.opponentBlinded = false;
     this.opponentEntangled = false;
     this.opponentHelpless = false;
     this.opponentProne = false;
-
     this.birthAugur = null;
     this.startingWeapon = false;
-
+    this.characterClass = null;
+    this.alignment = null;
+    this.level = 0;
     this.attackDieAdjustment = 0;
     this.range = null;
   }
 
   // if weapon is two handed, default wielding to two handed and disable changing
-  // if weapon is subdual only, check subdual and disable changing
   // if a shield is equiped, disable selecting two handed
   // if class === halfling
   // 		agility is considered minimum 16 for dual wielding
@@ -274,7 +287,9 @@ export class EquippedWeapon extends LitElement {
     }
 
     const weaponIsTwoHanded = weapons.get(this.weapon || 'Dagger')?.twoHanded;
-    const isSubdual = !!weapons.get(this.weapon || 'Dagger')?.subdualDamage;
+    const isSubdual =
+      !!weapons.get(this.weapon || 'Dagger')?.subdualDamage ||
+      this.attackerSubduing;
 
     return html`
       <div class="wrapper" part="wrapper">
@@ -286,39 +301,45 @@ export class EquippedWeapon extends LitElement {
             </h4>
           </div>
           <div class="keywords">
-            ${isSubdual ? html`<em>subdual only</em>` : html``}
+            ${isSubdual ? html`<em>subdual</em>` : html``}
             ${this.lucky ? html`<em>lucky</em>` : html``}
             ${this.startingWeapon ? html`<em>starting weapon</em>` : html``}
           </div>
           <div class="middle-column">
             <div class="wielding-and-subdual" part="wielding-and-subdual">
-              <select @change="${this.handleWieldingChange}">
-                <option
-                  value="${wielding.ONE_HANDED}"
-                  ?selected="${this.wielding === wielding.ONE_HANDED}"
-                >
-                  ${wieldingDisplayText[wielding.ONE_HANDED]}
-                </option>
-                <option
-                  value="${wielding.TWO_HANDED}"
-                  ?selected="${this.wielding === wielding.TWO_HANDED ||
-                  weaponIsTwoHanded}"
-                >
-                  ${wieldingDisplayText[wielding.TWO_HANDED]}
-                </option>
-                <option
-                  value="${wielding.DUAL_WIELD_MAIN_HAND}"
-                  ?selected="${this.wielding === wielding.DUAL_WIELD_MAIN_HAND}"
-                >
-                  ${wieldingDisplayText[wielding.DUAL_WIELD_MAIN_HAND]}
-                </option>
-                <option
-                  value="${wielding.DUAL_WIELD_OFF_HAND}"
-                  ?selected="${this.wielding === wielding.DUAL_WIELD_OFF_HAND}"
-                >
-                  ${wieldingDisplayText[wielding.DUAL_WIELD_OFF_HAND]}
-                </option>
-              </select>
+              ${this.weapon !== 'Unarmed'
+                ? html`
+                    <select @change="${this.handleWieldingChange}">
+                      <option
+                        value="${wielding.ONE_HANDED}"
+                        ?selected="${this.wielding === wielding.ONE_HANDED}"
+                      >
+                        ${wieldingDisplayText[wielding.ONE_HANDED]}
+                      </option>
+                      <option
+                        value="${wielding.TWO_HANDED}"
+                        ?selected="${this.wielding === wielding.TWO_HANDED ||
+                        weaponIsTwoHanded}"
+                      >
+                        ${wieldingDisplayText[wielding.TWO_HANDED]}
+                      </option>
+                      <option
+                        value="${wielding.DUAL_WIELD_MAIN_HAND}"
+                        ?selected="${this.wielding ===
+                        wielding.DUAL_WIELD_MAIN_HAND}"
+                      >
+                        ${wieldingDisplayText[wielding.DUAL_WIELD_MAIN_HAND]}
+                      </option>
+                      <option
+                        value="${wielding.DUAL_WIELD_OFF_HAND}"
+                        ?selected="${this.wielding ===
+                        wielding.DUAL_WIELD_OFF_HAND}"
+                      >
+                        ${wieldingDisplayText[wielding.DUAL_WIELD_OFF_HAND]}
+                      </option>
+                    </select>
+                  `
+                : html``}
             </div>
             ${this.weaponRangeSelector}
           </div>
@@ -524,6 +545,10 @@ export class EquippedWeapon extends LitElement {
     // @ts-ignore
     dr.roll.modifier = this._damageModifier;
 
+    if (this.attackerCharging && this.attackerMounted) {
+      dr.roll.multiplier = 2;
+    }
+
     dr.conditions.attacker.charging = this.attackerCharging;
     dr.conditions.attacker.entangled = this.attackerCharging;
     dr.conditions.attacker.attackerFiringIntoMelee =
@@ -660,7 +685,7 @@ export class EquippedWeapon extends LitElement {
     }
 
     if (this.type === 'melee') {
-      modifier = modifierFor(this.strength);
+      modifier += modifierFor(this.strength);
       breakdown.push({
         name: 'Strength Modifier',
         value: modifierFor(this.strength),
@@ -695,6 +720,14 @@ export class EquippedWeapon extends LitElement {
           value: modifierFor(this.luck),
         });
       }
+
+      if (this.attackerCharging && !this.attackerMounted) {
+        modifier += 2;
+        breakdown.push({
+          name: 'Reckless charge (-2 AC for 1 round)',
+          value: 2,
+        });
+      }
     }
 
     if (this.type === 'missile') {
@@ -724,6 +757,18 @@ export class EquippedWeapon extends LitElement {
           value: modifierFor(this.luck),
         });
       }
+    }
+
+    // apply luck to all attacks
+    if (slug(this.characterClass) === 'thief' && this.attackerSneakAttacking) {
+      const backstab =
+        skills.get('backstab')?.get(this.alignment)?.get(this.level)?.bonus ||
+        0;
+      modifier += backstab;
+      breakdown.push({
+        name: 'Backstab Modifier',
+        value: backstab,
+      });
     }
 
     // apply luck to all attacks
@@ -789,6 +834,9 @@ export class EquippedWeapon extends LitElement {
   }
 
   get _damageDie() {
+    // allow override via attributes
+    if (this.damageDie) return this.damageDie;
+
     const weaponStats = weapons.get(this.weapon);
 
     let die = null;
@@ -800,8 +848,18 @@ export class EquippedWeapon extends LitElement {
     if (this.attackerSneakAttacking && weaponStats?.sneakDamage)
       die = weaponStats?.sneakDamage;
 
-    // allow override via attributes
-    if (this.damageDie) die = this.damageDie;
+    // decrement the damage die when attacking to subdue unless the weapon is
+    // a dedicated subdual weapon (blackjack)
+    if (this.attackerSubduing && !weaponStats?.subdualDamage) {
+      console.log(this.attackerSubduing);
+      console.log(weaponStats?.subdualDamage);
+      console.log(die);
+
+      // @ts-ignore
+      const [qty, faces] = die.split('d');
+      die = `${qty}${this.decrementDiceChain(`d${faces}`)}`;
+      console.log(die);
+    }
 
     return die;
   }
@@ -880,6 +938,13 @@ export class EquippedWeapon extends LitElement {
       breakdown.push({
         name: 'Modifier Adjustment',
         value: this.damageModifierAdjustment,
+      });
+    }
+
+    if (this.attackerSubduing && !weaponStatsFor(this.weapon)?.subdualDamage) {
+      breakdown.push({
+        name: 'Subdual Damage',
+        value: '-1 die',
       });
     }
 

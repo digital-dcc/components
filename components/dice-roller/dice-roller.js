@@ -6,6 +6,7 @@ import '../modal-dialog/modal-dialog.js';
 class DiceRollResult {
   #diceRolls = [];
   #modifier = 0;
+  #multiplier = 1;
   name = '';
   description = '';
 
@@ -21,6 +22,14 @@ class DiceRollResult {
     return this.#modifier;
   }
 
+  set multiplier(multiplier) {
+    this.#multiplier = multiplier;
+  }
+
+  get multiplier() {
+    return this.#multiplier;
+  }
+
   get rolls() {
     return this.#diceRolls.map((roll) => roll.roll);
   }
@@ -34,7 +43,7 @@ class DiceRollResult {
   }
 
   get total() {
-    return this.diceRollTotal + this.#modifier;
+    return (this.diceRollTotal + this.#modifier) * this.#multiplier;
   }
 }
 
@@ -175,13 +184,22 @@ export class DiceRoller extends LitElement {
   }
 
   get modifierBreakdown() {
-    return this.diceRoll?.roll?.modifier?.breakdown
+    const breakdowns = this.diceRoll?.roll?.modifier?.breakdown
       ?.filter(({value}) => value > 0 || value < 0)
       ?.map(({name, value}) => {
         return html`<li class="modifier-breakdown-entry">
           <span>${name}</span><span>${formatModifier(value)}</span>
         </li>`;
       });
+
+    if (this.diceRoll?.roll.multiplier && this.diceRoll?.roll.multiplier > 1) {
+      breakdowns.push(html`<li class="modifier-breakdown-entry">
+        <span>Damage Multiplier</span
+        ><span>x${this.diceRoll?.roll.multiplier}</span>
+      </li>`);
+    }
+
+    return breakdowns;
   }
 
   incrementQuantity() {
@@ -224,6 +242,8 @@ export class DiceRoller extends LitElement {
     rollResult.name = this.diceRoll?.name;
     rollResult.description = this.diceRoll?.description;
     rollResult.modifier = this.modifier;
+    rollResult.multiplier = this.diceRoll?.roll.multiplier || 1;
+
     const qty = this.qty || 1;
     const die = this.die?.split('d')[1] || 20;
 
@@ -289,8 +309,11 @@ export class DiceRoller extends LitElement {
                 <h2>Result</h2>
                 <p>
                   [${this.rollResult.rolls.join(', ')}]
-                  ${formatModifier(this.rollResult.modifier)} =
-                  ${this.rollResult.total}
+                  ${formatModifier(this.rollResult.modifier)}
+                  ${this.rollResult.multiplier > 1
+                    ? `x ${this.rollResult.multiplier}`
+                    : ''}
+                  = ${this.rollResult.total}
                 </p>
               </div>`
             : html``}

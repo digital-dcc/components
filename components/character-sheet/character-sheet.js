@@ -563,10 +563,23 @@ export class CharacterSheet extends LitElement {
                         birth-augur="${this.data.birthAugur}"
                         luck="${this.data.luck}"
                         weapon="${weapon.name}"
+                        alignment="${this.data.alignment}"
+                        level="${this.data.level}"
                         @dice-roll="${this.handleDiceRollRequested}"
                       ></equipped-weapon>
                     `
                   )}
+                <equipped-weapon
+                  agility="${this.data.agility}"
+                  strength="${this.data.strength}"
+                  character-class="${this.data.characterClass}"
+                  birth-augur="${this.data.birthAugur}"
+                  luck="${this.data.luck}"
+                  weapon="Unarmed"
+                  alignment="${this.data.alignment}"
+                  level="${this.data.level}"
+                  @dice-roll="${this.handleDiceRollRequested}"
+                ></equipped-weapon>
               </weapons-panel>
             </section>
             <section>

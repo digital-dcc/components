@@ -30,6 +30,7 @@ export class WeaponsPanel extends LitElement {
       mounted: {state: true},
       charging: {state: true},
       sneakAttacking: {state: true},
+      attackerSubduing: {state: true},
 
       oponentBehindCover: {state: true},
       oponentBlinded: {state: true},
@@ -53,6 +54,7 @@ export class WeaponsPanel extends LitElement {
     this.attackerMounted = false;
     this.attackerCharging = false;
     this.attackerSneakAttacking = false;
+    this.attackerSubduing = false;
     this.opponentBehindCover = false;
     this.opponentBlinded = false;
     this.opponentEntangled = false;
@@ -100,6 +102,7 @@ export class WeaponsPanel extends LitElement {
         'attackerMounted',
         'attackerCharging',
         'attackerSneakAttacking',
+        'attackerSubduing',
         'opponentBehindCover',
         'opponentBlinded',
         'opponentEntangled',
@@ -228,6 +231,17 @@ export class WeaponsPanel extends LitElement {
                     @change="${this.handleCheckboxChange}"
                   />
                   back stabbing
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="attacker-subduing"
+                    .checked="${this.attackerSubduing}"
+                    @change="${this.handleCheckboxChange}"
+                  />
+                  attacking to subdue
                 </label>
               </li>
             </ul>
