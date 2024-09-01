@@ -284,36 +284,42 @@ export class DiceRoller extends LitElement {
                   <div>Modifier</div>
                   <div>${formatModifier(this.rollResult.modifier)}</div>
                 </div>
-                <div class="luck-burn">
-                  <div class="roll-adjustment">
-                    Luck Burn ${this.luckBurnThiefRolls}
-                    ${this.luckBurnComplete
-                      ? html``
-                      : html`
-                          <div class="roll-adjustment-section">
-                            <button @click="${this.decrementLuckBurn}">
-                              -
-                            </button>
-                            <div class="value">
-                              ${this.luckBurn} / ${this.currentLuck}
-                            </div>
-                            <button @click="${this.incrementLuckBurn}">
-                              +
-                            </button>
-                          </div>
-                        `}
-                    ${this.luckBurnComplete
-                      ? html`<span>${formatModifier(this.luckBurnValue)}</span>`
-                      : html`<button
-                          class="luck-burn-button${this.luckBurn > 0
-                            ? ''
-                            : ' disabled'}"
-                          @click="${this.burnLuck}"
-                        >
-                          burn
-                        </button>`}
-                  </div>
-                </div>
+
+                ${this.diceRoll.disableLuckBurn
+                  ? html``
+                  : html` <div class="luck-burn">
+                      <div class="roll-adjustment">
+                        Luck Burn ${this.luckBurnThiefRolls}
+                        ${this.luckBurnComplete
+                          ? html``
+                          : html`
+                              <div class="roll-adjustment-section">
+                                <button @click="${this.decrementLuckBurn}">
+                                  -
+                                </button>
+                                <div class="value">
+                                  ${this.luckBurn} / ${this.currentLuck}
+                                </div>
+                                <button @click="${this.incrementLuckBurn}">
+                                  +
+                                </button>
+                              </div>
+                            `}
+                        ${this.luckBurnComplete
+                          ? html`<span
+                              >${formatModifier(this.luckBurnValue)}</span
+                            >`
+                          : html`<button
+                              class="luck-burn-button${this.luckBurn > 0
+                                ? ''
+                                : ' disabled'}"
+                              @click="${this.burnLuck}"
+                            >
+                              burn
+                            </button>`}
+                      </div>
+                    </div>`}
+
                 <div class="final-total mt-10 pt-10">
                   <div>Total</div>
                   <div>${this.rollResult.total + this.luckBurnValue}</div>

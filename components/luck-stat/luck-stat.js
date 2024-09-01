@@ -18,6 +18,7 @@ class DiceRoll {
   };
   maxLuck;
   luck;
+  disableLuckBurn = true;
 }
 
 /**
