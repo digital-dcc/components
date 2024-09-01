@@ -402,7 +402,6 @@ export class ThiefSkills extends LitElement {
   }
 
   onClick(skill, modifier, qty, die) {
-    console.log('modifier', modifier);
     const roll = new DiceRoll();
     roll.name = `Thief Skill Check`;
     roll.description = `Thief ${skill.toLowerCase()} roll`;
