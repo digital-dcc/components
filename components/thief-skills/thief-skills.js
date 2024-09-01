@@ -388,7 +388,9 @@ export class ThiefSkills extends LitElement {
               @click="${() =>
                 this.onClick(
                   'Cast Spell From Scroll',
-                  castSpellFromScroll.modifier
+                  castSpellFromScroll.modifier,
+                  castSpellFromScroll.qty,
+                  castSpellFromScroll.die
                 )}"
             >
               ${this.formatCastFromScrollModifier(castSpellFromScroll)}
@@ -399,12 +401,13 @@ export class ThiefSkills extends LitElement {
     `;
   }
 
-  onClick(skill, modifier) {
+  onClick(skill, modifier, qty, die) {
+    console.log('modifier', modifier);
     const roll = new DiceRoll();
     roll.name = `Thief Skill Check`;
     roll.description = `Thief ${skill.toLowerCase()} roll`;
-    roll.roll.qty = modifier.qty || 1;
-    roll.roll.die = modifier.die || 20;
+    roll.roll.qty = qty || 1;
+    roll.roll.die = die || 20;
     roll.roll.modifier = modifier;
     roll.birthAugur = this.birthAugur;
     roll.agility = this.agility;
