@@ -95,7 +95,7 @@ export class CharacterSheet extends LitElement {
   }
 
   handleNotesChanged(e) {
-    this.data.notes = e.detail;
+    this.data.notes = e.detail.value;
     this.dispatchEvent(
       new CustomEvent('change', {
         detail: {...JSON.parse(JSON.stringify(this.data))},
@@ -335,6 +335,15 @@ export class CharacterSheet extends LitElement {
     );
   }
 
+  onLuckBurn(e) {
+    this.data.luck = e.detail.luck;
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data))},
+      })
+    );
+  }
+
   get equippedArmor() {
     return this.data?.armor?.find((item) => item.equipped && !item.shield);
   }
@@ -348,9 +357,13 @@ export class CharacterSheet extends LitElement {
       <!-- Dice Roller Modal Component -->
       <dice-roller
         .diceRoll="${this.diceRoll}"
+        character-class="${this.data.characterClass}"
+        level="${this.data.level}"
+        current-luck="${this.data.luck}"
         .open="${this.diceRollerIsOpen}"
         @close="${this.handleDiceRollClosed}"
         @ondice-roll-result="${this.handleDiceRollPerformed}"
+        @luck-burn="${this.onLuckBurn}"
       ></dice-roller>
       <inventory-selector
         .open="${this.inventorySelectorOpen}"
@@ -388,36 +401,42 @@ export class CharacterSheet extends LitElement {
               <strength-stat
                 armor=${this.equippedArmor?.name}
                 max-strength=${this.data.maxStrength}
+                strength=${this.data.strength}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @strength-skill-check="${this.handleDiceRollRequested}"
               ></strength-stat>
               <agility-stat
                 armor=${this.equippedArmor?.name}
                 max-agility=${this.data.maxAgility}
+                agility=${this.data.agility}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @agility-skill-check="${this.handleDiceRollRequested}"
               ></agility-stat>
               <stamina-stat
                 armor=${this.equippedArmor?.name}
                 max-stamina=${this.data.maxStamina}
+                stamina=${this.data.stamina}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @stamina-skill-check="${this.handleDiceRollRequested}"
               ></stamina-stat>
               <intelligence-stat
                 armor=${this.equippedArmor?.name}
                 max-intelligence=${this.data.maxIntelligence}
+                intelligence=${this.data.intelligence}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @intelligence-skill-check="${this.handleDiceRollRequested}"
               ></intelligence-stat>
               <personality-stat
                 armor=${this.equippedArmor?.name}
                 max-personality=${this.data.maxPersonality}
+                personality=${this.data.personality}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @personality-skill-check="${this.handleDiceRollRequested}"
               ></personality-stat>
               <luck-stat
                 armor=${this.equippedArmor?.name}
                 max-luck=${this.data.maxLuck}
+                luck=${this.data.luck}
                 @luck-check="${this.handleDiceRollRequested}"
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @luck-skill-check="${this.handleDiceRollRequested}"
@@ -527,11 +546,12 @@ export class CharacterSheet extends LitElement {
             ></occupation-box>
             <section class="languages">
               <character-languages>
-                ${this.data?.languages?.map(
-                  (language) =>
+                ${this.data.languages?.map(
+                  (language, index) =>
                     html`<character-language-item
-                      name="${language}"
-                    ></character-language-item>`
+                        name="${language}"
+                      ></character-language-item>
+                      ${index < this.data.languages?.length - 1 ? html`<span>,</span>` : ''}`
                 )}
               </character-languages>
             </section>

@@ -1,12 +1,16 @@
-import {LitElement, html, css} from 'lit';
+import {LitElement, html} from 'lit';
 import {diceChain} from '../../utilities/dice-chain.js';
 import {formatModifier} from '../../utilities/format-modifier.js';
+import {slug} from '../../utilities/slug.js';
+import {characterClasses} from '../../utilities/character-classes.js';
 import '../modal-dialog/modal-dialog.js';
+import {styles} from './styles.js';
 
 class DiceRollResult {
   #diceRolls = [];
   #modifier = 0;
   #multiplier = 1;
+  #luckBurn = 0;
   name = '';
   description = '';
 
@@ -48,119 +52,38 @@ class DiceRollResult {
 }
 
 export class DiceRoller extends LitElement {
-  static styles = css`
-    :host {
-      font-family: var(
-        --primary-font,
-        -apple-system,
-        BlinkMacSystemFont,
-        'Segoe UI',
-        Roboto,
-        Helvetica,
-        Arial,
-        sans-serif,
-        'Apple Color Emoji',
-        'Segoe UI Emoji',
-        'Segoe UI Symbol'
-      );
-    }
-    h1,
-    .roll-description {
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    .roll-description {
-      margin-bottom: 15px;
-    }
-    .roll-adjustment {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 20px;
-      border-top: 1px dashed #f2f2f2;
-      padding-top: 10px;
-    }
-    @media (max-width: 400px) {
-      .roll-adjustment-section {
-        flex-direction: column;
-      }
-    }
-    .roll-adjustment-section {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .roll-adjustment button {
-      width: 30px;
-      height: 30px;
-      padding: 0;
-      margin: 0;
-      border: none;
-      background-color: #f2f2f2;
-      border-radius: 25%;
-      cursor: pointer;
-    }
-    .roll-button {
-      width: 100%;
-      padding: 10px;
-      background-color: #f2f2f2;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .value {
-      text-align: center;
-    }
-    .qty-value {
-      width: 10px;
-    }
-    .die-value {
-      width: 25px;
-    }
-    .modifier-value {
-      width: 20px;
-    }
-    .roll-result h2,
-    .roll-result p {
-      text-align: center;
-    }
-    .modifier-breakdown {
-      padding: 10px 0;
-      margin: 0;
-      border-top: 1px dashed #f2f2f2;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .modifier-breakdown-entry {
-      display: flex;
-      justify-content: space-between;
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      width: 100%;
-    }
-  `;
+  static styles = [styles];
 
   static properties = {
     diceRoll: {attribute: false, type: Object},
+    currentLuck: {attribute: 'current-luck', type: String},
+    characterClass: {attribute: 'character-class', type: String},
+    level: {type: Number},
     open: {type: Boolean, state: true},
     qtyAdjustment: {type: Number, state: true},
     dieAdjustment: {type: Number, state: true},
     modifierAdjustment: {type: Number, state: true},
     rollResult: {type: Number, state: true},
+    luckBurn: {type: Number, state: true},
+    luckBurnComplete: {type: Boolean, state: true},
+    luckBurnValue: {type: Number, state: true},
   };
 
   constructor() {
     super();
     this.diceRoll = null;
+    this.currentLuck = null;
+    this.characterClass = null;
+    this.level = 0;
     this.open = false;
     this.qtyAdjustment = 0;
     this.dieAdjustment = 0;
     this.modifierAdjustment = 0;
     this.rollResult = null;
+    this.luckBurn = 0;
+    this.luckBurnComplete = false;
+    this.luckBurnValue = 0;
+    this.luckBurnThiefRolls = '';
   }
 
   updated() {
@@ -211,6 +134,18 @@ export class DiceRoller extends LitElement {
     this.qtyAdjustment--;
   }
 
+  incrementLuckBurn() {
+    // you can burn up to current luck score and no more
+    if (this.luckBurn >= this.currentLuck) return;
+    this.luckBurn++;
+  }
+
+  decrementLuckBurn() {
+    // you cant burn negative luck
+    if (this.luckBurn <= 0) return;
+    this.luckBurn--;
+  }
+
   get highestDie() {
     return diceChain[diceChain.length - 1];
   }
@@ -254,9 +189,42 @@ export class DiceRoller extends LitElement {
 
     this.rollResult = rollResult;
 
+    // this isnt going to work well with luck burn as it stands
+    // do we need this??
     this.dispatchEvent(
       new CustomEvent('dice-roll-result', {
         detail: rollResult,
+      })
+    );
+  }
+
+  burnLuck() {
+    if (this.luckBurn <= 0) return;
+    this.luckBurnComplete = true;
+    if (slug(this.characterClass) === 'halfling') {
+      this.luckBurnThiefRolls = ` - x2`;
+      this.luckBurnValue = this.luckBurn * 2;
+    } else if (slug(this.characterClass) === 'thief') {
+      // get the thief's luck die (d3, d4 etc)
+      const luckDie = characterClasses.get('thief')?.get(this.level)?.luckDie;
+      // drop the d in d4 etc
+      const die = Number(luckDie?.split('d')[1]);
+      const results = [];
+      // roll as many of that die as luck points burned.
+      for (let i = 0; i < this.luckBurn; i++) {
+        results.push(Math.floor(Math.random() * die) + 1);
+      }
+      this.luckBurnThiefRolls = ` - ${this.luckBurn}${luckDie} [${results.join(
+        ', '
+      )}]`;
+      const total = results.reduce((a, b) => a + b, 0);
+      this.luckBurnValue = total;
+    } else {
+      this.luckBurnValue = this.luckBurn;
+    }
+    this.dispatchEvent(
+      new CustomEvent('luck-burn', {
+        detail: {luck: this.currentLuck - this.luckBurn},
       })
     );
   }
@@ -268,6 +236,10 @@ export class DiceRoller extends LitElement {
     this.qtyAdjustment = 0;
     this.dieAdjustment = 0;
     this.modifierAdjustment = 0;
+    this.luckBurn = 0;
+    this.luckBurnValue = 0;
+    this.luckBurnComplete = false;
+    this.luckBurnThiefRolls = '';
     this.dispatchEvent(new CustomEvent('close'));
   }
 
@@ -301,21 +273,51 @@ export class DiceRoller extends LitElement {
           </div>
         </div>
         <div>
-          <button class="roll-button" @click="${this.roll}">Roll</button>
+          <button class="roll-button mt-10" @click="${this.roll}">Roll</button>
         </div>
         <div class="roll-result">
           ${this.rollResult
-            ? html`<div>
-                <h2>Result</h2>
-                <p>
-                  [${this.rollResult.rolls.join(', ')}]
-                  ${formatModifier(this.rollResult.modifier)}
-                  ${this.rollResult.multiplier > 1
-                    ? `x ${this.rollResult.multiplier}`
-                    : ''}
-                  = ${this.rollResult.total}
-                </p>
-              </div>`
+            ? html` <div class="die-result">
+                  <p>${this.rollResult.rolls.join(', ')}</p>
+                </div>
+                <div class="roll-modifier">
+                  <div>Modifier</div>
+                  <div>${formatModifier(this.rollResult.modifier)}</div>
+                </div>
+                <div class="luck-burn">
+                  <div class="roll-adjustment">
+                    Luck Burn ${this.luckBurnThiefRolls}
+                    ${this.luckBurnComplete
+                      ? html``
+                      : html`
+                          <div class="roll-adjustment-section">
+                            <button @click="${this.decrementLuckBurn}">
+                              -
+                            </button>
+                            <div class="value">
+                              ${this.luckBurn} / ${this.currentLuck}
+                            </div>
+                            <button @click="${this.incrementLuckBurn}">
+                              +
+                            </button>
+                          </div>
+                        `}
+                    ${this.luckBurnComplete
+                      ? html`<span>${formatModifier(this.luckBurnValue)}</span>`
+                      : html`<button
+                          class="luck-burn-button${this.luckBurn > 0
+                            ? ''
+                            : ' disabled'}"
+                          @click="${this.burnLuck}"
+                        >
+                          burn
+                        </button>`}
+                  </div>
+                </div>
+                <div class="final-total mt-10 pt-10">
+                  <div>Total</div>
+                  <div>${this.rollResult.total + this.luckBurnValue}</div>
+                </div>`
             : html``}
         </div>
       </modal-dialog>

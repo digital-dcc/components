@@ -40,34 +40,6 @@ export class CharacterLanguages extends LitElement {
     `;
   }
 
-	firstUpdated() {
-    const slot = this.shadowRoot?.querySelector('slot');
-    slot?.addEventListener('slotchange', () => {
-      this._interleaveCommas();
-    });
-  }
-
-  _interleaveCommas() {
-    const slot = this.shadowRoot?.querySelector('slot');
-    const nodes = slot?.assignedNodes({ flatten: true }).filter(node => node.nodeType === Node.ELEMENT_NODE);
-    const fragment = document.createDocumentFragment();
-
-    nodes?.forEach((node, index) => {
-      fragment.appendChild(node.cloneNode(true));
-      if (index < nodes.length - 1) {
-				const el = document.createElement('span');
-				el.style.marginRight = '5px';
-				el.innerText = ',';
-				fragment.appendChild(el);
-      }
-    });
-
-    // Clear the slot's original content and append the new content
-    // @ts-ignore
-    slot?.assignedNodes().forEach(node => node?.remove());
-    this.shadowRoot?.querySelector('ul')?.appendChild(fragment);
-  }
-
   render() {
     return html`
       <div part="wrapper" class="wrapper">
