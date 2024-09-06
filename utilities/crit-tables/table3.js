@@ -1,4 +1,4 @@
-export const table3 = {
+export const III = {
   0: {
     roll: 0,
     result:

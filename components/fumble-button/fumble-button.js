@@ -2,6 +2,7 @@ import {LitElement, html, css} from 'lit';
 import {formatModifier} from '../../utilities/format-modifier.js';
 import {modifierFor} from '../../utilities/modifier-for.js';
 import {slug} from '../../utilities/slug.js';
+import {fumbleTable} from '../../utilities/fumble-table.js';
 import '../stat-display/stat-display.js';
 
 class DiceRoll {
@@ -14,6 +15,7 @@ class DiceRoll {
       breakdown: [],
       total: 0,
     },
+    result() {},
   };
   luck;
   birthAugur;
@@ -144,6 +146,9 @@ export class FumbleButton extends LitElement {
       die: fumbleDie.get(slug(this.armor || '')) || 4,
       // @ts-ignore
       modifier: this.modifier,
+      result(value) {
+        return fumbleTable[value].result;
+      },
     };
     roll.birthAugur = slug(this.birthAugur || '');
     roll.luck = this.luck;

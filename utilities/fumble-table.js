@@ -1,4 +1,4 @@
-export const fumbles = {
+export const fumbleTable = {
   0: {
     roll: 0,
     result: 'You miss wildly but miraculously cause no other damage.',

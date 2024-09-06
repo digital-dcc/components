@@ -144,4 +144,9 @@ export const styles = css`
     cursor: not-allowed;
     opacity: 0.5;
   }
+  .result-text {
+    font-size: 1rem;
+    width: 200px;
+    font-weight: normal;
+  }
 `;

@@ -67,6 +67,7 @@ export class DiceRoller extends LitElement {
     luckBurn: {type: Number, state: true},
     luckBurnComplete: {type: Boolean, state: true},
     luckBurnValue: {type: Number, state: true},
+    rollResultText: {type: String, state: true},
   };
 
   constructor() {
@@ -84,6 +85,7 @@ export class DiceRoller extends LitElement {
     this.luckBurnComplete = false;
     this.luckBurnValue = 0;
     this.luckBurnThiefRolls = '';
+    this.rollResultText = '';
   }
 
   updated() {
@@ -188,6 +190,7 @@ export class DiceRoller extends LitElement {
     }
 
     this.rollResult = rollResult;
+    this.rollResultText = this.diceRoll?.roll?.result(Number(rollResult.total));
 
     // this isnt going to work well with luck burn as it stands
     // do we need this??
@@ -222,6 +225,9 @@ export class DiceRoller extends LitElement {
     } else {
       this.luckBurnValue = this.luckBurn;
     }
+    this.rollResultText = this.diceRoll?.roll?.result(
+      Number(this.rollResult?.total) + Number(this.luckBurnValue)
+    );
     this.dispatchEvent(
       new CustomEvent('luck-burn', {
         detail: {luck: this.currentLuck - this.luckBurn},
@@ -240,6 +246,7 @@ export class DiceRoller extends LitElement {
     this.luckBurnValue = 0;
     this.luckBurnComplete = false;
     this.luckBurnThiefRolls = '';
+    this.rollResultText = '';
     this.dispatchEvent(new CustomEvent('close'));
   }
 
@@ -277,7 +284,8 @@ export class DiceRoller extends LitElement {
         </div>
         <div class="roll-result">
           ${this.rollResult
-            ? html` <div class="die-result">
+            ? html`
+                <div class="die-result">
                   <p>${this.rollResult.rolls.join(', ')}</p>
                 </div>
                 <div class="roll-modifier">
@@ -323,7 +331,16 @@ export class DiceRoller extends LitElement {
                 <div class="final-total mt-10 pt-10">
                   <div>Total</div>
                   <div>${this.rollResult.total + this.luckBurnValue}</div>
-                </div>`
+                </div>
+
+                ${this.rollResultText &&
+                html`
+                  <div class="final-total mt-10 pt-10">
+                    <div>Result</div>
+                    <div class="result-text">${this.rollResultText}</div>
+                  </div>
+                `}
+              `
             : html``}
         </div>
       </modal-dialog>

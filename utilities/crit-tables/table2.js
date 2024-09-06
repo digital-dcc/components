@@ -1,4 +1,4 @@
-export const table2 = {
+export const II = {
   0: {
     roll: 0,
     result: 'Miss! Hesitation costs you the perfect strike!',

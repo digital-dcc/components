@@ -3,6 +3,7 @@ import {formatModifier} from '../../utilities/format-modifier.js';
 import {slug} from '../../utilities/slug.js';
 import {modifierFor} from '../../utilities/modifier-for.js';
 import {characterClasses} from '../../utilities/character-classes.js';
+import * as critTables from '../../utilities/crit-tables.js';
 import '../stat-display/stat-display.js';
 
 class DiceRoll {
@@ -15,6 +16,7 @@ class DiceRoll {
       breakdown: [],
       total: 0,
     },
+    result() {},
   };
   luck;
   characterClass;
@@ -31,7 +33,7 @@ export class CritButton extends LitElement {
         padding: 0px;
       }
       stat-display::part(value) {
-        font-size: 1em
+        font-size: 1em;
       }
     `;
   }
@@ -142,7 +144,7 @@ export class CritButton extends LitElement {
     const die = characterClasses
       .get(this.characterClassSlug)
       ?.get(Number(this.level || 0))?.critDie;
-		if (!die) return 1;
+    if (!die) return 1;
     return Number(die?.split('d')[0] || 1);
   }
 
@@ -154,7 +156,7 @@ export class CritButton extends LitElement {
     const die = characterClasses
       .get(this.characterClassSlug)
       ?.get(Number(this.level || 0))?.critDie;
-		if (!die) return 4;
+    if (!die) return 4;
     return Number(die.split('d')[1].split('+')[0]);
   }
 
@@ -167,7 +169,7 @@ export class CritButton extends LitElement {
     const die = characterClasses
       .get(this.characterClassSlug)
       ?.get(Number(this.level || 0))?.critDie;
-		if (!die) return 0;
+    if (!die) return 0;
     return Number(die.split('d')[1].split('+')[1] || 0);
   }
 
@@ -178,8 +180,11 @@ export class CritButton extends LitElement {
    */
   get critTable() {
     if (this.tableOverride) return this.tableOverride;
-    return characterClasses.get(this.characterClassSlug)?.get(Number(this.level || 0))
-      ?.critTable || 'I';
+    return (
+      characterClasses
+        .get(this.characterClassSlug)
+        ?.get(Number(this.level || 0))?.critTable || 'I'
+    );
   }
 
   onClick() {
@@ -191,6 +196,11 @@ export class CritButton extends LitElement {
       die: this.die,
       // @ts-ignore
       modifier: this.modifier,
+      result: (value) => {
+        console.log(this.critTable, value);
+        const num = value < 0 ? 0 : value;
+        return critTables[this.critTable][num].result;
+      },
     };
     roll.birthAugur = this.birthAugur;
     roll.luck = this.luck;
