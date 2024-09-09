@@ -19,6 +19,7 @@ class DiceRoll {
   maxStamina;
   stamina;
   luck;
+  luckReverse = false;
 }
 
 /**
@@ -124,13 +125,36 @@ export class StaminaStat extends LitElement {
           value="${formatModifier(this.modifier.total)}"
           base="${this.displayStamina}"
           value-clickable
-          @value-clicked="${this.onClick}"
+          @value-clicked="${this.onModifierClicked}"
+          name-clickable
+          @name-clicked="${this.onNameClick}"
+          base-clickable
+          @base-clicked="${this.onStatValueClicked}"
         ></stat-display>
       </div>
     `;
   }
 
-  onClick() {
+  onNameClick() {
+    this.dispatchEvent(new CustomEvent('name-clicked'));
+  }
+
+  onStatValueClicked() {
+    const roll = new DiceRoll();
+    roll.name = 'Stamina Check';
+    roll.description = 'Roll under stamina check roll';
+    roll.roll.qty = 1;
+    roll.roll.die = this.die;
+    roll.luckReverse = true;
+
+    this.dispatchEvent(
+      new CustomEvent('stamina-check', {
+        detail: roll,
+      })
+    );
+  }
+
+  onModifierClicked() {
     const roll = new DiceRoll();
     roll.name = 'Skill Check';
     roll.description = 'Stamina skill check roll';

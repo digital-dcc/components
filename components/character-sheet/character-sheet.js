@@ -38,6 +38,7 @@ import '../willpower-save/willpower-save.js';
 import '../thief-skills/thief-skills.js';
 import '../notes-box/notes-box.js';
 import '../occupation-box/occupation-box.js';
+import '../stat-editor/stat-editor.js';
 
 export class CharacterSheet extends LitElement {
   static get styles() {
@@ -52,6 +53,7 @@ export class CharacterSheet extends LitElement {
       checkPenaltySelected: {type: Boolean, state: true},
       inventorySelectorType: {type: String, state: true},
       inventorySelectorOpen: {type: Boolean, state: true},
+      statEditorOpen: {type: Boolean, state: true},
     };
   }
 
@@ -63,6 +65,7 @@ export class CharacterSheet extends LitElement {
     this.checkPenaltySelected = false;
     this.inventorySelectorType = '';
     this.inventorySelectorOpen = false;
+    this.statEditorOpen = false;
   }
 
   handleDiceRollRequested(e) {
@@ -84,7 +87,6 @@ export class CharacterSheet extends LitElement {
   }
 
   onHitPointsChanged(e) {
-    console.log(e.detail);
     this.data.hp = e.detail.hp;
     this.data.maxHP = e.detail.maxHP;
     this.dispatchEvent(
@@ -129,6 +131,10 @@ export class CharacterSheet extends LitElement {
   onInventorySelectorClose() {
     this.inventorySelectorType = '';
     this.inventorySelectorOpen = false;
+  }
+
+  onStatEditorClose() {
+    this.statEditorOpen = false;
   }
 
   addOrIncrementInventoryItem(type, name, quantity) {
@@ -344,6 +350,15 @@ export class CharacterSheet extends LitElement {
     );
   }
 
+  onStatChange(e) {
+    this.data[e.detail.stat] = e.detail.value;
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {...JSON.parse(JSON.stringify(this.data))},
+      })
+    );
+  }
+
   get equippedArmor() {
     return this.data?.armor?.find((item) => item.equipped && !item.shield);
   }
@@ -371,6 +386,23 @@ export class CharacterSheet extends LitElement {
         @add-item="${this.onAddInventoryItem}"
         @close="${this.onInventorySelectorClose}"
       ></inventory-selector>
+      <stat-editor
+        .open="${this.statEditorOpen}"
+        strength="${this.data.strength}"
+        max-strength="${this.data.maxStrength}"
+        agility="${this.data.agility}"
+        max-agility="${this.data.maxAgility}"
+        stamina="${this.data.stamina}"
+        max-stamina="${this.data.maxStamina}"
+        intelligence="${this.data.intelligence}"
+        max-intelligence="${this.data.maxIntelligence}"
+        personality="${this.data.personality}"
+        max-personality="${this.data.maxPersonality}"
+        luck="${this.data.luck}"
+        max-luck="${this.data.maxLuck}"
+        @change="${this.onStatChange}"
+        @close="${this.onStatEditorClose}"
+      ></stat-editor>
       <!-- / Dice Roller Modal Component -->
       <div class="wrapper column">
         <section class="row">
@@ -404,6 +436,8 @@ export class CharacterSheet extends LitElement {
                 strength=${this.data.strength}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @strength-skill-check="${this.handleDiceRollRequested}"
+                @strength-check="${this.handleDiceRollRequested}"
+                @name-clicked="${() => (this.statEditorOpen = true)}"
               ></strength-stat>
               <agility-stat
                 armor=${this.equippedArmor?.name}
@@ -411,6 +445,8 @@ export class CharacterSheet extends LitElement {
                 agility=${this.data.agility}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @agility-skill-check="${this.handleDiceRollRequested}"
+                @agility-check="${this.handleDiceRollRequested}"
+                @name-clicked="${() => (this.statEditorOpen = true)}"
               ></agility-stat>
               <stamina-stat
                 armor=${this.equippedArmor?.name}
@@ -418,6 +454,8 @@ export class CharacterSheet extends LitElement {
                 stamina=${this.data.stamina}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @stamina-skill-check="${this.handleDiceRollRequested}"
+                @stamina-check="${this.handleDiceRollRequested}"
+                @name-clicked="${() => (this.statEditorOpen = true)}"
               ></stamina-stat>
               <intelligence-stat
                 armor=${this.equippedArmor?.name}
@@ -425,6 +463,8 @@ export class CharacterSheet extends LitElement {
                 intelligence=${this.data.intelligence}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @intelligence-skill-check="${this.handleDiceRollRequested}"
+                @intelligence-check="${this.handleDiceRollRequested}"
+                @name-clicked="${() => (this.statEditorOpen = true)}"
               ></intelligence-stat>
               <personality-stat
                 armor=${this.equippedArmor?.name}
@@ -432,6 +472,8 @@ export class CharacterSheet extends LitElement {
                 personality=${this.data.personality}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @personality-skill-check="${this.handleDiceRollRequested}"
+                @personality-check="${this.handleDiceRollRequested}"
+                @name-clicked="${() => (this.statEditorOpen = true)}"
               ></personality-stat>
               <luck-stat
                 armor=${this.equippedArmor?.name}
@@ -440,6 +482,7 @@ export class CharacterSheet extends LitElement {
                 @luck-check="${this.handleDiceRollRequested}"
                 ?apply-check-penalty="${this.checkPenaltySelected}"
                 @luck-skill-check="${this.handleDiceRollRequested}"
+                @name-clicked="${() => (this.statEditorOpen = true)}"
               ></luck-stat>
             </div>
             <check-penalty
@@ -551,7 +594,9 @@ export class CharacterSheet extends LitElement {
                     html`<character-language-item
                         name="${language}"
                       ></character-language-item>
-                      ${index < this.data.languages?.length - 1 ? html`<span>,</span>` : ''}`
+                      ${index < this.data.languages?.length - 1
+                        ? html`<span>,</span>`
+                        : ''}`
                 )}
               </character-languages>
             </section>

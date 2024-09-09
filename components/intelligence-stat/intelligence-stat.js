@@ -19,6 +19,7 @@ class DiceRoll {
   maxIntelligence;
   intelligence;
   luck;
+  luckReverse = false;
 }
 
 /**
@@ -129,13 +130,36 @@ export class IntelligenceStat extends LitElement {
           value="${formatModifier(this.modifier.total)}"
           base="${this.displayIntelligence}"
           value-clickable
-          @value-clicked="${this.onClick}"
+          @value-clicked="${this.onModifierClicked}"
+          name-clickable
+          @name-clicked="${this.onNameClick}"
+          base-clickable
+          @base-clicked="${this.onStatValueClicked}"
         ></stat-display>
       </div>
     `;
   }
 
-  onClick() {
+  onNameClick() {
+    this.dispatchEvent(new CustomEvent('name-clicked'));
+  }
+
+  onStatValueClicked() {
+    const roll = new DiceRoll();
+    roll.name = 'Intelligence Check';
+    roll.description = 'Roll under intelligence check roll';
+    roll.roll.qty = 1;
+    roll.roll.die = this.die;
+    roll.luckReverse = true;
+
+    this.dispatchEvent(
+      new CustomEvent('intelligence-check', {
+        detail: roll,
+      })
+    );
+  }
+
+  onModifierClicked() {
     const roll = new DiceRoll();
     roll.name = 'Skill Check';
     roll.description = 'Intelligence skill check roll';

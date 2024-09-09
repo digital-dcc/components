@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;stat-editor> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/stat-editor/stat-editor.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <div>
+        <stat-editor
+					open
+					strength="10"
+					max-strength="12"
+					stamina="11"
+					max-stamina="11"
+					agility="9"
+					max-agility="9"
+					intelligence="17"
+					max-intelligence="17"
+					personality="8"
+					max-personality="8"
+					luck="4"
+					max-luck="14"
+				></stat-editor>
+      </div>
+    </div>
+  </body>
+</html>

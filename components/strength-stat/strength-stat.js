@@ -19,6 +19,7 @@ class DiceRoll {
   maxStrength;
   strength;
   luck;
+  luckReverse = false;
 }
 
 /**
@@ -128,13 +129,21 @@ export class StrengthStat extends LitElement {
           value="${formatModifier(this.modifier.total)}"
           base="${this.displayStrength}"
           value-clickable
-          @value-clicked="${this.onClick}"
+          base-clickable
+          name-clickable
+          @value-clicked="${this.onModifierClicked}"
+          @base-clicked="${this.onStatValueClicked}"
+          @name-clicked="${this.onNameClick}"
         ></stat-display>
       </div>
     `;
   }
 
-  onClick() {
+  onNameClick() {
+    this.dispatchEvent(new CustomEvent('name-clicked'));
+  }
+
+  onModifierClicked() {
     const roll = new DiceRoll();
     roll.name = 'Skill Check';
     roll.description = 'Strength skill check roll';
@@ -148,6 +157,21 @@ export class StrengthStat extends LitElement {
 
     this.dispatchEvent(
       new CustomEvent('strength-skill-check', {
+        detail: roll,
+      })
+    );
+  }
+
+  onStatValueClicked() {
+    const roll = new DiceRoll();
+    roll.name = 'Strength Check';
+    roll.description = 'Roll under strength check roll';
+    roll.roll.qty = 1;
+    roll.roll.die = this.die;
+    roll.luckReverse = true;
+
+    this.dispatchEvent(
+      new CustomEvent('strength-check', {
         detail: roll,
       })
     );

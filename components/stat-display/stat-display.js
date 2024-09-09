@@ -9,7 +9,7 @@ export class StatDisplay extends LitElement {
         padding: 0px;
       }
       .wrapper {
-				font-family: var(
+        font-family: var(
           --primary-font,
           -apple-system,
           BlinkMacSystemFont,
@@ -30,9 +30,9 @@ export class StatDisplay extends LitElement {
         display: flex;
         flex-direction: column;
         aspect-ratio: 1 / 1;
-				width: 100%;
-				height: 100%;
-				box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
       }
       h1 {
         margin: 0 auto;
@@ -86,6 +86,7 @@ export class StatDisplay extends LitElement {
       textPosition: {type: String, attribute: 'text-position'},
       valueClickable: {attribute: 'value-clickable', type: Boolean},
       baseClickable: {attribute: 'base-clickable', type: Boolean},
+      nameClickable: {attribute: 'name-clickable', type: Boolean},
       base: {type: String},
     };
   }
@@ -99,15 +100,14 @@ export class StatDisplay extends LitElement {
     this.textPosition = 'top';
     this.valueClickable = false;
     this.baseClickable = false;
+    this.nameClickable = false;
     this.base = null;
   }
 
   render() {
     return html`
       <div class="wrapper" part="wrapper">
-        ${this.textPosition !== 'bottom'
-          ? html`<h1 part="name">${this.name}</h1>`
-          : html``}
+        ${this.textPosition !== 'bottom' ? this.displayName() : html``}
         <button
           @click=${this.onValueClicked}
           part="value"
@@ -120,12 +120,21 @@ export class StatDisplay extends LitElement {
         >
           ${this.value}
         </button>
-        ${this.textPosition === 'bottom'
-          ? html`<h1 part="name">${this.name}</h1>`
-          : html``}
+        ${this.textPosition === 'bottom' ? this.displayName() : html``}
         ${this.base ? this.displayBase() : html``}
       </div>
     `;
+  }
+
+  displayName() {
+    return html`<h1 part="name">
+      <button
+        @click=${this.onNameClicked}
+        class="${this.nameClickable ? 'clickable' : ''}"
+      >
+        ${this.name}
+      </button>
+    </h1>`;
   }
 
   displayBase() {
@@ -148,6 +157,10 @@ export class StatDisplay extends LitElement {
 
   onBaseClicked() {
     this.dispatchEvent(new CustomEvent('base-clicked'));
+  }
+
+  onNameClicked() {
+    this.dispatchEvent(new CustomEvent('name-clicked'));
   }
 }
 

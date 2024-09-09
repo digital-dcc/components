@@ -19,6 +19,7 @@ class DiceRoll {
   maxPersonality;
   personality;
   luck;
+  luckReverse = false;
 }
 
 /**
@@ -126,13 +127,36 @@ export class PersonalityStat extends LitElement {
           value="${formatModifier(this.modifier.total)}"
           base="${this.displayPersonality}"
           value-clickable
-          @value-clicked="${this.onClick}"
+          @value-clicked="${this.onModifierClicked}"
+          name-clickable
+          @name-clicked="${this.onNameClick}"
+          base-clickable
+          @base-clicked="${this.onStatValueClicked}"
         ></stat-display>
       </div>
     `;
   }
 
-  onClick() {
+  onNameClick() {
+    this.dispatchEvent(new CustomEvent('name-clicked'));
+  }
+
+  onStatValueClicked() {
+    const roll = new DiceRoll();
+    roll.name = 'Personality Check';
+    roll.description = 'Roll under personality check roll';
+    roll.roll.qty = 1;
+    roll.roll.die = this.die;
+    roll.luckReverse = true;
+
+    this.dispatchEvent(
+      new CustomEvent('personality-check', {
+        detail: roll,
+      })
+    );
+  }
+
+  onModifierClicked() {
     const roll = new DiceRoll();
     roll.name = 'Skill Check';
     roll.description = 'Personality skill check roll';

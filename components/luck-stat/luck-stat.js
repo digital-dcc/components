@@ -118,9 +118,15 @@ export class LuckStat extends LitElement {
           base-clickable
           @base-clicked="${this.onLuckModifierClick}"
           @value-clicked="${this.onLuckScoreClick}"
+          name-clickable
+          @name-clicked="${this.onNameClick}"
         ></stat-display>
       </div>
     `;
+  }
+
+  onNameClick() {
+    this.dispatchEvent(new CustomEvent('name-clicked'));
   }
 
   onLuckModifierClick() {
@@ -144,7 +150,7 @@ export class LuckStat extends LitElement {
   onLuckScoreClick() {
     const roll = new DiceRoll();
     roll.name = 'Luck Check';
-    roll.description = 'Luck check roll';
+    roll.description = 'Roll under luck check roll';
     roll.roll.qty = 1;
     roll.roll.die = 20;
     roll.maxLuck = this.maxLuck;

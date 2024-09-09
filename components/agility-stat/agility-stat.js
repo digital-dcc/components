@@ -19,6 +19,7 @@ class DiceRoll {
   maxAgility;
   agility;
   luck;
+  luckReverse = false;
 }
 
 /**
@@ -124,13 +125,36 @@ export class AgilityStat extends LitElement {
           value="${formatModifier(this.modifier.total)}"
           base="${this.displayAgility}"
           value-clickable
-          @value-clicked="${this.onClick}"
+          base-clickable
+          @value-clicked="${this.onModifierClicked}"
+          @base-clicked="${this.onStatValueClicked}"
+          name-clickable
+          @name-clicked="${this.onNameClick}"
         ></stat-display>
       </div>
     `;
   }
 
-  onClick() {
+  onStatValueClicked() {
+    const roll = new DiceRoll();
+    roll.name = 'Agility Check';
+    roll.description = 'Roll under agility check roll';
+    roll.roll.qty = 1;
+    roll.roll.die = this.die;
+    roll.luckReverse = true;
+
+    this.dispatchEvent(
+      new CustomEvent('agility-check', {
+        detail: roll,
+      })
+    );
+  }
+
+  onNameClick() {
+    this.dispatchEvent(new CustomEvent('name-clicked'));
+  }
+
+  onModifierClicked() {
     const roll = new DiceRoll();
     roll.name = 'Skill Check';
     roll.description = 'Agility skill check roll';

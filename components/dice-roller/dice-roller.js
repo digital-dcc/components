@@ -190,7 +190,9 @@ export class DiceRoller extends LitElement {
     }
 
     this.rollResult = rollResult;
-    this.rollResultText = this.diceRoll?.roll?.result(Number(rollResult.total));
+    this.rollResultText =
+      this.diceRoll?.roll?.result &&
+      this.diceRoll?.roll?.result(Number(rollResult.total));
 
     // this isnt going to work well with luck burn as it stands
     // do we need this??
@@ -225,9 +227,14 @@ export class DiceRoller extends LitElement {
     } else {
       this.luckBurnValue = this.luckBurn;
     }
-    this.rollResultText = this.diceRoll?.roll?.result(
-      Number(this.rollResult?.total) + Number(this.luckBurnValue)
-    );
+    if (this.diceRoll.luckReverse) {
+      this.luckBurnValue = this.luckBurnValue * -1;
+    }
+    this.rollResultText =
+      this.diceRoll?.roll?.result &&
+      this.diceRoll?.roll?.result(
+        Number(this.rollResult?.total) + Number(this.luckBurnValue)
+      );
     this.dispatchEvent(
       new CustomEvent('luck-burn', {
         detail: {luck: this.currentLuck - this.luckBurn},
