@@ -1,9 +1,9 @@
 import {LitElement, html, css} from 'lit';
 import {modifierFor} from '../../utilities/modifier-for.js';
 import {occupations} from '../../utilities/occupations.js';
+import {armorStatsFor} from '../../utilities/armor.js';
 import {slug} from '../../utilities/slug.js';
 import '../stat-display/stat-display.js';
-import {armorStatsFor} from '../../utilities/armor.js';
 
 /**
  * An example element.
@@ -69,10 +69,14 @@ export class SpeedDisplay extends LitElement {
     );
   }
 
+	onNameClick() {
+    this.dispatchEvent(new CustomEvent('name-clicked'));
+  }
+
   render() {
     return html`
       <div class="wrapper">
-        <stat-display name="Speed" value="${String(this.speed)}"></stat-display>
+        <stat-display name="Speed" name-clickable @name-clicked=${this.onNameClick} value="${String(this.speed)}"></stat-display>
       </div>
     `;
   }

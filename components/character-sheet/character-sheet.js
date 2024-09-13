@@ -39,6 +39,7 @@ import '../thief-skills/thief-skills.js';
 import '../notes-box/notes-box.js';
 import '../occupation-box/occupation-box.js';
 import '../stat-editor/stat-editor.js';
+import '../speed-editor/speed-editor.js';
 
 export class CharacterSheet extends LitElement {
   static get styles() {
@@ -54,6 +55,7 @@ export class CharacterSheet extends LitElement {
       inventorySelectorType: {type: String, state: true},
       inventorySelectorOpen: {type: Boolean, state: true},
       statEditorOpen: {type: Boolean, state: true},
+      speedEditorOpen: {type: Boolean, state: true},
     };
   }
 
@@ -66,6 +68,7 @@ export class CharacterSheet extends LitElement {
     this.inventorySelectorType = '';
     this.inventorySelectorOpen = false;
     this.statEditorOpen = false;
+    this.speedEditorOpen = false;
   }
 
   handleDiceRollRequested(e) {
@@ -137,6 +140,10 @@ export class CharacterSheet extends LitElement {
     this.statEditorOpen = false;
   }
 
+  onSpeedEditorClose() {
+    this.speedEditorOpen = false;
+  }
+
   addOrIncrementInventoryItem(type, name, quantity) {
     // try to find existing item
     const existingItem = this.data[type].find((item) => item.name === name);
@@ -199,11 +206,7 @@ export class CharacterSheet extends LitElement {
         );
         break;
     }
-    this.dispatchEvent(
-      new CustomEvent('change', {
-        detail: {...JSON.parse(JSON.stringify(this.data))},
-      })
-    );
+    this.emitChangeEvent();
   }
 
   onRemoveArmorItem(e) {
@@ -274,11 +277,7 @@ export class CharacterSheet extends LitElement {
       (item) => item.name === e.detail.name
     );
     item.quantity = e.detail.quantity;
-    this.dispatchEvent(
-      new CustomEvent('change', {
-        detail: {...JSON.parse(JSON.stringify(this.data))},
-      })
-    );
+    this.emitChangeEvent();
   }
 
   onEquipmentQuantityChange(e) {
@@ -286,11 +285,7 @@ export class CharacterSheet extends LitElement {
       (item) => item.name === e.detail.name
     );
     item.quantity = e.detail.quantity;
-    this.dispatchEvent(
-      new CustomEvent('change', {
-        detail: {...JSON.parse(JSON.stringify(this.data))},
-      })
-    );
+    this.emitChangeEvent();
   }
 
   onMountGearQuantityChange(e) {
@@ -298,11 +293,7 @@ export class CharacterSheet extends LitElement {
       (item) => item.name === e.detail.name
     );
     item.quantity = e.detail.quantity;
-    this.dispatchEvent(
-      new CustomEvent('change', {
-        detail: {...JSON.parse(JSON.stringify(this.data))},
-      })
-    );
+    this.emitChangeEvent();
   }
 
   onWeaponEquipChange(e) {
@@ -310,11 +301,7 @@ export class CharacterSheet extends LitElement {
       (item) => item.name === e.detail.name
     );
     item.equipped = e.detail.equipped;
-    this.dispatchEvent(
-      new CustomEvent('change', {
-        detail: {...JSON.parse(JSON.stringify(this.data))},
-      })
-    );
+    this.emitChangeEvent();
   }
 
   onArmorEquipChange(e) {
@@ -334,24 +321,25 @@ export class CharacterSheet extends LitElement {
           if (i.name === item.name && e.detail.equipped) i.equipped = true;
         });
     }
-    this.dispatchEvent(
-      new CustomEvent('change', {
-        detail: {...JSON.parse(JSON.stringify(this.data))},
-      })
-    );
+    this.emitChangeEvent();
   }
 
   onLuckBurn(e) {
     this.data.luck = e.detail.luck;
-    this.dispatchEvent(
-      new CustomEvent('change', {
-        detail: {...JSON.parse(JSON.stringify(this.data))},
-      })
-    );
+    this.emitChangeEvent();
   }
 
   onStatChange(e) {
     this.data[e.detail.stat] = e.detail.value;
+    this.emitChangeEvent();
+  }
+
+  onSpeedChange(e) {
+    this.data.speedAdjustment = e.detail.speedAdjustment;
+    this.emitChangeEvent();
+  }
+
+  emitChangeEvent() {
     this.dispatchEvent(
       new CustomEvent('change', {
         detail: {...JSON.parse(JSON.stringify(this.data))},
@@ -403,6 +391,16 @@ export class CharacterSheet extends LitElement {
         @change="${this.onStatChange}"
         @close="${this.onStatEditorClose}"
       ></stat-editor>
+      <speed-editor
+        .open="${this.speedEditorOpen}"
+        occupation=${this.data.occupation}
+        birth-augur=${this.data.birthAugur}
+        armor=${this.data.armor}
+        starting-luck=${this.data.startingLuck}
+        speed-adjustment=${this.data.speedAdjustment}
+        @change="${this.onSpeedChange}"
+        @close="${this.onSpeedEditorClose}"
+      ></speed-editor>
       <!-- / Dice Roller Modal Component -->
       <div class="wrapper column">
         <section class="row">
@@ -419,6 +417,8 @@ export class CharacterSheet extends LitElement {
                 birth-augur="${this.data.birthAugur}"
                 occupation="${this.data.occupation}"
                 starting-luck="${this.data.startingLuck}"
+                @name-clicked="${() => (this.speedEditorOpen = true)}"
+                speed-adjustment=${this.data.speedAdjustment}
               ></speed-display>
               <alignment-display
                 alignment="${this.data.alignment}"
