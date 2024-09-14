@@ -40,6 +40,7 @@ import '../notes-box/notes-box.js';
 import '../occupation-box/occupation-box.js';
 import '../stat-editor/stat-editor.js';
 import '../speed-editor/speed-editor.js';
+import '../alignment-editor/alignment-editor.js';
 
 export class CharacterSheet extends LitElement {
   static get styles() {
@@ -56,6 +57,7 @@ export class CharacterSheet extends LitElement {
       inventorySelectorOpen: {type: Boolean, state: true},
       statEditorOpen: {type: Boolean, state: true},
       speedEditorOpen: {type: Boolean, state: true},
+      alignmentEditorOpen: {type: Boolean, state: true},
     };
   }
 
@@ -69,6 +71,7 @@ export class CharacterSheet extends LitElement {
     this.inventorySelectorOpen = false;
     this.statEditorOpen = false;
     this.speedEditorOpen = false;
+    this.alignmentEditorOpen = false;
   }
 
   handleDiceRollRequested(e) {
@@ -142,6 +145,10 @@ export class CharacterSheet extends LitElement {
 
   onSpeedEditorClose() {
     this.speedEditorOpen = false;
+  }
+
+  onAlignmentEditorClose() {
+    this.alignmentEditorOpen = false;
   }
 
   addOrIncrementInventoryItem(type, name, quantity) {
@@ -339,6 +346,11 @@ export class CharacterSheet extends LitElement {
     this.emitChangeEvent();
   }
 
+  onAlignmentChange(e) {
+    this.data.alignment = e.detail.alignment;
+    this.emitChangeEvent();
+  }
+
   emitChangeEvent() {
     this.dispatchEvent(
       new CustomEvent('change', {
@@ -395,12 +407,18 @@ export class CharacterSheet extends LitElement {
         .open="${this.speedEditorOpen}"
         occupation=${this.data.occupation}
         birth-augur=${this.data.birthAugur}
-        armor=${this.data.armor}
+        armor=${this.equippedArmor?.name}
         starting-luck=${this.data.startingLuck}
         speed-adjustment=${this.data.speedAdjustment}
         @change="${this.onSpeedChange}"
         @close="${this.onSpeedEditorClose}"
       ></speed-editor>
+      <alignment-editor
+        .open="${this.alignmentEditorOpen}"
+        alignment=${this.data.alignment}
+        @change="${this.onAlignmentChange}"
+        @close="${this.onAlignmentEditorClose}"
+      ></alignment-editor>
       <!-- / Dice Roller Modal Component -->
       <div class="wrapper column">
         <section class="row">
@@ -422,6 +440,7 @@ export class CharacterSheet extends LitElement {
               ></speed-display>
               <alignment-display
                 alignment="${this.data.alignment}"
+                @name-clicked="${() => (this.alignmentEditorOpen = true)}"
               ></alignment-display>
               <experience-points xp=${this.data.xp}></experience-points>
             </div>

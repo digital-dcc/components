@@ -87,7 +87,7 @@ export class SpeedEditor extends LitElement {
               </tr>
               <tr>
                 <td class="first">Armor</td>
-                <td class="">${speed.armor}</td>
+                <td class="">${formatModifier(speed.armor)}</td>
               </tr>
               ${this.speed.birthAugur
                 ? html`

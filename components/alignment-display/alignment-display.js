@@ -16,6 +16,7 @@ export class AlignmentDisplay extends LitElement {
         border: 1px black solid;
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         font-family: var(
           --primary-font,
           -apple-system,
@@ -55,6 +56,54 @@ export class AlignmentDisplay extends LitElement {
         text-align: center;
         align-items: center;
       }
+      button {
+        margin: 0 auto;
+        display: block;
+        border: 0;
+        background-color: unset;
+        width: 100%;
+      }
+      button.value-button {
+        flex: 1.4;
+        font-size: 1.7rem;
+        border-radius: 5px 5px 0 0;
+      }
+      button.with-base {
+        flex: 0;
+      }
+      button.base-button {
+        border-radius: 0 0 5px 5px;
+        padding-top: 5px;
+        text-align: center;
+      }
+      button.no-bottom-text.without-base {
+        border-radius: 5px;
+      }
+      .clickable:hover {
+        background-color: rgba(211, 211, 211, 0.5);
+      }
+      .clickable {
+        cursor: pointer;
+      }
+      .clickable:active {
+        transform: translateY(1px);
+      }
+      .lawful,
+      .chaotic,
+      .neutral {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 50%;
+      }
+      .chaotic {
+        background-image: url('images/chaotic.png');
+      }
+      .lawful {
+        background-image: url('images/lawful.png');
+      }
+      .neutral {
+        background-image: url('images/neutral.png');
+      }
     `;
   }
 
@@ -75,8 +124,15 @@ export class AlignmentDisplay extends LitElement {
 
   render() {
     return html`
-      <div part="wrapper" class="wrapper">
-        <h2 class="title" part="title">Alignment</h2>
+      <div part="wrapper" class="wrapper ${this.alignment.toLowerCase()}">
+        <h2 class="title" part="title">
+          <button
+            @click=${() => this.dispatchEvent(new CustomEvent('name-clicked'))}
+            class="clickable"
+          >
+            Alignment
+          </button>
+        </h2>
         <div class="alignment-name-wrapper">
           <div class="alignment-name">${this.alignmentText}</div>
         </div>
