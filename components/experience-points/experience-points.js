@@ -18,12 +18,12 @@ export class ExperiencePoints extends LitElement {
       ::part(name) {
         font-size: 0.8rem;
       }
-			.wrapper {
-				box-sizing: border-box;
-				width: 100%;
-				height: 100%;
-				aspect-ratio: 1 / 1;
-			}
+      .wrapper {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
+      }
     `;
   }
 
@@ -38,6 +38,10 @@ export class ExperiencePoints extends LitElement {
     this.xp = null;
   }
 
+  onNameClicked() {
+    this.dispatchEvent(new CustomEvent('name-clicked'));
+  }
+
   render() {
     const currentLevel = levelForXp(this.xp);
     const requiredXP = xpForNextLevel(currentLevel);
@@ -46,6 +50,8 @@ export class ExperiencePoints extends LitElement {
         <stat-display
           name="XP"
           value="${this.xp}/${requiredXP}"
+          name-clickable
+          @name-clicked=${this.onNameClicked}
         ></stat-display>
       </div>
     `;

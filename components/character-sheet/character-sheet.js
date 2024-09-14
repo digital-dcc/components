@@ -41,6 +41,7 @@ import '../occupation-box/occupation-box.js';
 import '../stat-editor/stat-editor.js';
 import '../speed-editor/speed-editor.js';
 import '../alignment-editor/alignment-editor.js';
+import '../experience-points-editor/experience-points-editor.js';
 
 export class CharacterSheet extends LitElement {
   static get styles() {
@@ -58,6 +59,7 @@ export class CharacterSheet extends LitElement {
       statEditorOpen: {type: Boolean, state: true},
       speedEditorOpen: {type: Boolean, state: true},
       alignmentEditorOpen: {type: Boolean, state: true},
+      experiencePointsEditorOpen: {type: Boolean, state: true},
     };
   }
 
@@ -72,6 +74,7 @@ export class CharacterSheet extends LitElement {
     this.statEditorOpen = false;
     this.speedEditorOpen = false;
     this.alignmentEditorOpen = false;
+    this.experiencePointsEditorOpen = false;
   }
 
   handleDiceRollRequested(e) {
@@ -149,6 +152,10 @@ export class CharacterSheet extends LitElement {
 
   onAlignmentEditorClose() {
     this.alignmentEditorOpen = false;
+  }
+
+  onExperiencePointsEditorClose() {
+    this.experiencePointsEditorOpen = false;
   }
 
   addOrIncrementInventoryItem(type, name, quantity) {
@@ -351,6 +358,16 @@ export class CharacterSheet extends LitElement {
     this.emitChangeEvent();
   }
 
+  onExperiencePointsChange(e) {
+    this.data.xp = e.detail.experiencePoints;
+    this.emitChangeEvent();
+  }
+
+  onLevelChange(e) {
+    this.data.level = e.detail.level;
+    this.emitChangeEvent();
+  }
+
   emitChangeEvent() {
     this.dispatchEvent(
       new CustomEvent('change', {
@@ -419,6 +436,14 @@ export class CharacterSheet extends LitElement {
         @change="${this.onAlignmentChange}"
         @close="${this.onAlignmentEditorClose}"
       ></alignment-editor>
+      <experience-points-editor
+        .open="${this.experiencePointsEditorOpen}"
+        level="${this.data.level}"
+        experience-points="${this.data.xp}"
+        @experience-points-change="${this.onExperiencePointsChange}"
+        @level-change="${this.onLevelChange}"
+        @close="${this.onExperiencePointsEditorClose}"
+      ></experience-points-editor>
       <!-- / Dice Roller Modal Component -->
       <div class="wrapper column">
         <section class="row">
@@ -442,7 +467,11 @@ export class CharacterSheet extends LitElement {
                 alignment="${this.data.alignment}"
                 @name-clicked="${() => (this.alignmentEditorOpen = true)}"
               ></alignment-display>
-              <experience-points xp=${this.data.xp}></experience-points>
+              <experience-points
+                @name-clicked="${() =>
+                  (this.experiencePointsEditorOpen = true)}"
+                xp=${this.data.xp}
+              ></experience-points>
             </div>
           </div>
         </section>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;experience-points-editor> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script
+      type="module"
+      src="../components/experience-points-editor/experience-points-editor.js"
+    ></script>
+    <style>
+      .wrapper {
+        font-size: 14px;
+      }
+      :root,
+      :host {
+        --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+      }
+      body {
+        font-family: var(--primary-font);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">back</a>
+    <div class="wrapper">
+      <div>
+        <experience-points-editor
+          open
+          level="4"
+          experience-points="299"
+        ></experience-points-editor>
+
+        <script>
+          document
+            .querySelector('experience-points-editor')
+            .addEventListener('experience-points-change', (e) => {
+              console.log('experience points change', e.detail);
+            });
+          document
+            .querySelector('experience-points-editor')
+            .addEventListener('level-change', (e) => {
+              console.log('level change', e.detail);
+            });
+        </script>
+      </div>
+    </div>
+  </body>
+</html>
