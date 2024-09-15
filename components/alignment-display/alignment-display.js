@@ -63,22 +63,6 @@ export class AlignmentDisplay extends LitElement {
         background-color: unset;
         width: 100%;
       }
-      button.value-button {
-        flex: 1.4;
-        font-size: 1.7rem;
-        border-radius: 5px 5px 0 0;
-      }
-      button.with-base {
-        flex: 0;
-      }
-      button.base-button {
-        border-radius: 0 0 5px 5px;
-        padding-top: 5px;
-        text-align: center;
-      }
-      button.no-bottom-text.without-base {
-        border-radius: 5px;
-      }
       .clickable:hover {
         background-color: rgba(211, 211, 211, 0.5);
       }

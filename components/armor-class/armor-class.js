@@ -30,17 +30,32 @@ export class ArmorClass extends LitElement {
         font-size: 0.8rem;
         text-align: center;
       }
-			.armor-class-wrapper {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
+      .armor-class-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
       .armor-class {
-				margin-top: 15px;
+        margin-top: 15px;
         font-size: 2.5rem;
         display: absolute;
         top: 50%;
         left: 50%;
+      }
+      button {
+        margin: 0 auto;
+        display: block;
+        border: 0;
+        background-color: unset;
+      }
+      .clickable:hover {
+        background-color: rgba(211, 211, 211, 0.5);
+      }
+      .clickable {
+        cursor: pointer;
+      }
+      .clickable:active {
+        transform: translateY(1px);
       }
     `;
   }
@@ -68,7 +83,15 @@ export class ArmorClass extends LitElement {
     return html`
       <div class="wrapper">
         <div class="shield">
-          <h2 class="title">Armor Class</h2>
+          <h2 class="title" part="title">
+            <button
+              @click=${() =>
+                this.dispatchEvent(new CustomEvent('name-clicked'))}
+              class="clickable"
+            >
+              Armor Class
+            </button>
+          </h2>
           <div class="armor-class-wrapper">
             <div class="armor-class">${this.armorClass}</div>
           </div>

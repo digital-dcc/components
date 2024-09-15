@@ -42,6 +42,7 @@ import '../stat-editor/stat-editor.js';
 import '../speed-editor/speed-editor.js';
 import '../alignment-editor/alignment-editor.js';
 import '../experience-points-editor/experience-points-editor.js';
+import '../armor-class-editor/armor-class-editor.js';
 
 export class CharacterSheet extends LitElement {
   static get styles() {
@@ -60,6 +61,7 @@ export class CharacterSheet extends LitElement {
       speedEditorOpen: {type: Boolean, state: true},
       alignmentEditorOpen: {type: Boolean, state: true},
       experiencePointsEditorOpen: {type: Boolean, state: true},
+      armorClassEditorOpen: {type: Boolean, state: true},
     };
   }
 
@@ -75,6 +77,7 @@ export class CharacterSheet extends LitElement {
     this.speedEditorOpen = false;
     this.alignmentEditorOpen = false;
     this.experiencePointsEditorOpen = false;
+    this.armorClassEditorOpen = false;
   }
 
   handleDiceRollRequested(e) {
@@ -156,6 +159,10 @@ export class CharacterSheet extends LitElement {
 
   onExperiencePointsEditorClose() {
     this.experiencePointsEditorOpen = false;
+  }
+
+  onArmorClassEditorClose() {
+    this.armorClassEditorOpen = false;
   }
 
   addOrIncrementInventoryItem(type, name, quantity) {
@@ -368,6 +375,11 @@ export class CharacterSheet extends LitElement {
     this.emitChangeEvent();
   }
 
+  onArmorClassChange(e) {
+    this.data.armorClassAdjustment = e.detail.adjustment;
+    this.emitChangeEvent();
+  }
+
   emitChangeEvent() {
     this.dispatchEvent(
       new CustomEvent('change', {
@@ -444,6 +456,15 @@ export class CharacterSheet extends LitElement {
         @level-change="${this.onLevelChange}"
         @close="${this.onExperiencePointsEditorClose}"
       ></experience-points-editor>
+      <armor-class-editor
+        .open="${this.armorClassEditorOpen}"
+        armor=${this.equippedArmor?.name}
+        ?shield=${this.equippedShield?.name}
+        agility=${this.data.agility}
+        adjustment=${this.data.armorClassAdjustment}
+        @change="${this.onArmorClassChange}"
+        @close="${this.onArmorClassEditorClose}"
+      ></armor-class-editor>
       <!-- / Dice Roller Modal Component -->
       <div class="wrapper column">
         <section class="row">
@@ -480,6 +501,7 @@ export class CharacterSheet extends LitElement {
             <div class="row gap-20">
               <strength-stat
                 armor=${this.equippedArmor?.name}
+                ?shield=${this.equippedShield?.name}
                 max-strength=${this.data.maxStrength}
                 strength=${this.data.strength}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
@@ -489,6 +511,7 @@ export class CharacterSheet extends LitElement {
               ></strength-stat>
               <agility-stat
                 armor=${this.equippedArmor?.name}
+                ?shield=${this.equippedShield?.name}
                 max-agility=${this.data.maxAgility}
                 agility=${this.data.agility}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
@@ -498,6 +521,7 @@ export class CharacterSheet extends LitElement {
               ></agility-stat>
               <stamina-stat
                 armor=${this.equippedArmor?.name}
+                ?shield=${this.equippedShield?.name}
                 max-stamina=${this.data.maxStamina}
                 stamina=${this.data.stamina}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
@@ -507,6 +531,7 @@ export class CharacterSheet extends LitElement {
               ></stamina-stat>
               <intelligence-stat
                 armor=${this.equippedArmor?.name}
+                ?shield=${this.equippedShield?.name}
                 max-intelligence=${this.data.maxIntelligence}
                 intelligence=${this.data.intelligence}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
@@ -516,6 +541,7 @@ export class CharacterSheet extends LitElement {
               ></intelligence-stat>
               <personality-stat
                 armor=${this.equippedArmor?.name}
+                ?shield=${this.equippedShield?.name}
                 max-personality=${this.data.maxPersonality}
                 personality=${this.data.personality}
                 ?apply-check-penalty="${this.checkPenaltySelected}"
@@ -525,6 +551,7 @@ export class CharacterSheet extends LitElement {
               ></personality-stat>
               <luck-stat
                 armor=${this.equippedArmor?.name}
+                ?shield=${this.equippedShield?.name}
                 max-luck=${this.data.maxLuck}
                 luck=${this.data.luck}
                 @luck-check="${this.handleDiceRollRequested}"
@@ -546,6 +573,8 @@ export class CharacterSheet extends LitElement {
               agility=${this.data.agility}
               armor=${this.equippedArmor?.name}
               ?shield=${this.equippedShield?.name}
+              adjustment=${this.data.armorClassAdjustment}
+              @name-clicked="${() => (this.armorClassEditorOpen = true)}"
             ></armor-class>
             <hit-points
               hp=${this.data.hp}
